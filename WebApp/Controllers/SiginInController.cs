@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
-public class SiginInController : Controller
+public class SignInController : Controller
 {
-    public IActionResult Index()
+    [Route("/signin")]
+    public IActionResult SignIn()
     {
         return View();
     }
