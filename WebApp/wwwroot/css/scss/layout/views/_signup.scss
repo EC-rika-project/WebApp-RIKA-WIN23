@@ -1,0 +1,18 @@
+.signUp {
+    background-color: green;
+    .container {
+        padding: 20px;
+
+        .form-content {
+            font-weight: 600;
+            padding: 10px;
+        }
+
+        .form-check {
+            .form-check-input {
+                border-color: #191919;
+                border-radius: 5px;
+            }
+        }
+    }
+}

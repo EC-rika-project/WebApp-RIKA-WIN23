@@ -603,3 +603,18 @@ svg {
     gap: 16px 72px;
   }
 }
+
+.signUp {
+  background-color: green;
+}
+.signUp .container {
+  padding: 20px;
+}
+.signUp .container .form-content {
+  font-weight: 600;
+  padding: 10px;
+}
+.signUp .container .form-check .form-check-input {
+  border-color: #191919;
+  border-radius: 5px;
+}

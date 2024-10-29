@@ -1,0 +1,37 @@
+﻿@model SignUpViewModel
+<section class="signUp">
+    <div class="container">
+        <h2>Sign Up</h2>
+        <p>Create a new account</p>
+        <form method="post" asp-controller="SignUp" asp-action="SignUp" novalidate>
+            <div class="signup-form">
+                <div class="form-content">
+                    <label asp-for="UserName">Username</label>
+                    <input asp-for="UserName"/>
+                    <span asp-validation-for="UserName"></span>
+                </div>
+                <div class="form-content">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="form-content">
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <div class="form-content">
+                    <label asp-for="ConfirmPassword">ConfirmPassword</label>
+                    <input asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+                <div class="form-check">
+                    <label asp-for=TermsAndConditions>I agree to the <a asp-controller="About" asp-action="Terms">Terms</a> & <a asp-controller="About" asp-action="Conditions">Conditions</a>.</label>
+                    <input asp-for="TermsAndConditions" />
+                </div>
+            </div>
+        </form>
+        <button type="submit">Sign up</button>
+        <p>Already have an account? <a href="/SignUp.html">Sign in here</a></p>
+    </div>
+</section>
