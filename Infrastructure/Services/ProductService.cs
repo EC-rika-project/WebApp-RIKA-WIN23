@@ -14,15 +14,15 @@ namespace Infrastructure.Services
         }
 
         // gets all products from a specific category by Id
-        public async Task<IEnumerable<ProductDto>> GetAllProductsAsync(int categoryId)
+        public async Task<IEnumerable<ProductsDto>> GetAllProductsAsync(string categoryName)
         {
-            return await _productRepository.GetProductsAsync(categoryId);
+            return await _productRepository.GetProductsAsync(categoryName);
         }
 
         // gets one product
-        public async Task<ProductDto> GetOneProductAsync(int productId)
+        public async Task<ProductDetailsDto> GetOneProductAsync(string articleNumber)
         {
-            return await _productRepository.GetProductAsync(productId);
+            return await _productRepository.GetProductAsync(articleNumber);
         }
 
         // get one catgory?? can be added, but currently not needed

@@ -27,23 +27,23 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetProductsAsync(int categoryId)
+        public async Task<IEnumerable<ProductsDto>> GetProductsAsync(string categoryId)
         {
             try
             {
                 string request = $"api/products?categoryId={categoryId}";
-                var result = await _httpClient.GetFromJsonAsync<IEnumerable<ProductDto>>(request);
+                var result = await _httpClient.GetFromJsonAsync<IEnumerable<ProductsDto>>(request);
                 return result!;
             }
             catch (Exception ex) { Debug.WriteLine(ex); }
             return null!;
         }
-        public async Task<ProductDto> GetProductAsync(int productId)
+        public async Task<ProductDetailsDto> GetProductAsync(string productId)
         {
             try
             {
                 string requestUri = $"api/products/{productId}";
-                var result = await _httpClient.GetFromJsonAsync<ProductDto>(requestUri);
+                var result = await _httpClient.GetFromJsonAsync<ProductDetailsDto>(requestUri);
                 return result!;
             }
             catch (Exception ex) { Debug.WriteLine(ex); }
