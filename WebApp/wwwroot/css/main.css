@@ -605,16 +605,79 @@ svg {
 }
 
 .signUp {
-  background-color: green;
+  padding: 5em 0;
 }
 .signUp .container {
-  padding: 20px;
+  width: 85%;
 }
-.signUp .container .form-content {
+@media (min-width: 768px) {
+  .signUp .container {
+    width: 40%;
+  }
+}
+.signUp .container .signup-form {
+  padding: 3em 0;
+}
+.signUp .container .signup-form .form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.signUp .container .signup-form .form-content input {
+  border: none;
+  border-bottom: 1px solid #808080;
+  padding: 8px 0;
+  width: 100%;
+}
+.signUp .container .signup-form .form-content label {
   font-weight: 600;
-  padding: 10px;
 }
-.signUp .container .form-check .form-check-input {
+.signUp .container .signup-form .form-content span {
+  font-style: italic;
+  font-weight: 300;
+  color: #F42D2D;
+}
+.signUp .container .signup-form .btn-dark {
+  border: 1px solid black;
+}
+.signUp .container .form-checkbox {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  font-weight: 400;
+}
+.signUp .container .form-checkbox input {
   border-color: #191919;
   border-radius: 5px;
+  height: 1.2rem;
+  width: 1.2rem;
+}
+.signUp .password-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.signUp .password-wrapper input[type=password],
+.signUp .password-wrapper input[type=text] {
+  width: 100%;
+  padding-right: 50px;
+  box-sizing: border-box;
+}
+.signUp .password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #007bff;
+}
+.signUp .password-toggle:focus {
+  outline: none;
+}
+.signUp i {
+  color: black;
+  margin-top: 1.2rem;
 }

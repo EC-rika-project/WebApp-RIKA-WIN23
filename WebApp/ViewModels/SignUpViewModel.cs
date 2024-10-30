@@ -1,22 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Infrastructure.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.ViewModels;
 
 public class SignUpViewModel
 {
-    [Required (ErrorMessage = "A valid Username is required")]
-    public string UserName { get; set; } = null!;
+	[DataType(DataType.Text)]
+	[Display(Name = "Username", Prompt = "Enter your username", Order = 0)]
+	[Required (ErrorMessage = "A valid Username is required")]
+	[MinLength(2, ErrorMessage = "Enter a valid username")]
+	public string UserName { get; set; } = null!;
 
-    [Required(ErrorMessage = "A valid Password is required")]
-    public string Password { get; set; } = null!;
+	[Display(Name = "Email", Prompt = "Enter your Email address", Order = 1)]
+	[DataType(DataType.EmailAddress)]
+	[Required(ErrorMessage = "A valid Email is required")]
+	[RegularExpression("^[^@\\s]+@[^@\\s]+\\.[^@\\s]{2,}$", ErrorMessage = "Please enter a valid e-mail adress")]
+	public string Email { get; set; } = null!;
 
-    [Required(ErrorMessage = "A valid Email is required")]
-    public string Email { get; set; } = null!;
+	[Display(Name = "Password", Prompt = "Enter your password", Order = 2)]
+	[DataType(DataType.Password)]
+	[Required(ErrorMessage = "A valid Password is required")]
+	[RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "Please enter a valid password.")]
+	public string Password { get; set; } = null!;
 
-    [Required(ErrorMessage = "The password must be confirmed")]
-    [Compare(nameof(Password), ErrorMessage = "Password must be confirmed")]
+	[Display(Name = "Confirm password", Prompt = "Confirm your password", Order = 3)]
+	[DataType(DataType.Password)]
+	[Required(ErrorMessage = "The password must be confirmed")]
+    [Compare(nameof(Password), ErrorMessage = "Password does not match")]
     public string ConfirmPassword { get; set; } = null!;
 
-    [Required(ErrorMessage = "Terms and conditions must be accepted")]
+	[Display(Name = "I agree to the Terms & Conditions", Order = 4)]
+	[RequiredCheckbox(ErrorMessage = "Terms and conditions must be accepted")]
     public bool TermsAndConditions { get; set; }
 }
