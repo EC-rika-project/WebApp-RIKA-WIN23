@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Configurations\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Home\Partials\" />
   </ItemGroup>
 
   <ItemGroup>
