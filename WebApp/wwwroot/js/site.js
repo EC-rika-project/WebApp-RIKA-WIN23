@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿    function togglePassword(fieldId, button) {
+        const passwordField = document.getElementById(fieldId);
+    const icon = button.querySelector("i");
 
-// Write your JavaScript code.
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+        } else {
+        passwordField.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+        }
+    }
