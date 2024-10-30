@@ -31,11 +31,19 @@
                 </div>
                 <div class="form-checkbox">
                     <input asp-for="TermsAndConditions" />
-                    <label asp-for=TermsAndConditions>By creating an account you accept our <a asp-controller="About" asp-action="Terms">Terms</a> & <a asp-controller="About" asp-action="Conditions">Conditions</a>.</label>
+                    <label asp-for="TermsAndConditions">
+                        By creating an account you accept our
+                        <a href="javascript:void(0);" onclick="showOverlay('terms')">Terms</a> &
+                        <a href="javascript:void(0);" onclick="showOverlay('conditions')">Conditions</a>.
+                    </label>
                 </div>
                 <button class="btn-dark" type="submit">Sign up</button>
             </div>
         </form>
         <p>Already have an account? <a href="/SignUp.html">Sign in here</a></p>
     </div>
+    @await Html.PartialAsync("~/Views/SignUp/PartialViews/overlay.cshtml")
 </section>
+
+
+
