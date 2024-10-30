@@ -1,5 +1,37 @@
-﻿@{
+﻿@using System.Collections.ObjectModel
+@{
     ViewData["Title"] = Model.PageTitle;
+
+    var temporaryCategoryList = new[]
+    {
+        new { Id = 1, Name = "Category 1" },
+        new { Id = 2, Name = "Category 2" },
+        new { Id = 3, Name = "Category 3" }
+    };
 }
 
+<section class="section">
+    <div class="container bg-light hero-section">
+        <div class="category-menu">
+            <h1 class="h4 heading">Categories</h1>
+            <div class="link-wrapper">
+            @foreach (var category in temporaryCategoryList){
+                <a asp-controller="Product" asp-action="" class="category-link">
+                    <i class="fa-solid fa-xmark"></i>
+                    <h2 class="h5">Category Name</h2>
+                </a>
+            }
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="image-wrapper">
+                <img src="https://picsum.photos/400" class="image">
+            </div>
+            <div class="text-wrapper">
+                <h1 class="h2">20% Discount New Arrival Product</h1>
+                <p class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur fuga iste et porro magni repellendus nesciunt.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
