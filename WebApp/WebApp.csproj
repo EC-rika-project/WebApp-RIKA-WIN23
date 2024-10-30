@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Configurations\" />
+    <Folder Include="Views\Home\Partials\" />
   </ItemGroup>
 
   <ItemGroup>
