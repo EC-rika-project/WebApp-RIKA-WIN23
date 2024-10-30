@@ -1,45 +1,182 @@
+
+
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
 .signin-welcome {
-    background: green;
-    .container {       
+    text-align: left;
+    margin-bottom: 10px;
 
-        h2 {
-        }
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
 
-        p {
-        }
+    p {
+        font-size: 14px;
+        color: #black;
     }
 }
 
 .form-section {
+    .signin-form {
+        .form-group {
+            margin-bottom: 15px;
 
-    .container {
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
 
-        .signin-form {
+            .input-form {
+                width: 100%;
+                border: none; 
+                border-bottom: 1px solid #ccc; 
+                font-size: 14px;
+                background-color: transparent; 
 
-            .form-group {
-
-                label {
-                }
-
-                input {
-                }
-
-                span {
+                &:focus {
+                    outline: none; 
+                    border-bottom: 2px solid;
                 }
             }
 
-            .btn-primary {
+            //Make universal error input instead of this 
+            .error {
+                color: #e74c3c;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
             }
         }
 
-        .external-signin {
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
 
-            .btn {
+            &:hover {
+                background-color: #333;
+            }
+        }
+    }
+
+    .form-group.remember-me-forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        //remember me 
+        label {
+            margin-right: 55px;
+            padding-top: 5px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        //forgot password text
+        a {
+            font-size: 14px;
+            color: #000;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    
+    span {
+        padding: 0 10px;
+        color: #black;
+    }
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #ccc;
+    }
+}
+
+.external-signin {
+    text-align: center;
+
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid;
+        border-color: #838383;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        color: #fff;
+
+        &.btn-facebook {
+            background-color: #3b5998;
+
+            &:hover {
+                background-color: #2d4373;
             }
         }
 
-        .signin-NoAccount {
+        &.btn-google {
+            background-color: transparent;
+            color: black;
 
+            &:hover {
+                color: white;
+                background-color: #000;
+            }
+        }
+
+        &.btn-X {
+            color: black;
+            background-color: transparent;
+
+            &:hover {
+                color: white;
+                background-color: #000;
+            }
+        }
+    }
+}
+
+.signin-no-account {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-top: 15px;
+
+    a {
+        color: #000;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
