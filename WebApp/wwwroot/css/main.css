@@ -639,14 +639,26 @@ svg {
 }
 .signUp .container .signup-form .btn-dark {
   border: 1px solid black;
+  margin: 1em 0;
 }
 .signUp .container .form-checkbox {
   display: flex;
+  flex-direction: column;
+}
+.signUp .container .form-checkbox span {
+  font-style: italic;
+  font-weight: 300;
+  color: #F42D2D;
+}
+.signUp .container .checkbox-group {
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   gap: 0.8rem;
   font-weight: 400;
+  margin: 0.8rem 0;
 }
-.signUp .container .form-checkbox input {
+.signUp .container .checkbox-group input {
   border-color: #191919;
   border-radius: 5px;
   height: 1.2rem;

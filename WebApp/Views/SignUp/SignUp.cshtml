@@ -30,12 +30,15 @@
                     <span asp-validation-for="ConfirmPassword"></span>
                 </div>
                 <div class="form-checkbox">
-                    <input asp-for="TermsAndConditions" />
-                    <label asp-for="TermsAndConditions">
-                        By creating an account you accept our
-                        <a href="javascript:void(0);" onclick="showOverlay('terms')">Terms</a> &
-                        <a href="javascript:void(0);" onclick="showOverlay('conditions')">Conditions</a>.
-                    </label>
+                    <div class="checkbox-group">
+                        <input asp-for="TermsAndConditions" />
+                        <label asp-for="TermsAndConditions">
+                            By creating an account you accept our
+                            <a href="javascript:void(0);" onclick="showOverlay('terms')">Terms</a> &
+                            <a href="javascript:void(0);" onclick="showOverlay('conditions')">Conditions</a>.
+                        </label>
+                    </div>
+                    <span asp-validation-for="TermsAndConditions"></span>
                 </div>
                 <button class="btn-dark" type="submit">Sign up</button>
             </div>

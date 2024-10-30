@@ -38,16 +38,29 @@
 
             .btn-dark {
                 border: 1px solid black;
-                
+                margin: 1em 0;
             }
         }
 
         .form-checkbox {
             display: flex;
+            flex-direction: column;
+
+
+            span {
+                font-style: italic;
+                font-weight: 300;
+                color: #F42D2D
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: row;
             justify-content: flex-start;
             gap: 0.8rem;
             font-weight: 400;
-
+            margin: 0.8rem 0;
 
             input {
                 border-color: #191919;
@@ -67,10 +80,10 @@
     .password-wrapper input[type="password"],
     .password-wrapper input[type="text"] {
         width: 100%;
-        padding-right: 50px; 
+        padding-right: 50px;
         box-sizing: border-box;
     }
-  
+
     .password-toggle {
         position: absolute;
         right: 10px;
@@ -87,7 +100,7 @@
         outline: none;
     }
 
-    i{
+    i {
         color: black;
         margin-top: 1.2rem;
     }
