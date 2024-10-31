@@ -8,6 +8,16 @@
         new { Id = 2, Name = "Category 2" },
         new { Id = 3, Name = "Category 3" }
     };
+
+    var temporaryProductList = new[]
+    {
+        new { ArticleNumber = "1", Name = "Product 1", Ingress = "Ingress",  Price = 100 },
+        new { ArticleNumber = "2", Name = "Product 2", Ingress = "Ingress",  Price = 100 },
+        new { ArticleNumber = "3", Name = "Product 3", Ingress = "Ingress",  Price = 100 },
+        new { ArticleNumber = "4", Name = "Product 4", Ingress = "Ingress",  Price = 100 },
+        new { ArticleNumber = "5", Name = "Product 5", Ingress = "Ingress",  Price = 100 },
+
+    };
 }
 
 <section class="section">
@@ -35,9 +45,29 @@
     </div>
 </section>
 
-<section class="section">
-    <div class="container bg-light new-arrivals-section">
-        <h1 class="h3 heading">New Arrivals</h1>
-        <a class="link">View All</a>
+<section class="section new-arrivals-section">
+    <div class="container bg-light product-list">
+        <div class="product-heading">
+            <h1 class="h3">New Arrivals</h1>
+            <a asp-controller="" asp-action="" class="link">View All</a>
+        </div>
+        <div class="product-grid">
+            @for (int i = 0; i < 4; i++)
+            {
+                <article class="product-card">
+                    <div class="image-wrapper">
+                        <img src="https://picsum.photos/400" alt="" class="product-image" />
+                        <div class="icon-wrapper">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="product-text">
+                        <h2 class="h6">@temporaryProductList[i].Name</h2>
+                        <p class="body">@temporaryProductList[i].Ingress</p>
+                        <p class="h6">Price</p>
+                    </div>
+                </article>
+            }
+        </div>
     </div>
 </section>
