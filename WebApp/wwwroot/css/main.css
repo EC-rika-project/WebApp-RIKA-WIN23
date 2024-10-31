@@ -795,3 +795,15 @@ svg {
     width: 50%;
   }
 }
+
+.new-arrivals-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5rem;
+}
+.new-arrivals-section .link {
+  min-width: 35px;
+  min-height: 35px;
+  cursor: pointer;
+}
