@@ -22,8 +22,6 @@ function showOverlay(type) {
 
     if (type === 'terms') {
         document.getElementById("termsText").style.display = "block";
-    } else if (type === 'conditions') {
-        document.getElementById("conditionsText").style.display = "block";
     }
 
     document.getElementById("overlay").style.display = "flex";
