@@ -1,7 +1,19 @@
+using Infrastructure.Repositories;
+using Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register HttpClient
+builder.Services.AddHttpClient();
+
+// Register ProductService
+builder.Services.AddScoped<ProductService>(); 
+
+// Register ProductRepository
+builder.Services.AddScoped<ProductRepository>(); 
 
 var app = builder.Build();
 
