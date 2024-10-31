@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WebApp.ViewModels;
 
 
 namespace WebApp.Controllers
@@ -13,9 +14,12 @@ namespace WebApp.Controllers
             _logger = logger;
         }
 
+        [Route("/")]
         public IActionResult Index()
         {
-            return View();
+            HomeIndexViewModel viewModel = new();
+            return View(viewModel);            
+                
         }
     }
 }

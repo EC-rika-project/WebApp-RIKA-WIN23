@@ -16,6 +16,10 @@
 
   <ItemGroup>
     <Folder Include="Configurations\" />
+<<<<<<< HEAD
+=======
+    <Folder Include="Views\Home\Partials\" />
+>>>>>>> origin/dev
   </ItemGroup>
 
   <ItemGroup>
