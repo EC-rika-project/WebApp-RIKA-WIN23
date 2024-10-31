@@ -23,7 +23,7 @@
 <section class="section">
     <div class="container bg-light hero-section">
         <div class="category-menu">
-            <h1 class="h4 heading">Categories</h1>
+            <h2 class="h4 heading">Categories</h2>
             <div class="link-wrapper">
             @foreach (var category in temporaryCategoryList){
                 <a asp-controller="Product" asp-action="" class="category-link">
@@ -38,7 +38,7 @@
                 <img src="https://picsum.photos/400" class="image">
             </div>
             <div class="text-wrapper">
-                <h1 class="h2">20% Discount New Arrival Product</h1>
+                <h1 class="h2">20% Discount On New Arrival Products</h1>
                 <p class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur fuga iste et porro magni repellendus nesciunt.</p>
             </div>
         </div>
@@ -48,7 +48,7 @@
 <section class="section new-arrivals-section">
     <div class="container bg-light product-list">
         <div class="product-heading">
-            <h1 class="h3">New Arrivals</h1>
+            <h2 class="h3">New Arrivals</h2>
             <a asp-controller="" asp-action="" class="link">View All</a>
         </div>
         <div class="product-grid">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="product-text">
-                        <h2 class="h6">@temporaryProductList[i].Name</h2>
+                        <h3 class="h6">@temporaryProductList[i].Name</h3>
                         <p class="body">@temporaryProductList[i].Ingress</p>
                         <p class="h6">Price</p>
                     </div>
