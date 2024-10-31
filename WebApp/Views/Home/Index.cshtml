@@ -1,4 +1,86 @@
 ﻿@using System.Collections.ObjectModel
+@model WebApp.ViewModels.HomeIndexViewModel
+
+<style>
+    .form-container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .input-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .input-group input:not([type="checkbox"]) {
+        width: 100%;
+        padding: 8px 0;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        background-color: transparent;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .input-group input:focus {
+        outline: none;
+    }
+
+    .input-validation-error {
+        border-bottom-color: #dc3545 !important;
+    }
+
+    .input-validation-success {
+        border-bottom-color: #28a745 !important;
+    }
+
+    .field-validation-error {
+        color: #dc3545;
+        font-size: 12px;
+        position: absolute;
+        bottom: -18px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        margin: 0;
+    }
+
+    button {
+        width: 100%;
+        background-color: #000;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .card-fields {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 20px;
+    }
+</style>
+
 @{
     ViewData["Title"] = Model.PageTitle;
 
@@ -32,6 +114,88 @@
                 <p class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur fuga iste et porro magni repellendus nesciunt.</p>
             </div>
         </div>
+
+    </div>
+    <div class="form-container">
+        <form method="post" asp-controller="Test" asp-action="SubmitForm" novalidate>
+            <div id="form-name" class="input-group">
+                <label asp-for="Form.Name"></label>
+                <input asp-for="Form.Name" />
+                <span asp-validation-for="Form.Name"></span>
+            </div>
+
+            <div id="form-email" class="input-group">
+                <label asp-for="Form.Email"></label>
+                <input asp-for="Form.Email" />
+                <span asp-validation-for="Form.Email"></span>
+            </div>
+
+            <div id="form-password" class="input-group">
+                <label asp-for="Form.Password"></label>
+                <input asp-for="Form.Password" />
+                <span asp-validation-for="Form.Password"></span>
+            </div>
+
+            <div id="form-confirm-password" class="input-group">
+                <label asp-for="Form.ConfirmPassword"></label>
+                <input asp-for="Form.ConfirmPassword" />
+                <span asp-validation-for="Form.ConfirmPassword"></span>
+            </div>
+
+            <div id="form-street" class="input-group">
+                <label asp-for="Form.StreetName"></label>
+                <input asp-for="Form.StreetName" />
+                <span asp-validation-for="Form.StreetName"></span>
+            </div>
+
+            <div id="form-postal" class="input-group">
+                <label asp-for="Form.PostalCode"></label>
+                <input asp-for="Form.PostalCode" />
+                <span asp-validation-for="Form.PostalCode"></span>
+            </div>
+
+            <div id="form-city" class="input-group">
+                <label asp-for="Form.City"></label>
+                <input asp-for="Form.City" />
+                <span asp-validation-for="Form.City"></span>
+            </div>
+
+            <div id="form-phone" class="input-group">
+                <label asp-for="Form.PhoneNumber"></label>
+                <input asp-for="Form.PhoneNumber" />
+                <span asp-validation-for="Form.PhoneNumber"></span>
+            </div>
+
+            <div class="card-fields">
+                <div id="form-card" class="input-group">
+                    <label asp-for="Form.CardNumber"></label>
+                    <input asp-for="Form.CardNumber" />
+                    <span asp-validation-for="Form.CardNumber"></span>
+                </div>
+
+                <div id="form-expiry" class="input-group">
+                    <label asp-for="Form.ExpiryDate"></label>
+                    <input asp-for="Form.ExpiryDate" />
+                    <span asp-validation-for="Form.ExpiryDate"></span>
+                </div>
+
+                <div id="form-cvv" class="input-group">
+                    <label asp-for="Form.CVV"></label>
+                    <input asp-for="Form.CVV" />
+                    <span asp-validation-for="Form.CVV"></span>
+                </div>
+            </div>
+
+            <div id="form-terms" class="checkbox-group">
+                <input asp-for="Form.AcceptTerms" />
+                <label asp-for="Form.AcceptTerms">By creating an account you accept our terms and conditions</label>
+                <span asp-validation-for="Form.AcceptTerms"></span>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
     </div>
 </section>
+
+@await Html.PartialAsync("_ValidationScriptsPartial")
 
