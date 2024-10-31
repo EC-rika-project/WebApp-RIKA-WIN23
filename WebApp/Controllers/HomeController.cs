@@ -18,8 +18,6 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             HomeIndexViewModel viewModel = new();
-            TempData["Message"] = "Detta är ett test-meddelande!";
-            TempData["MessageType"] = "warning";
             return View(viewModel);            
                 
         }
