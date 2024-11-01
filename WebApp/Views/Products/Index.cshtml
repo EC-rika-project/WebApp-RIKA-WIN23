@@ -1,0 +1,87 @@
+﻿@model Rika.WebApp.ViewModels.ProductsViewModel
+
+<h1>@Model.CategoryName</h1>
+
+@if (Model?.Result?.Data != null)
+{
+    <section class="products">
+        <div class="container">
+            @foreach (var product in Model.Result.Data)
+            {
+                <div class="product-item" onclick="openModal(@product.ArticleNumber)">
+                    <img src="@product.CoverImageUrl" alt="@product.Name" />
+                    <h2>@product.Name</h2>
+                    <p>@product.Ingress</p>
+                    <p>Price: @product.Price</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Modal from chatgpt-->
+    <div id="productModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Product Details</h5>
+                    <button type="button" class="close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <p id="productName"></p>
+                    <p id="productIngress"></p>
+                    <p id="productDescription"></p>
+                    <p id="productPrice"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>No products available for this category.</p>
+}
+
+@* maybe move this to a separate js file? *@
+<script>
+    async function openModal(articleNumber) {
+        const response = await fetch(`/Products/ProductDetails?articleNumber=${articleNumber}`);
+        const productDetails = await response.json();
+
+        // Update modal with product details
+        document.getElementById("productName").innerText = productDetails.name;
+        document.getElementById("productIngress").innerText = productDetails.ingress;
+        document.getElementById("productDescription").innerText = productDetails.description;
+        document.getElementById("productPrice").innerText = `Price: ${productDetails.price}`;
+
+        // Open the modal
+        document.getElementById("productModal").style.display = "block";
+    }
+</script>
+
+@* this will be moved to a css file *@
+<style>
+    /* Add some basic modal styles */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .close {
+        cursor: pointer;
+    }
+</style>
