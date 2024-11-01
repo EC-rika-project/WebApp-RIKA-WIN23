@@ -1,0 +1,54 @@
+﻿@using WebApp.ViewModels
+@model CartViewModel
+
+@{
+
+}
+
+
+<div>
+
+    @foreach (var item in Model.cartList)
+    {
+
+
+    <article class="cart-item">
+        <div class="image-wrapper">
+            <img src="https://picsum.photos/200" alt="" class="image" />
+        </div>
+        <div class="text-grid">
+            <h5 class="h5 title">@item.Name</h5>
+            <div class="delete">
+                <i class="fa-solid fa-trash"></i>
+            </div>
+            <p class="body text">text</p>
+            <p class="h6 price">$Price</p>
+            <div class="quantity bg-gray">
+                <button class="qty-btn">-</button>
+                <div class="qty-number">
+                    <p class="body">1</p>
+                </div>
+                <button class="qty-btn">+</button>
+            </div>
+        </div>
+    </article>
+
+    }
+
+
+
+    <div class="total-price-wrapper">
+        <div class="row">
+            <h3 class="h6">Text</h3>
+            <h3 class="h6">$price</h3>
+        </div>
+        <div class="row">
+            <h3 class="h6">Text</h3>
+            <h3 class="h6">$price</h3>
+        </div>
+        <div class="row">
+            <h3 class="h6">Text</h3>
+            <h3 class="h6">$price</h3>
+        </div>
+    </div>
+</div>

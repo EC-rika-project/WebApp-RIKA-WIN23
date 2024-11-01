@@ -11,6 +11,7 @@
 <body class="page-wrapper">
 
     @await Html.PartialAsync("Partials/Header")
+    @await Component.InvokeAsync("Cart")
 
     <main role="main">
         @RenderBody()
