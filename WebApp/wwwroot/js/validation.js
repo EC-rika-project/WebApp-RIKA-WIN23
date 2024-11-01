@@ -69,7 +69,7 @@
     };
 
     const phonenumberValidator = (element) => {
-        const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        const regex = /^[0-9]{10}$/;
         const value = element.value.trim();
         let errorMessage = '';
         let valid = true;
@@ -78,7 +78,7 @@
             errorMessage = element.dataset.valRequired;
             valid = false;
         } else if (!regex.test(value)) {
-            errorMessage = 'Your phonenumber is invalid';
+            errorMessage = 'Please enter a valid phone number (10 digits)';
             valid = false;
         }
 
@@ -86,7 +86,7 @@
     };
 
     const postalcodeValidator = (element) => {
-        const regex = /^[0-9a-zA-Z\s]{3,10}$/;
+        const regex = /^[0-9]{5}$/;
         const value = element.value.trim();
         let errorMessage = '';
         let valid = true;
@@ -95,7 +95,7 @@
             errorMessage = element.dataset.valRequired;
             valid = false;
         } else if (!regex.test(value)) {
-            errorMessage = 'Enter a valid postal code';
+            errorMessage = 'Postal code must be exactly 5 digits';
             valid = false;
         }
 
@@ -107,6 +107,9 @@
         const value = element.value.trim().replace(/\s/g, '');
         let errorMessage = '';
         let valid = true;
+
+        const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        element.value = formattedValue;
 
         if (value.length === 0) {
             errorMessage = element.dataset.valRequired;
@@ -121,15 +124,39 @@
 
     const expDateValidator = (element) => {
         const regex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
-        const value = element.value.trim();
+        let value = element.value;
+        let cursorPosition = element.selectionStart;
+
+        if (cursorPosition === 3 && value.includes('/') && value.length === 3) {
+            value = value.substring(0, 2);
+            cursorPosition = 2;
+        }
+
+        value = value.replace(/\D/g, '').slice(0, 4);
+
         let errorMessage = '';
         let valid = true;
+
+        if (value.length > 0) {
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+                if (cursorPosition === 2 && value.length > element.value.length) {
+                    cursorPosition = 3;
+                }
+            }
+        }
+
+        element.value = value;
+        element.setSelectionRange(cursorPosition, cursorPosition);
 
         if (value.length === 0) {
             errorMessage = element.dataset.valRequired;
             valid = false;
-        } else if (!regex.test(value)) {
+        } else if (value.length < 5) {
             errorMessage = 'Enter date as MM/YY';
+            valid = false;
+        } else if (!regex.test(value)) {
+            errorMessage = 'Enter a valid date MM/YY';
             valid = false;
         }
 
@@ -138,7 +165,9 @@
 
     const cvvValidator = (element) => {
         const regex = /^[0-9]{3}$/;
-        const value = element.value.trim();
+        let value = element.value.replace(/\D/g, '').slice(0, 3);
+        element.value = value;
+
         let errorMessage = '';
         let valid = true;
 
@@ -154,17 +183,63 @@
     };
 
     const checkboxValidator = (element) => {
+        let errorMessage = '';
+
         if (element.checked) {
-            formErrorHandler(element, true);
+            formErrorHandler(element, true, '');
         }
         else {
-            formErrorHandler(element, false);
+            errorMessage = element.dataset.valRequired;
+            formErrorHandler(element, false, errorMessage);
         }
     };
 
     let forms = document.querySelectorAll('form');
 
     forms.forEach(form => {
+
+        form.addEventListener('submit', function (event) {
+            let inputs = form.querySelectorAll('input, textarea, select');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (input.dataset.val === 'true') {
+                    if (input.type === 'checkbox') {
+                        checkboxValidator(input);
+                        if (!input.checked) {
+                            isValid = false;
+                        }
+                    }
+                    else {
+                        if (input.name.includes("PostalCode")) {
+                            postalcodeValidator(input);
+                        } else if (input.name.includes("PhoneNumber")) {
+                            phonenumberValidator(input);
+                        } else if (input.name.includes("Email") || input.type === 'email') {
+                            emailValidator(input);
+                        } else if (input.name.includes("Password") || input.type === 'password') {
+                            passwordValidator(input);
+                        } else if (input.name.includes("CardNumber")) {
+                            cardNumberValidator(input);
+                        } else if (input.name.includes("ExpiryDate")) {
+                            expDateValidator(input);
+                        } else if (input.name.includes("CVV")) {
+                            cvvValidator(input);
+                        } else {
+                            textValidator(input);
+                        }
+
+                        if (input.classList.contains('input-validation-error')) {
+                            isValid = false;
+                        }
+                    }
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
         let inputs = form.querySelectorAll('input, textarea, select');
 
         inputs.forEach(input => {
