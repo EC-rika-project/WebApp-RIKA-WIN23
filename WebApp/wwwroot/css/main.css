@@ -803,8 +803,11 @@ svg {
   display: flex;
   padding: 5px;
 }
-
-.profile-info-text {
+.profile-info img {
+  width: 50%;
+  border-radius: 10%;
+}
+.profile-info .profile-info-text {
   margin-top: 15px;
   margin-left: 10px;
 }
@@ -846,6 +849,27 @@ a i.left-icon {
   background-color: rgba(181, 175, 175, 0.831372549);
 }
 
+a:hover {
+  font-weight: 700;
+}
+
 .btn-signout {
   width: 275px;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.faq-item {
+  margin-bottom: 20px;
+}
+
+.faq-item p {
+  margin: 5px 0;
 }

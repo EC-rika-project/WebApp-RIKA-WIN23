@@ -5,10 +5,11 @@
 <section>
     <div class="container">
     <div class="profile-info">
-        <img src="~/images/rika-profile-img.svg"/>
+        <img src="@Model.ProfileImage"/>
         <div class="profile-info-text">
-            <p class="bold-text">Firstname LastName</p>
-        <p>example@gmail.com</p>
+            <p class="bold-text">@Model.Name</p>
+
+        <p>@Model.Email</p>
         </div>
     </div>
     <ul>

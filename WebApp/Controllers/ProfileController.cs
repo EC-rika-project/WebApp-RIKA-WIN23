@@ -1,14 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Models;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
 {
     public class ProfileController : Controller
     {
 
+        private readonly UserService _userService;
+
+        public ProfileController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         [Route("/Profile")]
         public IActionResult Index()
         {
-            return View();
+
+            UserModel fakeUser = _userService.GetFakeUser();
+
+            return View(fakeUser);
         }
 
 
