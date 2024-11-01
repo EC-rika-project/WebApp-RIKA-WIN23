@@ -48,11 +48,13 @@ public class SignUpController : Controller
 
         if (!response.IsSuccessStatusCode)
         {
-            TempData["ErrorMessage"] = "Användare med denna e-postadress finns redan.";
+            TempData["Message"] = "User with the same Email address already exists. ";
+            TempData["MessageType"] = "error";
             return View(viewModel);
         }
 
-        TempData["SuccessMessage"] = "Registreringen lyckades! Vänligen logga in.";
+        TempData["Message"] = "Account created successfully. Please sign in.";
+        TempData["MessageType"] = "success";
         return View(viewModel);
         //RedirectToAction("SignIn", "SignIn");
     }
