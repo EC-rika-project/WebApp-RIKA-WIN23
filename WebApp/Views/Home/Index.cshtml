@@ -33,24 +33,6 @@
             outline: none;
         }
 
-    .input-validation-error {
-        border-bottom-color: #dc3545 !important;
-    }
-
-    .input-validation-success {
-        border-bottom-color: #28a745 !important;
-    }
-
-    .field-validation-error {
-        color: #dc3545;
-        font-size: 12px;
-        display: block;
-        position: absolute;
-        bottom: -18px;
-        left: 0;
-        width: 100%;
-    }
-
     .checkbox-group {
         display: flex;
         align-items: center;
@@ -67,14 +49,6 @@
 
         .checkbox-group input[type="checkbox"] {
             margin: 0;
-        }
-
-        .checkbox-group .field-validation-error {
-            position: static;
-            margin: 0;
-            font-size: 12px;
-            color: #dc3545;
-            display: block;
         }
 
     button {
@@ -221,16 +195,14 @@
                 </div>
             </div>
 
-            <div id="form-terms" class="checkbox">
-                <div class="checkbox-group">
-                    <div class="input-group">
-                        <input asp-for="Form.AcceptTerms" />
-                        <label asp-for="Form.AcceptTerms">
-                            By creating an account you accept our terms and conditions
-                        </label>
-                    </div>
-                    <span asp-validation-for="Form.AcceptTerms"></span>
+            <div class="checkbox-group">
+                <div class="input-group">
+                    <input asp-for="Form.AcceptTerms" />
+                    <label asp-for="Form.AcceptTerms">
+                        By creating an account you accept our terms and conditions
+                    </label>
                 </div>
+                <span asp-validation-for="Form.AcceptTerms"></span>
             </div>
 
             <button type="submit">Submit</button>

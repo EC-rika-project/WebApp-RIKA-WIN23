@@ -104,15 +104,17 @@
 
     const cardNumberValidator = (element) => {
         const regex = /^[0-9]{16}$/;
-        const value = element.value.trim().replace(/\s/g, '');
+        let value = element.value.replace(/\D/g, '').slice(0, 16);
+        element.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
         let errorMessage = '';
         let valid = true;
 
-        const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-        element.value = formattedValue;
-
         if (value.length === 0) {
-            errorMessage = element.dataset.valRequired;
+            errorMessage = element.dataset.valRequired || 'Card number is required';
+            valid = false;
+        } else if (value.length < 16) {
+            errorMessage = 'Card number must be exactly 16 digits';
             valid = false;
         } else if (!regex.test(value)) {
             errorMessage = 'Enter a valid 16-digit card number';
