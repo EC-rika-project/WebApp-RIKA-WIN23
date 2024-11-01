@@ -50,13 +50,15 @@ public class SignUpController : Controller
         {
             TempData["Message"] = "User with the same Email address already exists. ";
             TempData["MessageType"] = "error";
+
             return View(viewModel);
         }
 
         TempData["Message"] = "Account created successfully. Please sign in.";
         TempData["MessageType"] = "success";
-        return View(viewModel);
-        //RedirectToAction("SignIn", "SignIn");
+
+        return RedirectToAction("SignIn", "SignIn");
+        //return View(viewModel);
     }
 }
 
