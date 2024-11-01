@@ -6,9 +6,14 @@
         <form method="post" asp-controller="SignUp" asp-action="SignUp" novalidate>
             <div class="signup-form">
                 <div class="form-content">
-                    <label asp-for="UserName"></label>
-                    <input asp-for="UserName"/>
-                    <span asp-validation-for="UserName"></span>
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" />
+                    <span asp-validation-for="FirstName"></span>
+                </div>
+                <div class="form-content">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" />
+                    <span asp-validation-for="LastName"></span>
                 </div>
                 <div class="form-content">
                     <label asp-for="Email"></label>
