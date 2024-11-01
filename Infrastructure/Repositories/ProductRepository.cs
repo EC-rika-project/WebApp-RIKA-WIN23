@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                string request = $"api/categories";
+                string request = $"/categories";
                 var result = await _httpClient.GetFromJsonAsync<IEnumerable<CategoryDto>>(request);
                 return result!;
             }
@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                string request = $"api/products?categoryId={categoryId}";
+                string request = $"/products?categoryId={categoryId}";
                 var result = await _httpClient.GetFromJsonAsync<CategoryDto>(request);
                 return result!;
             }
@@ -39,24 +39,24 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
-        public async Task<IEnumerable<ProductsDto>> GetProductsAsync(string categoryId)
+        public async Task<PaginationResult<ProductsDto>> GetProductsAsync(string categoryId)
         {
             try
             {
-                string request = $"api/products?categoryId={categoryId}";
-                var result = await _httpClient.GetFromJsonAsync<IEnumerable<ProductsDto>>(request);
+                string request = $"/products?category={categoryId}";
+                var result = await _httpClient.GetFromJsonAsync<PaginationResult<ProductsDto>>(request);
                 return result!;
             }
             catch (Exception ex) { Debug.WriteLine(ex); }
             return null!;
         }
 
-        public async Task<ProductDetailsDto> GetProductAsync(string productId)
+        public async Task<ProductResponseDto> GetProductAsync(string productId)
         {
             try
             {
-                string requestUri = $"api/products/{productId}"; // how to fetch the productdetails?
-                var result = await _httpClient.GetFromJsonAsync<ProductDetailsDto>(requestUri);
+                string requestUri = $"/products/{productId}"; 
+                var result = await _httpClient.GetFromJsonAsync<ProductResponseDto>(requestUri);
                 return result!;
             }
             catch (Exception ex) { Debug.WriteLine(ex); }

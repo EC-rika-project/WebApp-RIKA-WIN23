@@ -2,14 +2,14 @@
 
 <h1>@Model.CategoryName</h1>
 
-@if (Model.Products != null)
+@if (Model?.Result?.Data != null)
 {
     <section class="products">
         <div class="container">
-            @foreach (var product in Model.Products)
+            @foreach (var product in Model.Result.Data)
             {
                 <div class="product-item" onclick="openModal(@product.ArticleNumber)">
-                    <img src="@product.ImageUrl" alt="@product.Name" />
+                    <img src="@product.CoverImageUrl" alt="@product.Name" />
                     <h2>@product.Name</h2>
                     <p>@product.Ingress</p>
                     <p>Price: @product.Price</p>

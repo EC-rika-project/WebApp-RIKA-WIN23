@@ -20,13 +20,13 @@ namespace Infrastructure.Services
         }
 
         // gets all products from a specific category by Id
-        public async Task<IEnumerable<ProductsDto>> GetAllProductsAsync(string categoryName)
+        public async Task<PaginationResult<ProductsDto>> GetAllProductsAsync(string categoryName)
         {
             return await _productRepository.GetProductsAsync(categoryName);
         }
 
         // gets one product
-        public async Task<ProductDetailsDto> GetOneProductAsync(string articleNumber)
+        public async Task<ProductResponseDto> GetOneProductAsync(string articleNumber)
         {
             return await _productRepository.GetProductAsync(articleNumber);
         }

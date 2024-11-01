@@ -17,7 +17,7 @@ namespace WebApp.Controllers
             var viewModel = new ProductsViewModel
             {
                 CategoryName = category.Name,
-                Products = products
+                Result = products
             };
 
             return View(viewModel);
