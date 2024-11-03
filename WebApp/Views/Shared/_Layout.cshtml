@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model WebApp.ViewModels.HomeIndexViewModel
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,7 +11,7 @@
 </head>
 <body class="page-wrapper">
 
-    @await Html.PartialAsync("Partials/Header")
+    @await Html.PartialAsync("Partials/Header, Model")
 
     <main role="main">
         @RenderBody()

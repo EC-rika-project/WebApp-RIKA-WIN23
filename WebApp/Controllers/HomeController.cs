@@ -1,3 +1,4 @@
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.ViewModels;
@@ -5,21 +6,29 @@ using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(ProductService productService) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        private readonly ProductService _productService = productService;
 
         [Route("/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            HomeIndexViewModel viewModel = new();
-            return View(viewModel);            
-                
-        }
+            var categories = await _productService.GetAllCategoriesAsync();
+
+            var headerCategoriesViewModel = new HeaderCatgeoriesViewModel
+            {
+                Categories = categories
+            };
+
+            // Fetch products under the "New Arrivals" category
+            var newArrivalsCategoryName = "New Arrivals"; 
+            var newArrivals = await _productService.GetAllProductsAsync(newArrivalsCategoryName);
+            var viewModel = new HomeIndexViewModel
+            {
+                Categories = categories,
+                NewArrivals = newArrivals
+            };
+            return View(viewModel);
+        }        
     }
 }

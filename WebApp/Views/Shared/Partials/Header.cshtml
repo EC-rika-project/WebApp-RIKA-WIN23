@@ -1,4 +1,5 @@
-﻿@* @inject SignInManager<UserEntity> _signInManager; *@
+﻿@model WebApp.ViewModels.HeaderCatgeoriesViewModel
+@* @inject SignInManager<UserEntity> _signInManager; *@
 
 <header class="header container">
     <div class="left-wrapper">
@@ -18,7 +19,7 @@
         <a asp-controller="Home" asp-action="Cart" class="link"><i class="fa-solid fa-cart-shopping icon"></i></a>
     </div>
 
-    @await Html.PartialAsync("Partials/MobileMenu")
+    @await Html.PartialAsync("Partials/MobileMenu", Model.Categories) <!-- Pass categories to MobileMenu -->
 
 
 </header>

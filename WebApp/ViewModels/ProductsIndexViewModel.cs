@@ -1,11 +1,12 @@
 ﻿using Infrastructure.Dtos;
 
-namespace Rika.WebApp.ViewModels
+namespace WebApp.ViewModels
 {
-    public class ProductsViewModel
+    public class ProductsIndexViewModel
     {
         public string CategoryName { get; set; } = null!;
         public PaginationResult<ProductsDto>? Result { get; set; }
+        public IEnumerable<CategoryDto>? Categories { get; set; }
     }
 }
 

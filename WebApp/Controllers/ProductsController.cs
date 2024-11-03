@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Rika.WebApp.ViewModels;
+using WebApp.ViewModels;
 using Infrastructure.Dtos;
 
 namespace WebApp.Controllers
@@ -12,12 +12,19 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Index(string categoryName)
         {
             var products = await _productService.GetAllProductsAsync(categoryName);
-            var category = await _productService.GetOneCategoryAsync(categoryName); 
+            var category = await _productService.GetOneCategoryAsync(categoryName);
+            var categories = await _productService.GetAllCategoriesAsync();
 
-            var viewModel = new ProductsViewModel
+            var headerCategoriesViewModel = new HeaderCatgeoriesViewModel
+            {
+                Categories = categories
+            };
+
+            var viewModel = new ProductsIndexViewModel
             {
                 CategoryName = category.Name,
-                Result = products
+                Result = products,
+                Categories = categories
             };
 
             return View(viewModel);

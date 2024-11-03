@@ -1,22 +1,14 @@
-﻿@{
-    var temporaryCategoryList = new[]
-    {
-        new { Id = 1, Name = "Category 1" },
-        new { Id = 2, Name = "Category 2" },
-        new { Id = 3, Name = "Category 3" }
-    };
-}
+﻿@model WebApp.ViewModels.HeaderCatgeoriesViewModel
 
 <div class="mobile-menu hide" id="mobile-menu">
     <div class="category-menu">
         <button class="btn-dark btn-circle close-btn" id="mobile-menu-btn-close"><i class="fa-solid fa-xmark"></i></button>
         <h1 class="h4 heading">Categories</h1>
         <div class="link-wrapper">
-            @foreach (var category in temporaryCategoryList)
+            @foreach (var category in Model.Categories!)
             {
-                <a asp-controller="Product" asp-action="" class="category-link">
-                    <i class="fa-solid fa-xmark"></i>
-                    <h2 class="h5">Category Name</h2>
+                <a asp-controller="Products" asp-action="Index" asp-route-categoryName="@category.Name" class="category-link">
+                    <h2>@category.Name</h2>
                 </a>
             }
         </div>

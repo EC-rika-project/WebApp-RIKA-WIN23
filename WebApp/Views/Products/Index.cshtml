@@ -1,11 +1,23 @@
-﻿@model Rika.WebApp.ViewModels.ProductsViewModel
-
-<h1>@Model.CategoryName</h1>
+﻿@model WebApp.ViewModels.ProductsIndexViewModel
 
 @if (Model?.Result?.Data != null)
 {
     <section class="products">
         <div class="container">
+            <div class="category-menu">
+                <h1 class="h4 heading">Categories</h1>
+                <div class="link-wrapper">
+                    <div class="category-list">
+                        @foreach (var category in Model.Categories!)
+                        {
+                            <a asp-controller="Products" asp-action="Index" asp-route-categoryName="@category.Name" class="category-link">
+                                <h2>@category.Name</h2>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <h1>@Model.CategoryName</h1>
             @foreach (var product in Model.Result.Data)
             {
                 <div class="product-item" onclick="openModal(@product.ArticleNumber)">
@@ -17,6 +29,16 @@
             }
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
 
     <!-- Modal from chatgpt-->
     <div id="productModal" class="modal" tabindex="-1" role="dialog">
