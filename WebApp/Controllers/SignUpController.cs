@@ -6,14 +6,10 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
 
-public class SignUpController : Controller
+public class SignUpController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : Controller
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    public SignUpController(IHttpClientFactory httpClientFactory)
-    {
-        _httpClientFactory = httpClientFactory;
-    }
+    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+    private readonly IConfiguration _configuration = configuration;
 
     [HttpGet]
     [Route("/signup")]
@@ -32,18 +28,22 @@ public class SignUpController : Controller
             return View(viewModel);
         }
 
+        var securityKey = _configuration["SecurityKeys:WebAppKey"];
+
         var dto = new SignUpDto
         {
             FirstName = viewModel.FirstName,
             LastName = viewModel.LastName,
             Email = viewModel.Email,
-            Password = viewModel.Password
+            Password = viewModel.Password,
+            SecurityKey = securityKey
+
         };
 
         var jsonContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
         var client = _httpClientFactory.CreateClient();
 
-        var response = await client.PostAsync("https://localhost:7163/api/signup", jsonContent);
+        var response = await client.PostAsync("https://localhost:7163/api/SignUp", jsonContent);
 
 
         if (!response.IsSuccessStatusCode)
@@ -57,8 +57,8 @@ public class SignUpController : Controller
         TempData["Message"] = "Account created successfully. Please sign in.";
         TempData["MessageType"] = "success";
 
-        return RedirectToAction("SignIn", "SignIn");
-        //return View(viewModel);
+        //return RedirectToAction("SignIn", "SignIn");
+        return View(viewModel);
     }
 }
 

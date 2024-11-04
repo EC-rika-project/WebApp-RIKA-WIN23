@@ -26,8 +26,8 @@ public class SignUpViewModel
 	[Display(Name = "Password", Prompt = "Enter your password", Order = 2)]
 	[DataType(DataType.Password)]
 	[Required(ErrorMessage = "A valid Password is required")]
-	[RegularExpression(@"^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[^a-zA-Z0-9])(?!.*\s).{8,}$", ErrorMessage = "Please enter a valid password.")]
-	public string Password { get; set; } = null!;
+	[RegularExpression(@"^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$", ErrorMessage = "Password invalid.")]
+    public string Password { get; set; } = null!;
 
 	[Display(Name = "Confirm password", Prompt = "Confirm your password", Order = 3)]
 	[DataType(DataType.Password)]
