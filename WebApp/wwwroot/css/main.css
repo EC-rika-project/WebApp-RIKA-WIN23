@@ -845,8 +845,6 @@ svg {
   border-bottom: 1px solid #808080;
   padding: 8px 0;
   width: 100%;
-}
-.signUp .container .signup-form .form-content input::placeholder {
   text-indent: 0.3rem !important;
 }
 .signUp .container .signup-form .form-content label {
