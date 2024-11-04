@@ -1,21 +1,22 @@
-﻿@{
+﻿@* @using Infrastructure.Dtos
+@{
     var cartItems = new List<CartItemDto>
     {
         new CartItemDto { ArticleNumber = "1", Name = "Produkt 1", Price = 100, Ingress = "ingress", Quantity = 2 },
         new CartItemDto { ArticleNumber = "2", Name = "Produkt 2", Price = 200, Ingress = "ingress", Quantity = 1 },
     };
-}
+} *@
 
 <div class="cart hide">
     <button class="btn-dark btn-circle close-btn cart-btn-close"><i class="fa-solid fa-xmark"></i></button>
     <div class="cart-heading-wrapper">
         <h1 class="h4 heading">My Cart</h1>
-        <p class="body">(xx items)</p>
+        <p class="body total-items">(xx items)</p>
     </div>
     <div class="cart-item-wrapper">
-        @foreach (var item in cartItems)
+@*         @foreach (var item in cartItems)
         {
-            <article class="cart-item">
+            <article class="cart-item" data-price="@item.Price">
                 <div class="image-wrapper">
                     <img src="https://picsum.photos/200" alt="" class="image" />
                 </div>
@@ -25,7 +26,7 @@
                         <i class="fa-regular fa-trash"></i>
                     </div>
                     <p class="body text">@item.Ingress</p>
-                    <p class="h6 price">@item.GetTotalPrice()</p> 
+                    <p class="h6 price"></p> 
                     <div class="quantity bg-gray">
                         <button class="qty-btn decrease">-</button>
                         <div class="qty-number">
@@ -35,21 +36,21 @@
                     </div>
                 </div>
             </article>
-        }
+        } *@
     </div>
 
     <div class="total-price-wrapper">
         <div class="row">
             <h3 class="h6">Subtotal</h3>
-             <h3 class="h6">@ViewBag.TotalAmount</h3>
+             <h3 class="h6 sub-total"></h3>
         </div>
         <div class="row">
             <h3 class="h6">Shipping</h3>
-            <h3 class="h6">$price</h3>
+            <h3 class="h6 shipping"></h3>
         </div>
         <div class="row">
             <h3 class="h6">Bagtotal</h3>
-            <h3 id="cart-total" class="h6">$price</h3>
+            <h3 id="cart-total" class="h6 cart-total"></h3>
         </div>
     </div>
 
