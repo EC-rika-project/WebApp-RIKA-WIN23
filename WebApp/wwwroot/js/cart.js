@@ -2,12 +2,11 @@
 const closeCartBtns = document.querySelectorAll(".cart-btn-close");
 const cart = document.querySelector(".cart");
 
-
+// Function to toggle the cart on the site
 function cartToggle() {
     if (cart.classList.contains("hide")) {
         cart.classList.remove("hide");
         cart.classList.add("show");
-        //fetchCart();
     } else {
         cart.classList.remove("show");
         cart.classList.add("hide");
@@ -20,15 +19,7 @@ window.addEventListener("load", function () {
 });
 
 function fetchCart() {
-    console.log("fetchCart")
-    //fetch("/Cart/Index")
-    //    .then(response => response.text())
-    //    .then(html => {
-    //        const overlayContainer = document.getElementById("cartOverlayContainer");
-    //        overlayContainer.innerHTML = html;
-    //        overlayContainer.style.display = "block";
-    //    })
-    //    .catch(error => console.error("Error loading cart items:", error));
+    //add fetch functionality
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -42,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${value.toFixed(2)} Sek`;
     }
 
+    // Function to save cart to local storage
     function saveCartToLocalStorage() {
         const cartData = [];
         document.querySelectorAll(".cart-item").forEach(item => {
@@ -53,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("cart", JSON.stringify(cartData));
     }
 
+    // Function to load the cart from local storage
     function loadCartFromLocalStorage() {
         let cartData = JSON.parse(localStorage.getItem("cart"));
         const cartContainer = document.querySelector(".cart-item-wrapper");
@@ -97,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addEventListenersToCartItems();
     }
 
-
+    // Function for calculate the total price in the cart
     function calculateTotal() {
         let subtotal = 0;
         let totalItems = 0;
@@ -112,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             totalPriceElement.textContent = formatPrice(price * quantity);
         });
 
-        let shippingCost = subtotal > 1000 ? 0 : 50;
+        let shippingCost = subtotal > 1000 || subtotal == 0 ? 0 : 50;
         shippingElement.textContent = formatPrice(shippingCost);
 
         const totalWithShipping = subtotal + shippingCost;
@@ -123,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         saveCartToLocalStorage();
     }
 
+    // Function for buttons in cart
     function addEventListenersToCartItems() {
         const cartItems = document.querySelectorAll(".cart-item");
 
@@ -167,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-
     loadCartFromLocalStorage();
     calculateTotal();
 });
