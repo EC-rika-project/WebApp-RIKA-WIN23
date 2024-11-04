@@ -35,7 +35,7 @@
     };
 
     const emailValidator = (element) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
         const value = element.value.trim();
         let errorMessage = '';
         let valid = true;
@@ -52,7 +52,7 @@
     };
 
     const passwordValidator = (element) => {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
         const value = element.value.trim();
         let errorMessage = '';
         let valid = true;
@@ -87,15 +87,19 @@
 
     const postalcodeValidator = (element) => {
         const regex = /^[0-9]{5}$/;
-        const value = element.value.trim();
+        let value = element.value.replace(/\D/g, '').slice(0, 5);
+        element.value = value.replace(/(\d{3})(?=\d)/, '$1 ');
         let errorMessage = '';
         let valid = true;
 
         if (value.length === 0) {
             errorMessage = element.dataset.valRequired;
             valid = false;
-        } else if (!regex.test(value)) {
+        } else if (value.length < 5) {
             errorMessage = 'Postal code must be exactly 5 digits';
+            valid = false;
+        } else if (!regex.test(value)) {
+            errorMessage = 'Enter a valid 5-digit postal code';
             valid = false;
         }
 
@@ -242,6 +246,7 @@
                 event.preventDefault();
             }
         });
+
         let inputs = form.querySelectorAll('input, textarea, select');
 
         inputs.forEach(input => {
