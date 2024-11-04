@@ -1,5 +1,5 @@
 ﻿@* @inject SignInManager<UserEntity> _signInManager; *@
-
+ 
 <header class="header container">
     <div class="left-wrapper">
         <button class="btn-circle mobile-btn" id="mobile-menu-btn-open"><i class="fa-solid fa-bars"></i></button>
@@ -14,13 +14,14 @@
 		else
 		{
 			<a asp-controller="Signin" asp-action="" class="link"><i class="fa-solid fa-user icon"></i></a>
-		} *@
-        <a asp-controller="Home" asp-action="Cart" class="link"><i class="fa-solid fa-cart-shopping icon"></i></a>
+		} *@       
+        <button class="link cart-btn-open"><i class="fa-solid fa-cart-shopping icon"></i></button>
     </div>
 
     @await Html.PartialAsync("Partials/MobileMenu")
-
+    @await Html.PartialAsync("Partials/Cart")
 
 </header>
 
 <script src="~/js/toggleMobileMenu.js"></script>
+<script src="~/js/cart.js" asp-append-version="true"></script>

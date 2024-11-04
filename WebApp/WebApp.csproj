@@ -17,6 +17,7 @@
   <ItemGroup>
     <Folder Include="Configurations\" />
     <Folder Include="Views\Home\Partials\" />
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
   <ItemGroup>
