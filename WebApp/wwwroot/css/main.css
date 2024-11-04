@@ -821,6 +821,9 @@ svg {
   padding: 8px 0;
   width: 100%;
 }
+.signUp .container .signup-form .form-content input::placeholder {
+  text-indent: 0.3rem !important;
+}
 .signUp .container .signup-form .form-content label {
   font-weight: 600;
 }
@@ -870,19 +873,16 @@ svg {
 .signUp .password-toggle {
   position: absolute;
   right: 10px;
-  top: 50%;
+  top: 63%;
   transform: translateY(-50%);
   background-color: transparent;
   border: none;
   cursor: pointer;
   font-size: 14px;
-  color: #007bff;
+  color: black;
 }
 .signUp .password-toggle:focus {
   outline: none;
-}
-.signUp i {
-  color: black;
 }
 
 .overlay {

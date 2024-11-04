@@ -22,7 +22,12 @@
                     border-bottom: 1px solid #808080;
                     padding: 8px 0;
                     width: 100%;
+
+                    &::placeholder {
+                        text-indent: 0.3rem !important;
+                    }
                 }
+
 
                 label {
                     font-weight: 600;
@@ -87,21 +92,17 @@
     .password-toggle {
         position: absolute;
         right: 10px;
-        top: 50%;
+        top: 63%;
         transform: translateY(-50%);
         background-color: transparent;
         border: none;
         cursor: pointer;
         font-size: 14px;
-        color: #007bff;
+        color: black;
     }
 
     .password-toggle:focus {
         outline: none;
-    }
-
-    i {
-        color: black;
     }
 }
 

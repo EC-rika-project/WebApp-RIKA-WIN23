@@ -57,8 +57,8 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
         TempData["Message"] = "Account created successfully. Please sign in.";
         TempData["MessageType"] = "success";
 
-        //return RedirectToAction("SignIn", "SignIn");
-        return View(viewModel);
+        return RedirectToAction("SignIn", "SignIn");
+        //return View(viewModel);
     }
 }
 
