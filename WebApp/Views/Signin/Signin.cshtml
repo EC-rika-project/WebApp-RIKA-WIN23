@@ -14,7 +14,7 @@
 <section class="form-section">
     <div class="container">
         <div class="signin-form">
-            <form asp-action="SignIn" method="post">
+            <form asp-controller="SignIn" asp-action="SignIn" method="post">
                 <div class="form-group">
                     <label asp-for="Email"></label>
                     <input asp-for="Email" class="input-form" />
