@@ -168,11 +168,17 @@
     border-bottom-color: #28a745 !important;
 }
 
+.form-group {
+    position: relative;
+    padding-bottom: 16px;
+    
+}
+
 .field-validation-error {
+    position: absolute;
     color: #dc3545;
     font-size: 12px;
     bottom: -18px;
-    position: absolute;
     left: 0;
     width: 100%;
 }
@@ -181,9 +187,9 @@
     position: relative;
 
     .field-validation-error {
-        position: absolute;
+        
         left: 0;
-        top: 3.5em;
+        top: 4em;
         margin: 0;
         font-size: 12px;
         color: #dc3545;
@@ -191,7 +197,7 @@
 
 
         @include tablet {
-            top: 2em;
+            top: 3.2em;
         }
     }
 } 
