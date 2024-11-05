@@ -43,8 +43,8 @@
                             <a href="javascript:void(0);" onclick="showOverlay('terms')">Terms & Conditions</a>
                               
                         </label>
-                    </div>
                     <span asp-validation-for="TermsAndConditions"></span>
+                    </div>
                 </div>
                 <button class="btn-dark" type="submit">Sign up</button>
             </div>
@@ -53,7 +53,7 @@
     </div>
     @await Html.PartialAsync("~/Views/SignUp/PartialViews/overlay.cshtml")
 
-     @await Html.PartialAsync("_ValidationScriptPartial") 
+     @await Html.PartialAsync("_ValidationScriptsPartial")
 </section>
 
 

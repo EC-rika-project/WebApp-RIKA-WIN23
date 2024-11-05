@@ -410,18 +410,28 @@ svg {
 .field-validation-error {
   color: #dc3545;
   font-size: 12px;
-  position: absolute;
   bottom: -18px;
+  position: absolute;
   left: 0;
   width: 100%;
 }
 
+.checkbox-group {
+  position: relative;
+}
 .checkbox-group .field-validation-error {
-  position: static;
+  position: absolute;
+  left: 0;
+  top: 3.5em;
   margin: 0;
   font-size: 12px;
   color: #dc3545;
   display: block;
+}
+@media (min-width: 768px) {
+  .checkbox-group .field-validation-error {
+    top: 2em;
+  }
 }
 
 .link {
@@ -838,7 +848,8 @@ svg {
 .signUp .container .signup-form .form-content {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  position: relative;
+  margin: 1em 0;
 }
 .signUp .container .signup-form .form-content input {
   border: none;

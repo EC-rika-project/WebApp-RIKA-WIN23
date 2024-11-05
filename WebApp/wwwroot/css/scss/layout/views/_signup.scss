@@ -4,7 +4,7 @@
     .container {
         width: 85%;
 
-       
+
         @include tablet {
             width: 40%;
         }
@@ -15,7 +15,8 @@
             .form-content {
                 display: flex;
                 flex-direction: column;
-                gap: 1em;
+                position: relative;
+                margin: 1em 0;
 
                 input {
                     border: none;
@@ -52,7 +53,7 @@
             span {
                 font-style: italic;
                 font-weight: 300;
-                color: #F42D2D
+                color: #F42D2D;
             }
         }
 
