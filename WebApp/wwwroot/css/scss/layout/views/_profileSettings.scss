@@ -6,7 +6,22 @@
     background-color: #b5afafd4;
 }
 
+.profile-info {
+    border-radius: 8px;
+    max-width: 275px;
+    display: flex;
+    padding: 5px;
 
+    img {
+        width: 50%;
+        border-radius: 10%;
+    }
+
+    .profile-info-text {
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+}
 
 .profile-pic {
     border-radius: 8px;
