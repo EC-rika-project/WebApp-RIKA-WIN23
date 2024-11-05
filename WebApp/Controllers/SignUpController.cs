@@ -58,7 +58,7 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
         TempData["MessageType"] = "success";
 
         return RedirectToAction("SignIn", "SignIn");
-        //return View(viewModel);
+     
     }
 }
 
