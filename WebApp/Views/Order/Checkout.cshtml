@@ -5,50 +5,36 @@
 <section class="section checkout-productlist-section">
     <div class="container">
         <h2 class="h5">Products</h2>
-@*         <article class="cart-item">
-            <div class="image-wrapper">
-                <img src="https://picsum.photos/200" alt="" class="image" />
-            </div>
-            <div class="text-grid">
-                <h5 class="h5 title">Title</h5>
-                <div class="delete">
-                    <i class="fa-solid fa-trash"></i>
-                </div>
-                <p class="body text">Text</p>
-                <p class="h6 price">$Price</p>
-                <div class="quantity bg-gray">
-                    <button class="qty-btn">-</button>
-                    <div class="qty-number">
-                        <p class="body">1</p>
+        <div class="checkout-productlist-wrapper">
+  @*           @foreach (var product in Model.ProductList){
+                <article class="co-cart-item">
+                    <div class="co-image-wrapper">
+                        <img src="https://picsum.photos/200" alt="" class="co-image" />
                     </div>
-                    <button class="qty-btn">+</button>
-                </div>
-            </div>
-        </article>
-        <article class="cart-item">
-            <div class="image-wrapper">
-                <img src="https://picsum.photos/200" alt="" class="image" />
-            </div>
-            <div class="text-grid">
-                <h5 class="h5 title">Title</h5>
-                <div class="delete">
-                    <i class="fa-solid fa-trash"></i>
-                </div>
-                <p class="body text">Text</p>
-                <p class="h6 price">$Price</p>
-                <div class="quantity bg-gray">
-                    <button class="qty-btn">-</button>
-                    <div class="qty-number">
-                        <p class="body">1</p>
+                    <div class="co-text-grid">
+                        <h5 class="h5 co-title">Title</h5>
+                        <div class="co-delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <p class="body co-text">Text</p>
+                        <p class="h6 co-price">$Price</p>
+                        <div class="co-quantity bg-gray">
+                            <button class="co-qty-btn">-</button>
+                            <div class="co-qty-number">
+                                <p class="co-body">1</p>
+                            </div>
+                            <button class="co-qty-btn">+</button>
+                        </div>
                     </div>
-                    <button class="qty-btn">+</button>
-                </div>
-            </div>
-        </article>
-        <div class="subtotal-row">
-            <h3 class="h6">Subtotal</h3>
-            <h3 class="h6 sub-total">xxx SEK</h3>
-        </div> *@
+                </article>
+            } *@
+        </div>
+        <div id="test"></div>
+
+
+
+
+
     </div>
 </section>
 <section class="section checkout-login-section">

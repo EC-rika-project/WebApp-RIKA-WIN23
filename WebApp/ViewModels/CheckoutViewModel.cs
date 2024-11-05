@@ -5,6 +5,7 @@ namespace WebApp.ViewModels;
 
 public class CheckoutViewModel
 {
+    public List<CartItemDto> ProductList { get; set; } = [];
     public CheckoutUserDto CheckoutUser { get; set; } = new CheckoutUserDto();
     public RadioOptionsModel SelectedOption { get; set; }
 

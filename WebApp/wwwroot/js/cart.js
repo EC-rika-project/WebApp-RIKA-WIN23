@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function for calculate the total price in the cart
     function calculateTotal() {
-        console.log("calc")
         let subtotal = 0;
         let totalItems = 0;
         const updatedCartItems = document.querySelectorAll(".cart-item");
@@ -165,6 +164,66 @@ document.addEventListener("DOMContentLoaded", () => {
     loadCartFromLocalStorage();
     calculateTotal();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cartData = localStorage.getItem("cart");
+    const coCartContainer = document.getElementById("test");
+    coCartContainer.innerHTML = '';
+
+    cartData.forEach(({ name, price, quantity, ingress }) => {
+        coCartContainer.innerHTML += `
+            <article class="cart-item" data-price="${price}">
+                <div class="image-wrapper">
+                    <img src="https://picsum.photos/200" alt="" class="image" />
+                </div>
+                <div class="text-grid">
+                    <h5 class="h5 title">${name}</h5>
+                    <div class="delete">
+                        <i class="fa-regular fa-trash"></i>
+                    </div>
+                    <p class="body text">${ingress}</p>
+                    <p class="h6 price">${formatPrice(price * quantity)}</p>
+                    <div class="quantity bg-gray">
+                        <button class="qty-btn decrease">-</button>
+                        <div class="qty-number">
+                            <p class="body quantity">${quantity}</p>
+                        </div>
+                        <button class="qty-btn increase">+</button>
+                    </div>
+                </div>
+            </article>
+        `;
+    });
+    
+});
+
+
+
+//function fetchCart() {
+//    const cartData = localStorage.getItem("cart");
+//    if (cartData) {
+//        fetch("/checkout", {
+//            method: "POST",
+//            headers: {
+//                "Content-Type": "application/json"
+//            },
+//            body: JSON.stringify({ cart: JSON.parse(cartData) })
+//        })
+//            .then(response => response.json())
+//            .then(data => {
+//                console.log("Checkout data sent successfully:", data);
+//            })
+//            .catch(error => {
+//                console.error("Error sending checkout data:", error);
+//            });
+//    }
+//}
+
+//document.addEventListener("DOMContentLoaded", fetchCart);
+
+
+
+
 
 
 
