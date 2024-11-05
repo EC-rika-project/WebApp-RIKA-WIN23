@@ -1,0 +1,136 @@
+.left-icon {
+    margin-right: 10px;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #b5afafd4;
+}
+
+
+
+.profile-pic {
+    border-radius: 8px;
+    max-width: 275px;
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+
+    img {
+        width: 50%;
+        border-radius: 10%;
+    }
+
+    
+}
+
+.profile-info {
+    margin-bottom: 15px;
+    border: none;
+    box-shadow: none;
+
+    .personal-form {
+        grid-template-columns: 1fr;
+        padding: 10px 0 10px 0;
+    }
+
+
+    .form-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        label {
+            margin-right: 15px;
+            flex-basis: 20%;
+            flex-shrink: 0;
+            color: #aaaaaa;
+        }
+
+        input {
+            flex-grow: 0.5;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+
+
+        .radio-container {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .radio {
+            display: none;
+        }
+
+        .radio + label {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .radio:checked + label {
+            background: #000000;
+            color: white;
+        }
+    }
+}
+
+.list-item {
+    display:flex;
+}
+
+
+    .toggle-input {
+        display: none;
+    }
+
+    .toggle-label {
+        margin-left:auto;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+        background-color: #ccc;
+        border-radius: 50px;
+        position: relative;
+        cursor: pointer;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .toggle-label::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        transition: transform 0.2s;
+        top: 2px;
+        left: 2px;
+    }
+
+    .toggle-input:checked + .toggle-label {
+        background-color: #000000;
+    }
+
+    .toggle-input:checked + .toggle-label::after {
+        transform: translateX(26px);
+    }
+

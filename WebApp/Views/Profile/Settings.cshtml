@@ -1,0 +1,92 @@
+﻿@using WebApp.ViewModels
+@model ProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<section>
+     <div class="container">
+        <div class="profile-pic">
+            <img src="@Model.ProfileImage" />
+        </div>
+
+        <div class="profile-info">
+        <form asp-action="UpdateProfile" method="post" class="personal-form">
+            <div class="form-item">
+        <label asp-for="Name" class="bold-text"></label>
+        <input class="input-underlined" asp-for="Name" type="text" value="@Model.Name" />
+                </div>
+                <div class="form-item">
+                    <label asp-for="Gender" class="bold-text"></label>
+                    @foreach (var gender in Enum.GetValues(typeof(Infrastructure.Models.Gender)))
+                    {
+                        <div class="radio-container">
+                            <input class="radio" type="radio" id="@gender" name="Gender" value="@gender"
+                            @if (gender.ToString() == Model.Gender.ToString())
+                            {
+                                <text>checked</text>
+                            } />
+                            <label for="@gender">@gender</label>
+                        </div>
+                    }
+                </div>
+                <div class="form-item">
+                    <label asp-for="Age" class="bold-text"></label>
+                    <input class="input-underlined" asp-for="Age" type="number" value="@Model.Age" />
+                </div>
+
+                <div class="form-item">
+
+        <label asp-for="Email" class="bold-text"></label>
+                    <input class="input-underlined" asp-for="Email" type="text" value="@Model.Email" />
+                </div>
+
+        </form>
+        </div>
+
+        <h2>Settings</h2>
+        <ul>
+            <li class="list-item bold-text">
+                <span>
+                    <i class="fa-solid fa-bell left-icon"></i>
+                    <span>Notification</span>
+                </span>
+                    <input type="checkbox" id="notification-toggle" class="toggle-input" />
+                    <label for="notification-toggle" class="toggle-label"></label>
+
+                
+            </li>
+            <li class="list-item bold-text">
+                <span>
+                    <i class="fa-solid fa-moon left-icon"></i>
+                    <span>Dark Mode</span>
+                </span>
+                    <input type="checkbox" id="dark-mode-toggle" class="toggle-input" />
+                    <label for="dark-mode-toggle" class="toggle-label"></label>
+                
+            </li>
+            <li class="bold-text"><a href="/Profile/Privacy"><i class="fa-solid fa-shield-check left-icon"></i> Help Center <i class="fa-solid fa-chevron-right"></i></a></li>
+        </ul>
+
+        <button class="btn-dark btn-signout">Sign Out</button>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleInputs = document.querySelectorAll('.toggle-input');
+
+        toggleInputs.forEach(input => {
+            input.addEventListener('change', function () {
+                if (input.checked) {
+                    console.log(input.id + " is ON");
+                    // Här kan du lägga till kod för att spara inställningen
+                } else {
+                    console.log(input.id + " is OFF");
+                    // Här kan du lägga till kod för att spara inställningen
+                }
+            });
+        });
+    });
+</script>
