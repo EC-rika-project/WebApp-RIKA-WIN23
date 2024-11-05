@@ -1,0 +1,138 @@
+.signUp {
+    padding: 5em 0;
+
+    .container {
+        width: 85%;
+
+
+        @include tablet {
+            width: 40%;
+        }
+
+        .signup-form {
+            padding: 3em 0;
+
+            .form-content {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                margin: 1em 0;
+
+                input {
+                    border: none;
+                    border-bottom: 1px solid #808080;
+                    padding: 8px 0;
+                    width: 100%;
+                    text-indent: 0.3rem !important;
+                }
+
+
+                label {
+                    font-weight: 600;
+                }
+
+
+                span {
+                    font-style: italic;
+                    font-weight: 300;
+                    color: #F42D2D
+                }
+            }
+
+            .btn-dark {
+                border: 1px solid black;
+                margin: 1em 0;
+            }
+        }
+
+        .form-checkbox {
+            display: flex;
+            flex-direction: column;
+
+
+            span {
+                font-style: italic;
+                font-weight: 300;
+                color: #F42D2D;
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 0.8rem;
+            font-weight: 400;
+            margin: 0.8rem 0;
+
+            input {
+                border-color: #191919;
+                border-radius: 5px;
+                height: 1.2rem;
+                width: 1.2rem;
+            }
+        }
+    }
+
+    .password-wrapper {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .password-wrapper input[type="password"],
+    .password-wrapper input[type="text"] {
+        width: 100%;
+        padding-right: 50px;
+        box-sizing: border-box;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 63%;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: black;
+    }
+
+    .password-toggle:focus {
+        outline: none;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background-color: white;
+    padding: 4em;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
