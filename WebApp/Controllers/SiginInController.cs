@@ -1,13 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
-using System.Text;
 using WebApp.ViewModels;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using Newtonsoft.Json;
 using Infrastructure.Interfaces;
 using WebApp.Factories;
 

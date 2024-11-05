@@ -407,10 +407,16 @@ svg {
   border-bottom-color: #28a745 !important;
 }
 
+.form-group {
+  position: relative;
+  padding-bottom: 16px;
+}
+
 .field-validation-error {
+  position: absolute;
   color: #dc3545;
   font-size: 12px;
-  bottom: -18px;
+  bottom: 6px;
   left: 0;
   width: 100%;
 }
