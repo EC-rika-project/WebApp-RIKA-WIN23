@@ -16,6 +16,7 @@ public class OrderController : Controller
     [Route("/checkout")]
     public IActionResult Checkout()
     {
-        return View();
+        CheckoutViewModel model = new();
+        return View(model);
     }
 }

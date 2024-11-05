@@ -795,6 +795,34 @@ svg {
   transform: translateX(0);
 }
 
+.checkout-productlist-section .subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.checkout-login-section {
+  margin: 32px 0;
+}
+.checkout-login-section .login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkout-form-section {
+  margin: 48px 0 48px 0;
+}
+.checkout-form-section .container {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.checkout-form-section .container .btn-dark {
+  align-self: center;
+}
+
 .hero-section {
   display: flex;
 }

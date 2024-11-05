@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function for calculate the total price in the cart
     function calculateTotal() {
+        console.log("calc")
         let subtotal = 0;
         let totalItems = 0;
         const updatedCartItems = document.querySelectorAll(".cart-item");
