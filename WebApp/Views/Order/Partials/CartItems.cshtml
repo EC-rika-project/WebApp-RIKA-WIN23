@@ -1,0 +1,29 @@
+﻿@using Infrastructure.Dtos
+@model List<CartItemDto>
+
+@* <div class="cart-product-list"> *@
+    @foreach (var item in Model)
+    {
+        <article class="co-cart-item" data-price="@item.Price">
+            <div class="image-wrapper">
+                <img src="https://picsum.photos/200" alt="" class="image" />
+            </div>
+            <div class="text-grid">
+                <h5 class="h5 title">@item.Name</h5>
+                <div class="delete">
+                    <i class="fa-regular fa-trash"></i>
+                </div>
+                <p class="body text">@item.Ingress</p>
+                <p class="h6 price">${formatPrice(price * quantity)}</p>
+                <div class="quantity bg-gray">
+                    <button class="qty-btn decrease">-</button>
+                    <div class="qty-number">
+                        <p class="body quantity">@item.Quantity</p>
+                    </div>
+                    <button class="qty-btn increase">+</button>
+                </div>
+            </div>
+            <input type="hidden" name="Products[@item.ArticleNumber].Name" value="@item.Name" />
+        </article>
+    }
+@* </div> *@

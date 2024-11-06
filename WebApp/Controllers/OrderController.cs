@@ -41,6 +41,13 @@ public class OrderController : Controller
         return View(viewModel);
     }
 
+    [HttpPost]
+    [Route("checkout/loadCartItems")]
+    public IActionResult LoadCartItems([FromBody] List<CartItemDto> cartData)
+    {
+        return PartialView("~/Views/Order/Partials/CartItems.cshtml", cartData);
+    }
+
 
 
     //[HttpPost]
