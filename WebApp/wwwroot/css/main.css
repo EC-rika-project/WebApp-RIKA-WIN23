@@ -170,7 +170,8 @@ svg {
   text-decoration: none;
 }
 
-.cart-item {
+.cart-item,
+.co-cart-item {
   width: 100%;
   display: flex;
   align-items: flex-start;
@@ -179,40 +180,48 @@ svg {
   border-bottom: 1px solid var(--color-border-dark-transparent);
 }
 @media (min-width: 768px) {
-  .cart-item {
+  .cart-item,
+  .co-cart-item {
     gap: 16px;
   }
 }
-.cart-item .image-wrapper {
+.cart-item .image-wrapper,
+.co-cart-item .image-wrapper {
   height: auto;
   width: 20%;
   max-width: 100px;
 }
-.cart-item .image-wrapper .image {
+.cart-item .image-wrapper .image,
+.co-cart-item .image-wrapper .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }
-.cart-item .text-grid {
+.cart-item .text-grid,
+.co-cart-item .text-grid {
   display: grid;
   grid-template-columns: 1fr 90px;
   grid-template-rows: auto 1fr auto;
   width: 90%;
 }
-.cart-item .text-grid .title {
+.cart-item .text-grid .title,
+.co-cart-item .text-grid .title {
   grid-column: 1/2;
   grid-row: 1/2;
 }
-.cart-item .text-grid .text {
+.cart-item .text-grid .text,
+.co-cart-item .text-grid .text {
   grid-column: 1/2;
   grid-row: 2/3;
 }
-.cart-item .text-grid .price {
+.cart-item .text-grid .price,
+.co-cart-item .text-grid .price {
   grid-column: 1/2;
   grid-row: 3/4;
 }
-.cart-item .text-grid .delete {
+.cart-item .text-grid .delete,
+.co-cart-item .text-grid .delete {
   grid-column: 2/3;
   grid-row: 1/3;
   justify-self: end;
@@ -221,7 +230,8 @@ svg {
   align-self: flex-start;
   cursor: pointer;
 }
-.cart-item .text-grid .quantity {
+.cart-item .text-grid .quantity,
+.co-cart-item .text-grid .quantity {
   grid-column: 2/3;
   grid-row: 3/4;
   border-radius: 20px;
@@ -229,13 +239,15 @@ svg {
   justify-content: space-around;
   align-items: center;
 }
-.cart-item .text-grid .quantity .qty-btn {
+.cart-item .text-grid .quantity .qty-btn,
+.co-cart-item .text-grid .quantity .qty-btn {
   background-color: transparent;
   border: none;
   width: 35px;
   height: 35px;
 }
-.cart-item .text-grid .quantity .qty-number {
+.cart-item .text-grid .quantity .qty-number,
+.co-cart-item .text-grid .quantity .qty-number {
   display: flex;
   justify-content: center;
   align-items: center;
