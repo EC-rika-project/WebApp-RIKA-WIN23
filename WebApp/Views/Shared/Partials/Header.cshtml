@@ -1,5 +1,5 @@
 ﻿@* @inject SignInManager<UserEntity> _signInManager; *@
- 
+
 <header class="header container">
     <div class="left-wrapper">
         <button class="btn-circle mobile-btn" id="mobile-menu-btn-open"><i class="fa-solid fa-bars"></i></button>
@@ -7,10 +7,10 @@
         <a asp-controller="" asp-action="" class="logo-desktop"><img src="/images/rikaLogo.svg" alt="Rika logo" class="logo"></a>
     </div>
     <div class="right-wrapper">
-@* 		@if (_signInManager.IsSignedIn(User))
-		{ *@
+ 		@if (User.Identity?.IsAuthenticated ?? false)
+		{ 
 			<a asp-controller="Profile" asp-action="" class="link"><i class="fa-solid fa-user icon"></i></a>
-@* 		}
+ 		}
 		else
 		{
 			<a asp-controller="Signin" asp-action="" class="link"><i class="fa-solid fa-user icon"></i></a>
