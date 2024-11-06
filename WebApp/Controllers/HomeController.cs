@@ -1,3 +1,4 @@
+using Infrastructure.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.ViewModels;
@@ -18,8 +19,8 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             HomeIndexViewModel viewModel = new();
-            return View(viewModel);            
-                
+            return View(viewModel);
+
         }
     }
 }

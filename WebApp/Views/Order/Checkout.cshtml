@@ -1,0 +1,96 @@
+﻿@using WebApp.Models
+@using WebApp.ViewModels
+@model CheckoutViewModel
+
+<section class="section checkout-productlist-section">
+    <div class="container">
+        <h2 class="h5">Products</h2>
+        <div id="checkout-productlist-wrapper"></div>
+    </div>
+</section>
+<section class="section checkout-login-section">
+    <div class="container login-wrapper">
+        <p class="body">Do you have an account?</p>
+        <button class="btn-dark span-2">Sign in</button>
+    </div>
+</section>
+<section class="section checkout-form-section">
+    <form class="container">
+        <div class="personal-form">
+            <h2 class="h5 form-heading span-2">Personal information</h2>
+            <div class="span-1">
+                <label asp-for="CheckoutUser.FirstName" class="input-label"></label>
+                <input asp-for="CheckoutUser.FirstName" class="input input-border  />
+                <span asp-validation-for="FirstName"></span>
+            </div>
+            <div class="span-1">
+                <label asp-for="CheckoutUser.LastName" class="input-label"></label>
+                <input asp-for="CheckoutUser.LastName" class="input input-border   />
+                <span asp-validation-for="LastName"></span>
+            </div>
+            <div class="span-2">
+                <label asp-for="CheckoutUser.Email" class="input-label"></label>
+                <input asp-for="CheckoutUser.Email" class="input input-border   />
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+
+        <div class="address-form">
+            <h2 class="h5 form-heading span-2">Delivery information</h2>
+            <div class="span-2">
+                <label asp-for="CheckoutUser.StreetName" class="input-label"></label>
+                <input asp-for="CheckoutUser.StreetName" class="input input-border   />
+                <span asp-validation-for="StreetName"></span>
+            </div>
+            <div class="span-1">
+                <label asp-for="CheckoutUser.PostalCode" class="input-label"></label>
+                <input asp-for="CheckoutUser.PostalCode" class="input input-border    />
+                <span asp-validation-for="PostalCode"></span>
+            </div>
+            <div class="span-1">
+                <label asp-for="CheckoutUser.City" class="input-label"></label>
+                <input asp-for="CheckoutUser.City" class="input input-border    />
+                <span asp-validation-for="City"></span>
+            </div>
+            <div class="span-2">
+                <label asp-for="CheckoutUser.PhoneNumber" class="input-label"></label>
+                <input asp-for="CheckoutUser.PhoneNumber" class="input input-border     />
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+        </div>
+
+        <div class="payment-form">
+            <h2 class="h5 form-heading span-2">Payment</h2>
+            @foreach (var option in Model.OptionLabels)
+            {
+                <label class="radio radio-label input-border">
+                    <div class="radio-option">
+                        <div class="payment-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        @option.Value
+                    </div>
+                    <input asp-for="SelectedOption" type="radio" name="SelectedOption" value="@option.Key" class="form-check-input"/>
+                    <span class="radio-btn"></span>
+                </label>
+            }
+        </div>
+
+        <div class="total-price-wrapper">
+
+            <div class="row">
+                <h3 class="h6">Shipping</h3>
+                <h3 class="h6 shipping"></h3>
+            </div>
+            <div class="row">
+                <h3 class="h6">Bagtotal</h3>
+                <h3 class="h6 cart-total"></h3>
+            </div>
+        </div>
+        
+        <button class="btn-dark span-2">Place order</button>
+        
+
+    </form>
+</section>
+
