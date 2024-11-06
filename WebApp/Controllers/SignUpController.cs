@@ -29,7 +29,8 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
             return View(viewModel);
         }
 
-        var securityKey = _configuration["SecurityKeys:WebAppKey"];
+        var securityKey = _configuration!.GetSection("SecurityKeys")["WebAppKey"];
+        var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
 
         var dto = new SignUpDto
         {
@@ -45,7 +46,7 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
 
         try
         {
-            var response = await client.PostAsync("https://localhost:7163/api/SignUp", jsonContent);
+            var response = await client.PostAsync($"https://localhost:7163/api/SignUp?key={apiKey}", jsonContent);
 
             if (!response.IsSuccessStatusCode)
             {
