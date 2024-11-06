@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 using WebApp.ViewModels;
 namespace WebApp.Controllers;
@@ -28,7 +29,8 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
             return View(viewModel);
         }
 
-        var securityKey = _configuration["SecurityKeys:WebAppKey"];
+        var securityKey = _configuration!.GetSection("SecurityKeys")["WebAppKey"];
+        var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
 
         var dto = new SignUpDto
         {
@@ -37,28 +39,52 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
             Email = viewModel.Email,
             Password = viewModel.Password,
             SecurityKey = securityKey
-
         };
 
         var jsonContent = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
         var client = _httpClientFactory.CreateClient();
 
-        var response = await client.PostAsync("https://localhost:7163/api/SignUp", jsonContent);
-
-
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            TempData["Message"] = "User with the same Email address already exists. ";
-            TempData["MessageType"] = "error";
+            var response = await client.PostAsync($"https://localhost:7163/api/SignUp?key={apiKey}", jsonContent);
 
-            return View(viewModel);
+            if (!response.IsSuccessStatusCode)
+            {
+                TempData["MessageType"] = "error";
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.Conflict:
+                        TempData["Message"] = "An account with this email address already exists.";
+                        break;
+
+                    case HttpStatusCode.BadRequest:
+                        TempData["Message"] = "Invalid data provided. Please check your information and try again.";
+                        break;
+
+                    case HttpStatusCode.InternalServerError:
+                        TempData["Message"] = "A server error occurred. Please try again later.";
+                        break;
+
+                    default:
+                        TempData["Message"] = "An error occurred while creating your account. Please try again.";
+                        break;
+                }
+
+                return View(viewModel);
+            }
+
+            TempData["Message"] = "Account created successfully. Please sign in.";
+            TempData["MessageType"] = "success";
+            return RedirectToAction("SignIn", "SignIn");
         }
 
-        TempData["Message"] = "Account created successfully. Please sign in.";
-        TempData["MessageType"] = "success";
-
-        return RedirectToAction("SignIn", "SignIn");
-     
+        catch (HttpRequestException)
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "There was a problem connecting to the server. Please try again later.";
+            return View(viewModel);
+        }
     }
 }
 
