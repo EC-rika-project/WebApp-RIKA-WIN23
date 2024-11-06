@@ -11,7 +11,6 @@ using System.Text;
 using AuthenticationProperties = Microsoft.AspNetCore.Authentication.AuthenticationProperties;
 
 namespace Infrastructure.Services;
-
 public class AuthenticationService(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : IAppAuthenticationService
 {
     private readonly HttpClient _httpClient = httpClient;
@@ -20,9 +19,22 @@ public class AuthenticationService(HttpClient httpClient, IConfiguration configu
 
     public async Task<string?> SignInAsync(SignInDto signInDto)
     {
-        var content = new StringContent(JsonConvert.SerializeObject(signInDto),Encoding.UTF8,"application/json");
-
+        var content = new StringContent(JsonConvert.SerializeObject(signInDto), Encoding.UTF8, "application/json");
         var response = await _httpClient.PostAsync("https://localhost:7163/api/SignIn", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var jwt = JsonConvert.DeserializeObject<JwtDto>(json);
+            return jwt?.JWT;
+        }
+        return null;
+    }
+
+    public async Task<string?> SignInWithExternalProviderAsync(SignInDto signInDto)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(signInDto), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("https://localhost:7163/api/SignIn/external", content);
 
         if (response.IsSuccessStatusCode)
         {

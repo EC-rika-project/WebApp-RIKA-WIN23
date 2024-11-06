@@ -6,4 +6,6 @@ public interface IAppAuthenticationService
 {
     Task<string?> SignInAsync(SignInDto viewModel);
     Task SignInUserWithTokenAsync(string token, bool rememberMe);
+    
+    Task<string> SignInWithExternalProviderAsync(SignInDto signInDto);
 }
