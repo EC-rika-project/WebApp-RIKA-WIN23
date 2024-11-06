@@ -38,9 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const cartData = [];
         document.querySelectorAll(".cart-item").forEach(item => {
             const name = item.querySelector(".title").textContent;
+            const ingress = item.querySelector(".ingress").textContent;
             const price = parseFloat(item.getAttribute("data-price"));
             const quantity = parseInt(item.querySelector(".qty-number p").textContent);
-            cartData.push({ name, price, quantity });
+            cartData.push({ name, price, ingress, quantity });
         });
         localStorage.setItem("cart", JSON.stringify(cartData));
     }
@@ -73,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="delete">
                         <i class="fa-regular fa-trash"></i>
                     </div>
-                    <p class="body text">${ingress}</p>
+                    <p class="body ingress">${ingress}</p>
                     <p class="h6 price">${formatPrice(price * quantity)}</p>
                     <div class="quantity bg-gray">
                         <button class="qty-btn decrease">-</button>

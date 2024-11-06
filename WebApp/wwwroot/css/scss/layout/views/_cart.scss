@@ -12,6 +12,7 @@
     flex-direction: column;
     transform: translateX(100%);
     transition: transform 0.5s ease;
+   
 
     @include tablet {
         width: 400px;
@@ -28,6 +29,7 @@
         align-items: center;
         margin-bottom: 16px;
         gap: 8px;
+        margin-top: 80px;
     }
 
     .cart-item:last-child {

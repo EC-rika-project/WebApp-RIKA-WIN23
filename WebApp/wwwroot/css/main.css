@@ -821,6 +821,7 @@ svg {
   align-items: center;
   margin-bottom: 16px;
   gap: 8px;
+  margin-top: 80px;
 }
 .cart .cart-item:last-child {
   border-bottom: none;
@@ -935,6 +936,27 @@ svg {
   .hero-section .content-wrapper .text-wrapper {
     width: 50%;
   }
+}
+
+.new-arrivals-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6rem 0;
+}
+.new-arrivals-section .link {
+  min-width: 35px;
+  min-height: 35px;
+  cursor: pointer;
+}
+.new-arrivals-section .product-heading {
+  display: flex;
+  align-items: flex-end;
+}
+.new-arrivals-section .product-heading .link {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 2px;
 }
 
 .signin-container {
@@ -1202,25 +1224,4 @@ svg {
   font-size: 24px;
   cursor: pointer;
   color: #333;
-}
-
-.new-arrivals-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 6rem 0;
-}
-.new-arrivals-section .link {
-  min-width: 35px;
-  min-height: 35px;
-  cursor: pointer;
-}
-.new-arrivals-section .product-heading {
-  display: flex;
-  align-items: flex-end;
-}
-.new-arrivals-section .product-heading .link {
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 2px;
 }
