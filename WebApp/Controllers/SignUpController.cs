@@ -46,7 +46,7 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
 
         try
         {
-            var response = await client.PostAsync($"https://localhost:7163/api/SignUp?key={apiKey}", jsonContent);
+            var response = await client.PostAsync($"https://userprovider-rika-win23.azurewebsites.net/api/SignUp/?key={apiKey}", jsonContent);
 
             if (!response.IsSuccessStatusCode)
             {
