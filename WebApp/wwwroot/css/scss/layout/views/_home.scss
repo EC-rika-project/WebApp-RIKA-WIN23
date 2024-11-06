@@ -61,3 +61,31 @@
         }
     }
 }
+
+.new-arrivals-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 6rem 0;
+
+    h1 {
+    }
+
+    .link {
+        min-width: 35px;
+        min-height: 35px;
+        cursor: pointer;
+    }
+
+    .product-heading {
+        display: flex;
+        align-items: flex-end;
+
+        .link {
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 2px;
+        }
+    }
+}
+
