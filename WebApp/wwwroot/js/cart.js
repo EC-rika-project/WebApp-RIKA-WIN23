@@ -165,6 +165,31 @@ document.addEventListener("DOMContentLoaded", () => {
     calculateTotal();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (window.location.pathname === "/checkout") {
+        const cartData = localStorage.getItem("cart");
+        if (cartData) {
+            fetch("/checkout/loadCartItems", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: cartData
+            })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("checkout-productlist-wrapper").innerHTML = html;
+                })
+                .catch(error => console.error("Error loading cart items:", error));
+        }
+    }
+});
+
+
+
+
+
 
 
 
