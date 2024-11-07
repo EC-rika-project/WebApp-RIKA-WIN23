@@ -39,6 +39,13 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
             return View(viewModel);
         }
 
+        if (string.IsNullOrWhiteSpace(viewModel.Email))
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "Email address cannot be empty.";
+            return View(viewModel);
+        }
+
         if (!IsValidEmail(viewModel.Email))
         {
             TempData["MessageType"] = "error";

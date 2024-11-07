@@ -49,11 +49,11 @@
                 <button class="btn-dark" type="submit">Sign up</button>
             </div>
         </form>
-        <p>Already have an account? <a href="/SignUp.html">Sign in here</a></p>
+        <p>Already have an account? <a class="link" asp-controller="Signin" asp-action="signin">Sign in here</a></p>
     </div>
     @await Html.PartialAsync("~/Views/SignUp/PartialViews/overlay.cshtml")
 
-     @await Html.PartialAsync("_ValidationScriptsPartial")
+     @await Html.PartialAsync("_ValidationScriptsPartial") 
 </section>
 
 
