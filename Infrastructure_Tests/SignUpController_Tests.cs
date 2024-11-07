@@ -235,7 +235,7 @@ namespace Infrastructure_Tests
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result); 
-            Assert.Equal("First and last names must each be at least 2 characters long.", _controller.TempData["Message"]);
+            Assert.Equal("First and last name must be at least 2 characters long and cannot be empty.", _controller.TempData["Message"]);
             Assert.Equal("error", _controller.TempData["MessageType"]);
         }
         /// <summary>

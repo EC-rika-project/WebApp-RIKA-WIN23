@@ -33,11 +33,12 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
     [Route("/signup")]
     public async Task<IActionResult> SignUp(SignUpViewModel viewModel)
     {
-        
-        if (viewModel.FirstName.Length < 2 || viewModel.LastName.Length < 2)
+
+        if ((string.IsNullOrWhiteSpace(viewModel.FirstName) || viewModel.FirstName.Length < 2) ||
+        (string.IsNullOrWhiteSpace(viewModel.LastName) || viewModel.LastName.Length < 2))
         {
             TempData["MessageType"] = "error";
-            TempData["Message"] = "First and last names must each be at least 2 characters long.";
+            TempData["Message"] = "First and last name must be at least 2 characters long and cannot be empty.";
             return View(viewModel);
         }
 
