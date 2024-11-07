@@ -1,6 +1,7 @@
 using Infrastructure.Interfaces;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,22 +21,48 @@ builder.Services.AddAuthentication(options =>
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
-    .AddGoogle(options =>
-    {
-        var googleAuthSection = builder.Configuration.GetSection("Authentication:Google");
-        options.ClientId = googleAuthSection["ClientId"];
-        options.ClientSecret = googleAuthSection["ClientSecret"];
-        options.SaveTokens = true;
-        options.CallbackPath = "/google-callback";
+.AddGoogle(options =>
+{
+    var googleAuthSection = builder.Configuration.GetSection("Authentication:Google");
+    options.ClientId = googleAuthSection["ClientId"];
+    options.ClientSecret = googleAuthSection["ClientSecret"];
+    options.SaveTokens = true;
+    options.CallbackPath = "/google-callback";
 
-        options.Events.OnRemoteFailure = context =>
-        {
+    options.Events.OnRemoteFailure = context =>
+    {
             
-            context.Response.Redirect("/profile");
+        context.Response.Redirect("/profile");
+        context.HandleResponse();
+        return Task.CompletedTask;
+    };
+})
+
+.AddFacebook(options =>
+{
+    var facebookAuthSection = builder.Configuration.GetSection("Authentication:Facebook");
+    options.AppId = facebookAuthSection["AppId"];
+    options.AppSecret = facebookAuthSection["AppSecret"];
+    options.CallbackPath = "/facebook-callback";
+    options.SaveTokens = true;
+
+    options.Scope.Add("email");
+    options.Scope.Add("public_profile");
+    options.Fields.Add("email");
+    options.Fields.Add("name");
+    options.Fields.Add("first_name");
+    options.Fields.Add("last_name");
+
+    options.Events = new OAuthEvents
+    {
+        OnRemoteFailure = context =>
+        {
+            context.Response.Redirect("/signin");
             context.HandleResponse();
             return Task.CompletedTask;
-        };
-    })
+        }
+    };
+})
 
     .AddCookie(options =>
     {
