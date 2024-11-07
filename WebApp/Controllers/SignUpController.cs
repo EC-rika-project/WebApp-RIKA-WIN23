@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
@@ -11,6 +12,12 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
     private readonly IConfiguration _configuration = configuration;
+
+    public bool IsValidEmail(string email)
+    {
+        var emailRegex = new Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]{2,}$");
+        return emailRegex.IsMatch(email);
+    }
 
     [HttpGet]
     [Route("/signup")]
@@ -24,8 +31,32 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
     [Route("/signup")]
     public async Task<IActionResult> SignUp(SignUpViewModel viewModel)
     {
-        if (!ModelState.IsValid)
+        if ((string.IsNullOrWhiteSpace(viewModel.FirstName) || viewModel.FirstName.Length < 2) ||
+        (string.IsNullOrWhiteSpace(viewModel.LastName) || viewModel.LastName.Length < 2))
         {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "First and last name must be at least 2 characters long and cannot be empty.";
+            return View(viewModel);
+        }
+
+        if (string.IsNullOrWhiteSpace(viewModel.Email))
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "Email address cannot be empty.";
+            return View(viewModel);
+        }
+
+        if (!IsValidEmail(viewModel.Email))
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "Invalid email address format.";
+            return View(viewModel);
+        }
+
+        if (!viewModel.TermsAndConditions)
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "You must accept the terms and conditions to proceed.";
             return View(viewModel);
         }
 
