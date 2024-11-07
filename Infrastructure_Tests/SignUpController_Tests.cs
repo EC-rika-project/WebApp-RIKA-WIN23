@@ -50,7 +50,10 @@ namespace Infrastructure_Tests
 
             _controller.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
         }
-
+        /// <summary>
+        /// Användare fyller i formuläret med fullständig och korrekt data för att testa om det går att skapa en användare
+        /// </summary>
+        /// <returns>Användare blir skapad och blir sedan omdirigerad till sign in sidan</returns>
         [Fact]
         public async Task SignUp_WithValidData_ShouldRedirectToSignIn()
         {
@@ -73,6 +76,10 @@ namespace Infrastructure_Tests
             Assert.Equal("Account created successfully. Please sign in.", _controller.TempData["Message"]);
         }
 
+        /// <summary>
+        /// Användare fyller i samtliga fält korrekt förutom email där man använder en email adress som redan finns i databasen
+        /// </summary>
+        /// <returns>Error meddelande som säger att det redan finns ett konto med denna email adress</returns>
         [Fact]
         public async Task SignUp_WithExistingEmail_ShouldReturnViewWithErrorMessage()
         {
@@ -86,7 +93,7 @@ namespace Infrastructure_Tests
                 TermsAndConditions = true
             };
 
-            // Skapa en ny mock av HttpMessageHandler som returnerar en HTTP Conflict
+            
             var handlerMock = new Mock<HttpMessageHandler>();
             handlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>(
@@ -110,6 +117,10 @@ namespace Infrastructure_Tests
             Assert.Equal("An account with this email address already exists.", _controller.TempData["Message"]);
         }
 
+        /// <summary>
+        /// Användare lämnar fält tomma för att testa om error meddelanden visas med tempdata
+        /// </summary>
+        /// <returns>Error meddelande om att det är validerings fel visas</returns>
         [Fact]
         public async Task SignUp_WithInvalidData_ShouldReturnViewWithModelErrors()
         {
@@ -133,7 +144,12 @@ namespace Infrastructure_Tests
             Assert.Same(viewModel, viewResult.Model);
         }
 
-         [Fact]
+        /// <summary>
+        /// Testar att användaren kan registrera sig när de accepterat villkoren,
+        /// och att de blir omdirigerade till inloggningen med rätt meddelande i TempData.
+        /// </summary>
+        /// <returns>Omdirigering till sign in sidan och ett sucess meddelande i TempData</returns>
+        [Fact]
         public async Task SignUp_WhenTermsAccepted_ShouldEnableSignUpButton()
         {
             // Arrange
@@ -143,7 +159,7 @@ namespace Infrastructure_Tests
                 LastName = "Doe",
                 Email = "john.doe@example.com",
                 Password = "Password123!",
-                TermsAndConditions = true // Checkbox markerad
+                TermsAndConditions = true 
             };
 
             // Act
@@ -151,10 +167,14 @@ namespace Infrastructure_Tests
 
             // Assert
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("SignIn", redirectResult.ActionName); // Kontrollera omdirigering till SignIn
+            Assert.Equal("SignIn", redirectResult.ActionName); 
             Assert.Equal("Account created successfully. Please sign in.", _controller.TempData["Message"]);
         }
 
+        /// <summary>
+        /// Testar att ett felmeddelande visas om användaren inte accepterat villkoren vid registrering.
+        /// </summary>
+        /// <returns>Visar felmeddelande i TempData och återgår till samma vy</returns>
         [Fact]
         public async Task SignUp_WhenTermsNotAccepted_ShouldShowErrorMessage()
         {
@@ -165,7 +185,7 @@ namespace Infrastructure_Tests
                 LastName = "Doe",
                 Email = "john.doe@example.com",
                 Password = "Password123!",
-                TermsAndConditions = false // Checkbox ej markerad
+                TermsAndConditions = false 
             };
 
             // Act
@@ -176,11 +196,14 @@ namespace Infrastructure_Tests
             Assert.Equal("You must accept the terms and conditions to proceed.", _controller.TempData["Message"]);
         }
 
+        /// <summary>
+        /// Testar att overlay för "Terms & conditions" visas när användaren klickar på länken
+        /// </summary>
+        ///<returns>Overlay poppar upp när användaren trycker på länken</returns>
         [Fact]
         public void TermsOverlay_ShouldAppearWhenTermsLinkClicked()
         {
-            // Detta är ett hypotetiskt test som simulerar att overlay visas.
-            // Om det finns en metod som hanterar overlay-visning kan den testas här.
+            
             var overlayTriggered = false;
 
             // Simulera att användaren klickar på "terms & conditions" länken
@@ -190,51 +213,62 @@ namespace Infrastructure_Tests
             Assert.True(overlayTriggered, "Overlay för 'terms & conditions' ska visas när användaren klickar på länken.");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task SignUp_WithShortFirstNameOrLastName_ShouldReturnViewWithErrorMessage()
         {
             // Arrange
             var viewModel = new SignUpViewModel
             {
-                FirstName = "A", // För kort förnamn
+                FirstName = "A", 
                 LastName = "Doe",
                 Email = "john.doe@example.com",
                 Password = "Password123!",
-                TermsAndConditions = true // Checkbox markerad
+                TermsAndConditions = true 
             };
 
             // Act
             var result = await _controller.SignUp(viewModel);
 
             // Assert
-            var viewResult = Assert.IsType<ViewResult>(result); // Kontrollera att en vy returneras (inte omdirigering)
+            var viewResult = Assert.IsType<ViewResult>(result); 
             Assert.Equal("First and last names must each be at least 2 characters long.", _controller.TempData["Message"]);
             Assert.Equal("error", _controller.TempData["MessageType"]);
         }
-
+        /// <summary>
+        /// Testar att ett felmeddelande visas när förnamn eller efternamn är för kort (mindre än 2 tecken)
+        /// </summary>
+        /// <returns>Testet kontrollerar att felmeddelande visas om man försöker använda sig av ett för kort namn</returns>
         [Fact]
         public async Task SignUp_WithValidFirstNameAndLastName_ShouldRedirectToSignIn()
         {
             // Arrange
             var viewModel = new SignUpViewModel
             {
-                FirstName = "Hans", // Giltigt förnamn
-                LastName = "Mattin-Lassei", // Giltigt efternamn
+                FirstName = "Hans", 
+                LastName = "Mattin-Lassei", 
                 Email = "hans.mattin@example.com",
                 Password = "Password123!",
-                TermsAndConditions = true // Checkbox markerad
+                TermsAndConditions = true
             };
 
             // Act
             var result = await _controller.SignUp(viewModel);
 
             // Assert
-            var redirectResult = Assert.IsType<RedirectToActionResult>(result); // Kontrollera att omdirigering sker
-            Assert.Equal("SignIn", redirectResult.ActionName); // Kontrollera omdirigering till "SignIn"
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result); 
+            Assert.Equal("SignIn", redirectResult.ActionName); 
             Assert.Equal("Account created successfully. Please sign in.", _controller.TempData["Message"]);
             Assert.Equal("success", _controller.TempData["MessageType"]);
         }
 
+        /// <summary>
+        /// Testar att ett felmeddelande visas när e-postadressen har ett ogiltigt format.
+        /// </summary>
+        /// <returns>Testet verifierar att felmeddelande för ogiltig email visas</returns>
         [Fact]
         public async Task SignUp_WithInvalidEmailFormat_ShouldReturnViewWithErrorMessage()
         {
@@ -243,7 +277,7 @@ namespace Infrastructure_Tests
             {
                 FirstName = "John",
                 LastName = "Doe",
-                Email = "invalid-email-format", // Ogiltigt e-postformat
+                Email = "invalid-email-format", 
                 Password = "Password123!",
                 TermsAndConditions = true
             };
@@ -257,6 +291,10 @@ namespace Infrastructure_Tests
             Assert.Equal("error", _controller.TempData["MessageType"]);
         }
 
+        /// <summary>
+        /// Testar att användaren skickas till SignIn-sidan när en giltig och unik e-postadress används vid registrering.
+        /// </summary>
+        /// <returns>En uppgift som representerar testet.</returns>
         [Fact]
         public async Task SignUp_WithValidAndUniqueEmail_ShouldRedirectToSignIn()
         {
@@ -265,7 +303,7 @@ namespace Infrastructure_Tests
             {
                 FirstName = "Alice",
                 LastName = "Johnson",
-                Email = "alice.johnson@example.com", // Giltig e-postadress som inte är upptagen
+                Email = "alice.johnson@example.com", 
                 Password = "Password123!",
                 TermsAndConditions = true
             };

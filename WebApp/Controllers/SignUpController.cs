@@ -1,9 +1,12 @@
 ﻿using Infrastructure.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using WebApp.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 namespace WebApp.Controllers;
 
 
@@ -11,6 +14,12 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
     private readonly IConfiguration _configuration = configuration;
+
+    public bool IsValidEmail(string email)
+    {
+        var emailRegex = new Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]{2,}$");
+        return emailRegex.IsMatch(email);
+    }
 
     [HttpGet]
     [Route("/signup")]
@@ -26,6 +35,32 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
     {
         if (!ModelState.IsValid)
         {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "There are validation errors. Please check your input and try again.";
+            return View(viewModel);
+        }
+
+        // För att manipulera vårat test för first och lastname
+        if (viewModel.FirstName.Length < 2 || viewModel.LastName.Length < 2)
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "First and last names must each be at least 2 characters long.";
+            return View(viewModel);
+        }
+        // För att manipulera vårat test för email
+        if (!IsValidEmail(viewModel.Email))
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "Invalid email address format.";
+            return View(viewModel);
+        }
+
+
+        //För att manipulera vårat test för terms & conditions
+        if (!viewModel.TermsAndConditions)
+        {
+            TempData["MessageType"] = "error";
+            TempData["Message"] = "You must accept the terms and conditions to proceed.";
             return View(viewModel);
         }
 
