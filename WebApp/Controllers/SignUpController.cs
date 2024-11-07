@@ -33,21 +33,14 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
     [Route("/signup")]
     public async Task<IActionResult> SignUp(SignUpViewModel viewModel)
     {
-        if (!ModelState.IsValid)
-        {
-            TempData["MessageType"] = "error";
-            TempData["Message"] = "There are validation errors. Please check your input and try again.";
-            return View(viewModel);
-        }
-
-        // För att manipulera vårat test för first och lastname
+        
         if (viewModel.FirstName.Length < 2 || viewModel.LastName.Length < 2)
         {
             TempData["MessageType"] = "error";
             TempData["Message"] = "First and last names must each be at least 2 characters long.";
             return View(viewModel);
         }
-        // För att manipulera vårat test för email
+
         if (!IsValidEmail(viewModel.Email))
         {
             TempData["MessageType"] = "error";
@@ -55,8 +48,6 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
             return View(viewModel);
         }
 
-
-        //För att manipulera vårat test för terms & conditions
         if (!viewModel.TermsAndConditions)
         {
             TempData["MessageType"] = "error";
