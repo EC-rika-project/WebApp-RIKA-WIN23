@@ -5,10 +5,11 @@ using Infrastructure.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static WebApp.Controllers.ShoppingCartTests;
+using System;
 namespace WebApp.Controllers;
 public class ShoppingCartTests
 {
-    // Test Case Description: Test that the user can see the correct total price for items in their shopping cart, and that the total price updates automatically when the quantity of items changes.
+   
 
 
     public class Product
@@ -21,7 +22,7 @@ public class ShoppingCartTests
 
     public class Cart
     {
-        private List<Product> products = new();
+        public List<Product> products = new();
 
         public void AddProduct(Product product)
         {
@@ -41,9 +42,26 @@ public class ShoppingCartTests
                 product.Quantity = quantity;
             }
         }
-        public void RemoveProduct(int productId)
+        public string RemoveProduct(int productId)
         {
-            products.RemoveAll(p => p.Id == productId);
+            try
+            {
+                products.RemoveAll(p => p.Id == productId);
+                return "The product has been removed from your cart.";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public void IncreaseQuantity(int productId)
+        {
+            var product = products.FirstOrDefault(p => p.Id == productId);
+            if (product != null)
+            {
+                product.Quantity += 1;
+            }
         }
     }
 
@@ -61,6 +79,8 @@ public class ShoppingCartTests
             return Cart.GetTotalPrice();
         }
     }
+
+    // Test Case Description: Test that the user can see the correct total price for items in their shopping cart, and that the total price updates automatically when the quantity of items changes.
 
     /// <summary>
     /// Test Case 1: Display total price for products in the shopping cart.
@@ -259,4 +279,86 @@ public class ShoppingCartTests
         // Assert
         Assert.Equal(350, totalPriceAfterRemoval); 
     }
+
+
+
+
+
+
+
+    // Test Case Description: Test that the user can remove, increase, or decrease the quantity of items in the shopping cart, and that the cart updates correctly.
+
+    /// <summary>
+    /// Test Case 1: Remove a product from the shopping cart.
+    /// Tests that a product is removed from the cart when the user clicks the "Remove" button.
+    /// Expects the product to no longer be in the cart and a confirmation message to be displayed.
+    /// </summary>
+
+    [Fact]
+    public void RemoveProductWithButton_ShouldRemoveProductFromCart_ThenReturnConfirmationMessage()       
+
+    {
+        // Arrange
+        var cart = new Cart();
+        var product = new Product { Id = 1, Name = "Product 1", Price = 100, Quantity = 1 };
+        cart.AddProduct(product);
+
+        var controller = new CartController { Cart = cart };
+
+        // Act
+        var result = cart.RemoveProduct(product.Id);
+
+        // Assert
+
+        Assert.DoesNotContain(product, cart.products);
+        Assert.Equal("The product has been removed from your cart.", result); 
+    }
+
+    /// <summary>
+    /// Test Case 2: Increase the quantity of a product in the shopping cart.
+    /// Tests that the quantity of a product in the cart increases when the user clicks the "+" button.
+    /// Expects the product quantity to increase by one and display the updated quantity.
+    /// </summary>
+
+    [Fact]
+        public void IncreaseProductQuantity_ShouldIncreaseProductQuantityByOne_ThenReturnUpdatedQuantity()
+        
+        {
+            // Arrange
+            var cart = new Cart();
+            var product = new Product { Id = 1, Name = "Product 1", Price = 100, Quantity = 1 }; 
+            cart.AddProduct(product);
+
+            var controller = new CartController { Cart = cart };
+
+            // Act
+            cart.IncreaseQuantity(product.Id);
+
+            // Assert
+            Assert.Equal(2, product.Quantity); 
+        }
+
+        /// <summary>
+        /// Test Case 3: Decrease the quantity of a product in the shopping cart.
+        /// Verifies that the quantity of a product is decreased by one when the "-" button is clicked.
+        /// Expects the quantity to decrease from 2 to 1 and to reflect this change in the product's information.
+        /// </summary>
+        [Fact]
+        public void DecreaseProductQuantity_ShouldDecreaseProductQuantityByOne_ThenReturnUpdatedQuantity()
+        
+        {
+            // Arrange
+            var cart = new Cart();
+            var product = new Product { Id = 1, Name = "Product 1", Price = 100, Quantity = 2 }; 
+            cart.AddProduct(product);
+
+            var controller = new CartController { Cart = cart };
+
+            // Act
+            cart.UpdateQuantity(product.Id, product.Quantity - 1);
+        
+
+            // Assert
+            Assert.Equal(1, product.Quantity); 
+        }
 }
