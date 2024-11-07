@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,31 +20,59 @@ namespace Infrastructure.Services
             _httpClient = httpClient;
         }
 
-        public async Task<UserModel> GetUserFromApiAsync(string token)
+        public async Task<UserDto> GetUserFromApiAsync(string userId)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
-            var response = await _httpClient.GetAsync("https://api.example.com/user");
+            
+            var response = await _httpClient.GetAsync($"https://localhost:7163/api/Profile?userId={userId}");
 
             if (response.IsSuccessStatusCode)
             {
+                // Om anropet var framgångsrikt, deserialisera svaret
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<UserModel>(content);
+                return JsonConvert.DeserializeObject<UserDto>(content);
             }
 
+            // Om anropet misslyckades, returnera null eller hantera fel på något sätt
             return null!;
         }
 
-        public UserModel GetFakeUser()
+
+        public async Task<bool> UpdateUserAsync(UserDto userDto)
         {
-            return new UserModel
+            var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("https://localhost:7163/api/Profile", content);
+
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    return true;
+            //}
+            //return false;
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                // Log the error or pass it up to the calling method for display
+                Console.WriteLine($"API Error: {errorContent}");
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+
+        public UserDto GetFakeUser()
+        {
+            return new UserDto
             {
                 UserId = "1",
-                Name = "Harre Birger Svenning",
+                FirstName = "Harre",
+                LastName = "Birger Svenning",
                 Email = "Harreking@gmail.com",
                 Age = 85,
-                Gender = Gender.Male,
-                ProfileImage = "/images/Profilepic.jpg"
+                Gender = "Male",
+                ProfileImageUrl = "/images/Profilepic.jpg"
             };
         }
     }

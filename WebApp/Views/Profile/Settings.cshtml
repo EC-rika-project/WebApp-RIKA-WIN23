@@ -8,41 +8,57 @@
 <section>
      <div class="container">
         <div class="profile-pic">
-            <img src="@Model.ProfileImage" />
+            <img src="@Model.ProfileImageUrl" />
         </div>
 
         <div class="profile-info">
         <form asp-action="UpdateProfile" method="post" class="personal-form">
             <div class="form-item">
-        <label asp-for="Name" class="bold-text"></label>
-        <input class="input-underlined" asp-for="Name" type="text" value="@Model.Name" />
+                <input type="hidden" asp-for="UserId"></input>
+
+
+                    <label asp-for="FirstName" class="bold-text">First Name</label>
+                    <input class="input-underlined" asp-for="FirstName" type="text" value="@Model.FirstName" />
                 </div>
+                <span asp-validation-for="FirstName"></span>
                 <div class="form-item">
-                    <label asp-for="Gender" class="bold-text"></label>
-                    @foreach (var gender in Enum.GetValues(typeof(Infrastructure.Models.Gender)))
-                    {
-                        <div class="radio-container">
-                            <input class="radio" type="radio" id="@gender" name="Gender" value="@gender"
-                            @if (gender.ToString() == Model.Gender.ToString())
-                            {
-                                <text>checked</text>
-                            } />
-                            <label for="@gender">@gender</label>
-                        </div>
-                    }
+                    <label asp-for="LastName" class="bold-text">Last Name</label>
+                    <input class="input-underlined" asp-for="LastName" type="text" value="@Model.LastName" />
                 </div>
+                <span asp-validation-for="LastName"></span>
+
+                
+
+                <div class="form-item">
+                <label asp-for="Gender" class="bold-text">Gender</label>
+    
+                <div class="radio-container">
+                <input class="radio input-underlined" type="radio" asp-for="Gender" name="Gender" id="Male" value="Male" />
+                <label for="Male" class="bold-text">Male</label>
+             </div>
+    
+                <div class="radio-container">
+                <input class="radio input-underlined" type="radio" asp-for="Gender" name="Gender" id="Female" value="Female" />
+                <label for="Female" class="bold-text">Female</label>
+                </div>
+                </div>
+                <span asp-validation-for="Gender"></span>
+
                 <div class="form-item">
                     <label asp-for="Age" class="bold-text"></label>
                     <input class="input-underlined" asp-for="Age" type="number" value="@Model.Age" />
                 </div>
+                <span asp-validation-for="Age"></span>
 
                 <div class="form-item">
 
         <label asp-for="Email" class="bold-text"></label>
                     <input class="input-underlined" asp-for="Email" type="text" value="@Model.Email" />
                 </div>
+                <span asp-validation-for="Email"></span>
 
-        </form>
+                <button type="submit" class="btn-accent">Confirm Changes</button>
+            </form>
         </div>
 
         <h2>Settings</h2>

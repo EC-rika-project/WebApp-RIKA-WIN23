@@ -1,7 +1,9 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Reflection;
 using System.Threading.Tasks;
 using WebApp.ViewModels;
 
@@ -22,7 +24,6 @@ namespace WebApp.Controllers
             var cookie = Request.Cookies["UserCookie"];
             if (!string.IsNullOrEmpty(cookie))
             {
-                // Försök att deserialisera kakan till ProfilePageViewModel
                 var user = JsonConvert.DeserializeObject<ProfilePageViewModel>(cookie);
                 if (user != null)
                 {
@@ -30,24 +31,24 @@ namespace WebApp.Controllers
                 }
             }
 
-            // Hämta användardata från API eller skapa en "fake" användare
-            UserModel userModel = _userService.GetFakeUser(); // Anta att du har en metod för att hämta användaren
-            if (userModel != null)
+            //Tillfälligt, ska tas ifrån UserCookien.
+            var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
+
+            var userDto = await _userService.GetUserFromApiAsync(userId);
+
+
+            var viewModel = new ProfilePageViewModel
             {
-                // Mappa UserModel till ProfilePageViewModel
-                var viewModel = new ProfilePageViewModel
-                {
-                    Name = userModel.Name,
-                    Email = userModel.Email,
-                    ProfileImage = userModel.ProfileImage
-                };
-
-                return View(viewModel);
-            }
-
-            // Om ingen användare hittades, hantera det här (exempelvis redirecta till inloggning)
-            return RedirectToAction("Login", "Account");
+                FirstName = userDto.FirstName!,
+                LastName = userDto.LastName!,
+                Email = userDto.Email,
+                ProfileImageUrl = userDto.ProfileImageUrl!,
+            };
+            Console.Write(viewModel);
+            return View(viewModel);
         }
+
+
 
         [Route("/Profile/Privacy")]
         public IActionResult PrivacyPolicy()
@@ -62,7 +63,7 @@ namespace WebApp.Controllers
         }
 
         [Route("/Profile/Settings")]
-        public IActionResult Settings()
+        public async Task<IActionResult> Settings()
         {
             var cookie = Request.Cookies["UserCookie"];
             if (!string.IsNullOrEmpty(cookie))
@@ -74,24 +75,60 @@ namespace WebApp.Controllers
                     return View(user);
                 }
             }
+            //Tillfälligt, ska tas ifrån UserCookien.
+            var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
 
-            // Hämta användardata från API eller skapa en "fake" användare
-            UserModel userModel = _userService.GetFakeUser(); // Anta att du har en metod för att hämta användaren
-            if (userModel != null)
+            var userDto = await _userService.GetUserFromApiAsync(userId);
+
+
+            var viewModel = new ProfilePageViewModel
             {
-                // Mappa UserModel till ProfilePageViewModel
-                var viewModel = new ProfilePageViewModel
-                {
-                    Name = userModel.Name,
-                    Email = userModel.Email,
-                    ProfileImage = userModel.ProfileImage,
-                    Age = userModel.Age,
-                    Gender = userModel.Gender
-                };
+                UserId = userId,
+                FirstName = userDto.FirstName!,
+                LastName = userDto.LastName!,
+                Email = userDto.Email,
+                ProfileImageUrl = userDto.ProfileImageUrl!,
+                Age = userDto.Age,
+                Gender = userDto.Gender
+            };
+            return View(viewModel);
+        }
 
-                return View(viewModel);
+
+        [HttpPost]
+        [Route("/Profile/Settings")]
+        public async Task<IActionResult> UpdateProfile(ProfilePageViewModel viewModel)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                var userDto = new UserDto
+                {
+                    UserId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d",
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    Email = viewModel.Email,
+                    ProfileImageUrl = "/images/rika-profile-img.svg",
+                    Gender = viewModel.Gender,
+                    Age = viewModel.Age
+                };
+                var result = await _userService.UpdateUserAsync(userDto);
+                if (result)
+                {
+                    TempData["Message"] = "Profile updated successfully!";
+                    TempData["MessageType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = "Failed to update profile";
+                    TempData["MessageType"] = "error";
+                    return RedirectToAction("Settings");
+                }
+
             }
-            return RedirectToAction("Index");
+            return View("Settings", viewModel);
         }
     }
 }
+
