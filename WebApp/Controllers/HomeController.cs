@@ -1,8 +1,6 @@
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using WebApp.ViewModels;
-
 
 namespace WebApp.Controllers
 {
@@ -13,22 +11,23 @@ namespace WebApp.Controllers
         [Route("/")]
         public async Task<IActionResult> Index()
         {
+            // Fetch categories
             var categories = await _productService.GetAllCategoriesAsync();
 
-            var headerCategoriesViewModel = new HeaderCatgeoriesViewModel
-            {
-                Categories = categories
-            };
+            // Pass the list of categories to ViewData
+            ViewData["Categories"] = categories;
 
-            // Fetch products under the "New Arrivals" category
-            var newArrivalsCategoryName = "New Arrivals"; 
-            var newArrivals = await _productService.GetAllProductsAsync(newArrivalsCategoryName);
+            // You can also fetch products if needed, like the "New Arrivals"
+            // var newArrivalsCategoryName = "New Arrivals"; 
+            // var newArrivals = await _productService.GetAllProductsAsync(newArrivalsCategoryName);
+
             var viewModel = new HomeIndexViewModel
             {
-                Categories = categories,
-                NewArrivals = newArrivals
+                // NewArrivals = newArrivals
             };
+
             return View(viewModel);
-        }        
+        }
     }
 }
+

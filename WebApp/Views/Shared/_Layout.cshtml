@@ -1,5 +1,4 @@
-﻿@model WebApp.ViewModels.HomeIndexViewModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +10,7 @@
 </head>
 <body class="page-wrapper">
 
-    @await Html.PartialAsync("Partials/Header, Model")
+    @await Html.PartialAsync("Partials/Header")
 
     <main role="main">
         @RenderBody()
@@ -26,6 +25,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/toast-config.js" asp-append-version="true"></script>
+    <script src="~/js/products.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

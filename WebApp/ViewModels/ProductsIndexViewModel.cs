@@ -6,7 +6,6 @@ namespace WebApp.ViewModels
     {
         public string CategoryName { get; set; } = null!;
         public PaginationResult<ProductsDto>? Result { get; set; }
-        public IEnumerable<CategoryDto>? Categories { get; set; }
     }
 }
 

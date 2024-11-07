@@ -27,18 +27,6 @@ namespace Infrastructure.Repositories
             return null!;
         }
 
-        public async Task<CategoryDto> GetCategoryAsync(string categoryId)
-        {
-            try
-            {
-                string request = $"/products?categoryId={categoryId}";
-                var result = await _httpClient.GetFromJsonAsync<CategoryDto>(request);
-                return result!;
-            }
-            catch (Exception ex) { Debug.WriteLine(ex); }
-            return null!;
-        }
-
         public async Task<PaginationResult<ProductsDto>> GetProductsAsync(string categoryId)
         {
             try

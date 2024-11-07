@@ -1,24 +1,9 @@
 ﻿@model WebApp.ViewModels.HomeIndexViewModel
-@using System.Collections.ObjectModel
-@{
-    ViewData["Title"] = Model.PageTitle;
-}
 
 <section class="section">
     <div class="container bg-light hero-section">
-        <div class="category-menu">
-            <h1 class="h4 heading">Categories</h1>
-            <div class="link-wrapper">
-                <div class="category-list">
-                    @foreach (var category in Model.Categories!)
-                    {
-                        <a asp-controller="Products" asp-action="Index" asp-route-categoryName="@category.Name" class="category-link">
-                            <h2>@category.Name</h2>
-                        </a>
-                    }
-                </div>
-            </div>
-        </div>
+        <!-- Render the CategoryMenu Partial -->
+        @await Html.PartialAsync("~/Views/Shared/Partials/CategoryMenu.cshtml")
         <div class="content-wrapper">
             <!-- Section for New Arrivals -->
             <div class="new-arrival-image">

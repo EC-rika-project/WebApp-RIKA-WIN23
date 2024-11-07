@@ -1,109 +1,48 @@
 ﻿@model WebApp.ViewModels.ProductsIndexViewModel
 
-@if (Model?.Result?.Data != null)
-{
-    <section class="products">
-        <div class="container">
-            <div class="category-menu">
-                <h1 class="h4 heading">Categories</h1>
-                <div class="link-wrapper">
-                    <div class="category-list">
-                        @foreach (var category in Model.Categories!)
+<section class="products">
+    <div class="container bg-light hero-section">
+        <!-- Render the CategoryMenu Partial -->
+        @await Html.PartialAsync("~/Views/Shared/Partials/CategoryMenu.cshtml")
+        <div class="content-wrapper">
+            <div class="all-products">
+                <div class="title-sort">
+                    <h1 class="product-title">@Model.CategoryName</h1>
+                    <button onclick="openSortModal()" class="sort-btn">
+                        <i class="fa-sharp fa-regular fa-bars-sort"></i>
+                    </button>
+                </div>
+                @if (Model.Result?.Data != null && Model.Result.Data.Any())
+                {
+                    <div class="product-grid">
+                        @foreach (var product in Model.Result.Data)
                         {
-                            <a asp-controller="Products" asp-action="Index" asp-route-categoryName="@category.Name" class="category-link">
-                                <h2>@category.Name</h2>
-                            </a>
+                            <div class="product-item" onclick="openProductModal(@product.ArticleNumber)">
+                                <img src="@product.CoverImageUrl" alt="@product.Name" />
+                                <button id="favoriteButton_@product.ArticleNumber" class="btn-like" data-id="@product.ArticleNumber" onclick="toggleFavorite(this); event.stopPropagation();">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <h2>@product.Name</h2>
+                                <p>@product.Ingress</p>
+                                <p style="font-weight:bold;">$@product.Price</p>
+                            </div>
                         }
                     </div>
-                </div>
-            </div>
-            <h1>@Model.CategoryName</h1>
-            @foreach (var product in Model.Result.Data)
-            {
-                <div class="product-item" onclick="openModal(@product.ArticleNumber)">
-                    <img src="@product.CoverImageUrl" alt="@product.Name" />
-                    <h2>@product.Name</h2>
-                    <p>@product.Ingress</p>
-                    <p>Price: @product.Price</p>
-                </div>
-            }
-        </div>
-    </section>
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Modal from chatgpt-->
-    <div id="productModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Product Details</h5>
-                    <button type="button" class="close" onclick="closeModal()">&times;</button>
-                </div>
-                <div class="modal-body" id="modalContent">
-                    <p id="productName"></p>
-                    <p id="productIngress"></p>
-                    <p id="productDescription"></p>
-                    <p id="productPrice"></p>
-                </div>
+                }
+                else
+                {
+                    <p class="items-notadded">No products available in this category.</p>
+                }
             </div>
         </div>
     </div>
-}
-else
-{
-    <p>No products available for this category.</p>
-}
+</section>
 
-@* maybe move this to a separate js file? *@
-<script>
-    async function openModal(articleNumber) {
-        const response = await fetch(`/Products/ProductDetails?articleNumber=${articleNumber}`);
-        const productDetails = await response.json();
+<!-- Render the Product Modal Partial -->
+@await Html.PartialAsync("~/Views/Shared/Partials/ProductModal.cshtml")
 
-        // Update modal with product details
-        document.getElementById("productName").innerText = productDetails.name;
-        document.getElementById("productIngress").innerText = productDetails.ingress;
-        document.getElementById("productDescription").innerText = productDetails.description;
-        document.getElementById("productPrice").innerText = `Price: ${productDetails.price}`;
+<!-- Render the Sort Modal Partial -->
+@await Html.PartialAsync("~/Views/Shared/Partials/SortModal.cshtml")
 
-        // Open the modal
-        document.getElementById("productModal").style.display = "block";
-    }
-</script>
 
-@* this will be moved to a css file *@
-<style>
-    /* Add some basic modal styles */
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
-    .modal-content {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        max-width: 500px;
-        width: 100%;
-    }
-
-    .close {
-        cursor: pointer;
-    }
-</style>

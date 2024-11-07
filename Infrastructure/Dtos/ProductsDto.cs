@@ -8,7 +8,5 @@ namespace Infrastructure.Dtos
         public string Name { get; set; } = null!;
         public string Ingress { get; set; } = null!;
         public string Price { get; set; } = null!;
-       
-        // productdetails???
     }
 }

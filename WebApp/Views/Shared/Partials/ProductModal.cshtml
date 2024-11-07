@@ -1,0 +1,47 @@
+﻿<div id="productModal">
+    <div class="product-modal-content">
+        <div class="modal-content-image">
+            <img id="productImage" />
+            <button id="favoriteButton" class="btn-like-modal" onclick="toggleFavorite(this)"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="modal-content-text">
+            <div class="product-modal-header">
+                <div>
+                    <h2 style="font-weight:bold;" id="productName"></h2>
+                    <p id="productIngress"></p>
+                </div>
+                <button type="button" class="btn-modal-close" onclick="closeProductModal()"><i class="fa-solid fa-x"></i></button>
+            </div>
+            <div class="product-modal-body">
+                <div class="modal-body-info">
+                    <p style="font-weight:bold;">Size</p>
+                    <div class="modal-size">
+                        @* size quantity needs to be added from api *@
+                        <button class="btn-modal-size" onclick="selectSize(this)">S</button>
+                        <button class="btn-modal-size" onclick="selectSize(this)">M</button>
+                        <button class="btn-modal-size" onclick="selectSize(this)">L</button>
+                    </div>
+                    <p style="font-weight:bold;">Color</p>
+                    <div class="modal-color">
+                        <button class="btn-modal-color" onclick=""></button> @* fetch product variations from api *@
+                        <button class="btn-modal-color" onclick=""></button>
+                        <button class="btn-modal-color" onclick=""></button>
+                    </div>
+                    <p style="font-weight:bold; padding-bottom:0.4rem;">Description:</p>
+                    <p id="productDescription"></p>
+                    <p style="font-size:smaller;" id="articleNumber">Art.nr: 1246569002 @* add later *@</p>
+                </div>
+                <div class="modal-body-cart">
+                    <div class="stock-price">
+                        @* stock needs to be added from api *@
+                        <p>Avalible in stock</p>
+                        <p style="font-weight:bold;" id="productPrice"></p>
+                    </div>
+                    <div class="cart-btn">
+                        <button id="cartButton" class="btn-modal-cart-btn" onclick="addToCart(this)"><i class="fa-light fa-cart-shopping"></i> Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

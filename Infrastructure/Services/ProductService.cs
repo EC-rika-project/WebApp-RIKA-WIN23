@@ -13,12 +13,6 @@ namespace Infrastructure.Services
             return await _productRepository.GetCategoriesAsync();
         }
 
-        // gets one category
-        public async Task<CategoryDto> GetOneCategoryAsync(string categoryName)
-        {
-            return await _productRepository.GetCategoryAsync(categoryName);
-        }
-
         // gets all products from a specific category by Id
         public async Task<PaginationResult<ProductsDto>> GetAllProductsAsync(string categoryName)
         {

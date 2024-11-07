@@ -22,8 +22,6 @@ namespace Infrastructure.Dtos
     public class ProductVariation
     {
         public string? Name { get; set; } // size
-        public int Stock { get; set; } // ?????
-
-        // color & articlenumber ??
+        public int Stock { get; set; } 
     }
 }
