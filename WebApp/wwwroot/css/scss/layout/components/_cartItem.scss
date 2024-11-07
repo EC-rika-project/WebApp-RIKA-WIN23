@@ -1,8 +1,10 @@
 // STYLING FOR A CART ITEM IN BOTH CART AND CHECKOUT
 
-.cart-item {
+.cart-item,
+.co-cart-item{
   width: 100%;
   display: flex;
+  align-items: flex-start;
   gap: 8px;
   padding: 16px 0;
   border-bottom: 1px solid var(--color-border-dark-transparent);
@@ -52,6 +54,7 @@
       font-size: 16px;
       padding: 0 12px 12px 12px;
       align-self: flex-start;
+      cursor: pointer;
     }
 
     .quantity {
