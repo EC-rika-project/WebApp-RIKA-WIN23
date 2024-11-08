@@ -2,7 +2,9 @@
 using Infrastructure.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Threading.Tasks;
 using WebApp.ViewModels;
@@ -21,32 +23,46 @@ namespace WebApp.Controllers
         [Route("/Profile")]
         public async Task<IActionResult> Index()
         {
-            var cookie = Request.Cookies["UserCookie"];
-            if (!string.IsNullOrEmpty(cookie))
+            var token = Request.Cookies["AuthToken"];
+            if (string.IsNullOrEmpty(token))
             {
-                var user = JsonConvert.DeserializeObject<ProfilePageViewModel>(cookie);
-                if (user != null)
-                {
-                    return View(user);
-                }
+                return Redirect("/signin");
             }
 
-            //Tillfälligt, ska tas ifrån UserCookien.
-            var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
 
-            var userDto = await _userService.GetUserFromApiAsync(userId);
-
+            var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+            var email = jwtToken.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
+            var username = jwtToken.Claims.FirstOrDefault(x => x.Type == "username")?.Value;
 
             var viewModel = new ProfilePageViewModel
             {
-                FirstName = userDto.FirstName!,
-                LastName = userDto.LastName!,
-                Email = userDto.Email,
-                ProfileImageUrl = userDto.ProfileImageUrl!,
+                UserId = userId,
+                Email = email,
+                FirstName = username
             };
-            Console.Write(viewModel);
+
             return View(viewModel);
+
         }
+
+            //Tillfälligt, ska tas ifrån UserCookien.
+        //    var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
+            
+        //    var userDto = await _userService.GetUserFromApiAsync(userId);
+
+
+        //    var viewModel = new ProfilePageViewModel
+        //    {
+        //        FirstName = userDto.FirstName!,
+        //        LastName = userDto.LastName!,
+        //        Email = userDto.Email,
+        //        ProfileImageUrl = userDto.ProfileImageUrl!,
+        //    };
+        //    Console.Write(viewModel);
+        //    return View(viewModel);
+        //}
 
 
 
@@ -66,17 +82,27 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Settings()
         {
             var cookie = Request.Cookies["UserCookie"];
+            string? userId = null;
+
             if (!string.IsNullOrEmpty(cookie))
             {
                 // Försök att deserialisera kakan till ProfilePageViewModel
                 var user = JsonConvert.DeserializeObject<ProfilePageViewModel>(cookie);
-                if (user != null)
-                {
-                    return View(user);
-                }
+                userId = user?.UserId;
+                //if (user != null)
+                //{
+                //    return View(user);
+                //}
             }
             //Tillfälligt, ska tas ifrån UserCookien.
-            var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
+            //var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Redirect("/signin");
+            }
+
+            
+
 
             var userDto = await _userService.GetUserFromApiAsync(userId);
 

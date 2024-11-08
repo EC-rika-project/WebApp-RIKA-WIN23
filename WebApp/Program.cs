@@ -1,3 +1,7 @@
+using Infrastructure.Interfaces;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,6 +25,8 @@ builder.Services.AddAuthentication(options => {
 
 builder.Services.AddScoped<IAppAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<UserService>();
+
 
 
 var app = builder.Build();

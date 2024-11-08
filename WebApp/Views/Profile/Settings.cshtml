@@ -5,8 +5,12 @@
     ViewData["Title"] = "Settings";
 }
 
-<section>
-     <div class="container">
+<section class="profile-section">
+
+
+     
+    <div class="container">
+
         <div class="profile-pic">
             <img src="@Model.ProfileImageUrl" />
         </div>
@@ -14,7 +18,7 @@
         <div class="profile-info">
         <form asp-action="UpdateProfile" method="post" class="personal-form">
             <div class="form-item">
-                <input type="hidden" asp-for="UserId"></input>
+                <input type="hidden" asp-for="UserId"></>
 
 
                     <label asp-for="FirstName" class="bold-text">First Name</label>
@@ -58,6 +62,8 @@
                 <span asp-validation-for="Email"></span>
 
                 <button type="submit" class="btn-accent">Confirm Changes</button>
+                <button type="button" onclick="window.location.href='/Profile'" class="btn-dark">Back</button>
+
             </form>
         </div>
 
