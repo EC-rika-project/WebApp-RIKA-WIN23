@@ -3,6 +3,8 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
 
+using Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -79,6 +81,8 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddScoped<IAppAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<OrderService>();
+
 
 var app = builder.Build();
 
@@ -95,6 +99,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 app.Run();

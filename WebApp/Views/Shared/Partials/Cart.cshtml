@@ -1,0 +1,27 @@
+﻿<div class="cart hide">
+    <button class="btn-dark btn-circle close-btn cart-btn-close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="cart-heading-wrapper">
+        <h1 class="h4 heading">My Cart</h1>
+        <p class="body total-items"></p>
+    </div>
+
+    <div class="cart-item-wrapper"></div>
+
+    <div class="total-price-wrapper">
+        <div class="row">
+            <h3 class="h6">Subtotal</h3>
+             <h3 class="h6 sub-total"></h3>
+        </div>
+        <div class="row">
+            <h3 class="h6">Shipping</h3>
+            <h3 class="h6 shipping"></h3>
+        </div>
+        <div class="row">
+            <h3 class="h6">Bagtotal</h3>
+            <h3 class="h6 cart-total"></h3>
+        </div>
+    </div>
+
+    <a asp-controller="Order" asp-action="Checkout" class="btn btn-dark">Proceed to Checkout</a>
+</div>
+
