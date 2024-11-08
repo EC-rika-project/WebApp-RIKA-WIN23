@@ -6,6 +6,11 @@
     <div class="container">
         <h2 class="h5">Products</h2>
         <div id="checkout-productlist-wrapper"></div>
+
+        <div class="subtotal-row">
+            <h3 class="h6">Subtotal</h3>
+            <h3 class="h6 co-subtotal">SEK</h3>
+        </div>
     </div>
 </section>
 <section class="section checkout-login-section">
@@ -63,16 +68,37 @@
             <h2 class="h5 form-heading span-2">Payment</h2>
             @foreach (var option in Model.OptionLabels)
             {
-                <label class="radio radio-label input-border">
-                    <div class="radio-option">
-                        <div class="payment-icon">
-                            <i class="fa-solid fa-circle-info"></i>
+                <div class="radio-label input-border">
+                    <label class="radio">
+                        <div class="radio-option">
+                            <div class="payment-icon">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            @option.Value
                         </div>
-                        @option.Value
-                    </div>
-                    <input asp-for="SelectedOption" type="radio" name="SelectedOption" value="@option.Key" class="form-check-input"/>
-                    <span class="radio-btn"></span>
-                </label>
+                        <input asp-for="SelectedOption" type="radio" name="SelectedOption" value="@option.Key" class="form-check-input"
+                               onclick="toggleCreditCardForm(this.value)" />
+                        <span class="radio-btn"></span>
+                    </label>
+
+                    @if (option.Key == RadioOptionsModel.CreditCard)
+                    {
+                        <div id="creditCardForm" class="credit-card-form" style="display: none;">
+                            <div>
+                                <input asp-for="CheckoutUser.CardNumber" class="input input-border" placeholder="Card number" />
+                                <span asp-validation-for="CheckoutUser.CardNumber"></span>
+                            </div>
+                            <div>
+                                <input asp-for="CheckoutUser.ExpDate" class="input input-border" placeholder="Exp.date" />
+                                <span asp-validation-for="CheckoutUser.ExpDate"></span>
+                            </div>
+                            <div>
+                                <input asp-for="CheckoutUser.Cvv" class="input input-border" placeholder="CVV" />
+                                <span asp-validation-for="CheckoutUser.Cvv"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
             }
         </div>
 
@@ -80,11 +106,11 @@
 
             <div class="row">
                 <h3 class="h6">Shipping</h3>
-                <h3 class="h6 shipping"></h3>
+                <h3 class="h6 co-shipping"></h3>
             </div>
             <div class="row">
                 <h3 class="h6">Bagtotal</h3>
-                <h3 class="h6 cart-total"></h3>
+                <h3 class="h6 co-cart-total"></h3>
             </div>
         </div>
         
@@ -94,3 +120,4 @@
     </form>
 </section>
 
+<script src="~/js/checkout.js" asp-append-version="true"></script>

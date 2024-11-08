@@ -42,12 +42,14 @@
       grid-row: 2 / 3;
     }
 
-    .price {
+    .price,
+    .co-price{
       grid-column: 1 / 2;
       grid-row: 3 / 4;
     }
 
-    .delete {
+    .delete,
+    .co-delete{
       grid-column: 2 / 3;
       grid-row: 1 / 3;
       justify-self: end;
@@ -57,7 +59,8 @@
       cursor: pointer;
     }
 
-    .quantity {
+    .quantity,
+    .co-quantity{
       grid-column: 2 / 3;
       grid-row: 3 / 4;
       border-radius: 20px;

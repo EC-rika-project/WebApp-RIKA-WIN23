@@ -17,21 +17,6 @@ public class OrderController : Controller
         _logger = logger;
         _orderService = orderService;
     }
-
-
-    //[HttpPost]
-    //[Route("/checkout")]
-    //public IActionResult Checkout([FromBody] string jsonCartData)
-    //{
-    //    CheckoutViewModel viewModel = new CheckoutViewModel();
-    //    if (!string.IsNullOrEmpty(jsonCartData))
-    //    {
-    //        viewModel.ProductList = JsonSerializer.Deserialize<List<CartItemDto>>(jsonCartData);
-    //    }
-
-    //    return View(viewModel);
-    //}
-
   
     [Route("/checkout")]
     public IActionResult Checkout()
@@ -47,22 +32,6 @@ public class OrderController : Controller
     {
         return PartialView("~/Views/Order/Partials/CartItems.cshtml", cartData);
     }
-
-
-
-    //[HttpPost]
-    //[Route("/checkout")]
-    //public IActionResult Checkout([FromBody] CartRequest request)
-    //{
-    //    var viewModel = new CheckoutViewModel();
-    //    if (request != null && request.Cart != null)
-    //    {
-    //        viewModel.ProductList = request.Cart;
-    //    }
-
-    //    return View(viewModel);
-    //}
-
 
     public async Task<IActionResult> CreateOrder(OrderDto order)
     {
