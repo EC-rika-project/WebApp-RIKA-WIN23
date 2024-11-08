@@ -1,9 +1,12 @@
 ﻿using Infrastructure.DTOs;
 using Infrastructure.Models;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -20,53 +23,41 @@ namespace WebApp.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [Route("/Profile")]
         public async Task<IActionResult> Index()
         {
+
             var token = Request.Cookies["AuthToken"];
+
             if (string.IsNullOrEmpty(token))
             {
+                // Om AuthToken saknas, omdirigera till inloggningssidan
                 return Redirect("/signin");
             }
 
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
 
-            var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
-            var email = jwtToken.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
-            var username = jwtToken.Claims.FirstOrDefault(x => x.Type == "username")?.Value;
+            var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == "nameid")?.Value;
+
+            var userDto = await _userService.GetUserFromApiAsync(userId);
 
             var viewModel = new ProfilePageViewModel
             {
                 UserId = userId,
-                Email = email,
-                FirstName = username
+                FirstName = userDto.FirstName!,
+                LastName = userDto.LastName!,
+                Email = userDto.Email,
+                ProfileImageUrl = string.IsNullOrEmpty(userDto.ProfileImageUrl) ? userDto.ProfileImageUrl : "/images/Profilepic.jpg",
             };
 
             return View(viewModel);
 
         }
 
-            //Tillfälligt, ska tas ifrån UserCookien.
-        //    var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
-            
-        //    var userDto = await _userService.GetUserFromApiAsync(userId);
 
-
-        //    var viewModel = new ProfilePageViewModel
-        //    {
-        //        FirstName = userDto.FirstName!,
-        //        LastName = userDto.LastName!,
-        //        Email = userDto.Email,
-        //        ProfileImageUrl = userDto.ProfileImageUrl!,
-        //    };
-        //    Console.Write(viewModel);
-        //    return View(viewModel);
-        //}
-
-
-
-        [Route("/Profile/Privacy")]
+    [Route("/Profile/Privacy")]
         public IActionResult PrivacyPolicy()
         {
             return View();
@@ -78,34 +69,26 @@ namespace WebApp.Controllers
             return View();
         }
 
+
+        [Authorize]
         [Route("/Profile/Settings")]
         public async Task<IActionResult> Settings()
         {
-            var cookie = Request.Cookies["UserCookie"];
-            string? userId = null;
+            var token = Request.Cookies["AuthToken"];
 
-            if (!string.IsNullOrEmpty(cookie))
+            if (string.IsNullOrEmpty(token))
             {
-                // Försök att deserialisera kakan till ProfilePageViewModel
-                var user = JsonConvert.DeserializeObject<ProfilePageViewModel>(cookie);
-                userId = user?.UserId;
-                //if (user != null)
-                //{
-                //    return View(user);
-                //}
-            }
-            //Tillfälligt, ska tas ifrån UserCookien.
-            //var userId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d";
-            if (string.IsNullOrEmpty(userId))
-            {
+                // Om AuthToken saknas, omdirigera till inloggningssidan
                 return Redirect("/signin");
             }
 
-            
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
 
+
+            var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == "nameid")?.Value;
 
             var userDto = await _userService.GetUserFromApiAsync(userId);
-
 
             var viewModel = new ProfilePageViewModel
             {
@@ -113,7 +96,7 @@ namespace WebApp.Controllers
                 FirstName = userDto.FirstName!,
                 LastName = userDto.LastName!,
                 Email = userDto.Email,
-                ProfileImageUrl = userDto.ProfileImageUrl!,
+                ProfileImageUrl = string.IsNullOrEmpty(userDto.ProfileImageUrl) ? userDto.ProfileImageUrl : "/images/Profilepic.jpg",
                 Age = userDto.Age,
                 Gender = userDto.Gender
             };
@@ -125,20 +108,34 @@ namespace WebApp.Controllers
         [Route("/Profile/Settings")]
         public async Task<IActionResult> UpdateProfile(ProfilePageViewModel viewModel)
         {
+            var token = Request.Cookies["AuthToken"];
 
+            if (string.IsNullOrEmpty(token))
+            {
+                // Om AuthToken saknas, omdirigera till inloggningssidan
+                return Redirect("/signin");
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+
+            var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == "nameid")?.Value;
 
             if (ModelState.IsValid)
             {
                 var userDto = new UserDto
                 {
-                    UserId = "a27b6c49-93dc-40d1-a01d-edb3c7e2101d",
+                    UserId = userId,
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
                     Email = viewModel.Email,
-                    ProfileImageUrl = "/images/rika-profile-img.svg",
+                    ProfileImageUrl = string.IsNullOrEmpty(viewModel.ProfileImageUrl)? "/images/Profilepic.jpg": viewModel.ProfileImageUrl,
                     Gender = viewModel.Gender,
                     Age = viewModel.Age
                 };
+
+
                 var result = await _userService.UpdateUserAsync(userDto);
                 if (result)
                 {
@@ -149,12 +146,32 @@ namespace WebApp.Controllers
                 {
                     TempData["Message"] = "Failed to update profile";
                     TempData["MessageType"] = "error";
-                    return RedirectToAction("Settings");
                 }
 
             }
             return View("Settings", viewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("/signout")]
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Route("/UnderConstruction")]
+        public IActionResult UnderConstruction()
+        {
+            return View();
+        }
+
+
     }
+
+
+    
 }
 

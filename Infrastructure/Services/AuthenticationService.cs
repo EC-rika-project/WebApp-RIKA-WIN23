@@ -21,8 +21,9 @@ public class AuthenticationService(HttpClient httpClient, IConfiguration configu
     public async Task<string?> SignInAsync(SignInDto signInDto)
     {
         var content = new StringContent(JsonConvert.SerializeObject(signInDto),Encoding.UTF8,"application/json");
+        var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
 
-        var response = await _httpClient.PostAsync("https://localhost:7163/api/SignIn", content);
+        var response = await _httpClient.PostAsync($"https://userprovider-rika-win23.azurewebsites.net/api/SignIn/?key={apiKey}", content);
 
         if (response.IsSuccessStatusCode)
         {

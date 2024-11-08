@@ -90,8 +90,10 @@
             </li>
             <li class="bold-text"><a href="/Profile/Privacy"><i class="fa-solid fa-shield-check left-icon"></i> Help Center <i class="fa-solid fa-chevron-right"></i></a></li>
         </ul>
-
-        <button class="btn-dark btn-signout">Sign Out</button>
+        <form method="post" action="/signout">
+           @Html.AntiForgeryToken()
+        <button type="submit" class="btn-dark btn-signout">Sign Out</button>
+        </form>
     </div>
 </section>
 

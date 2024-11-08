@@ -61,8 +61,7 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
         }
 
         var securityKey = _configuration!.GetSection("SecurityKeys")["WebAppKey"];
-        //var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
-        var apiKey = "Key";
+        var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
         var dto = new SignUpDto
         {
             FirstName = viewModel.FirstName,
@@ -77,8 +76,7 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
 
         try
         {
-            //var response = await client.PostAsync($"https://userprovider-rika-win23.azurewebsites.net/api/SignUp/?key={apiKey}", jsonContent);
-            var response = await client.PostAsync($"https://localhost:7163/api/SignUp?key={apiKey}", jsonContent);
+            var response = await client.PostAsync($"https://userprovider-rika-win23.azurewebsites.net/api/SignUp/?key={apiKey}", jsonContent);
 
             if (!response.IsSuccessStatusCode)
             {

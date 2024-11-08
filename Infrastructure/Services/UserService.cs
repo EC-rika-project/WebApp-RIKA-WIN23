@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DTOs;
 using Infrastructure.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,20 @@ namespace Infrastructure.Services
     {
 
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-        public UserService(HttpClient httpClient)
+        public UserService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _configuration = configuration;
         }
 
         public async Task<UserDto> GetUserFromApiAsync(string userId)
         {
-            
-            var response = await _httpClient.GetAsync($"https://localhost:7163/api/Profile?userId={userId}");
+            var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+
+
+            var response = await _httpClient.GetAsync($"https://userprovider-rika-win23.azurewebsites.net/api/Profile/?key={apiKey}&userId={userId}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -39,15 +44,13 @@ namespace Infrastructure.Services
 
         public async Task<bool> UpdateUserAsync(UserDto userDto)
         {
+            var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+
             var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync("https://localhost:7163/api/Profile", content);
+            var response = await _httpClient.PutAsync($"https://userprovider-rika-win23.azurewebsites.net/api/Profile/?key={apiKey}", content);
 
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    return true;
-            //}
-            //return false;
+            
             if (!response.IsSuccessStatusCode)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
@@ -59,21 +62,5 @@ namespace Infrastructure.Services
             return true;
         }
 
-
-
-
-        public UserDto GetFakeUser()
-        {
-            return new UserDto
-            {
-                UserId = "1",
-                FirstName = "Harre",
-                LastName = "Birger Svenning",
-                Email = "Harreking@gmail.com",
-                Age = 85,
-                Gender = "Male",
-                ProfileImageUrl = "/images/Profilepic.jpg"
-            };
-        }
     }
 }
