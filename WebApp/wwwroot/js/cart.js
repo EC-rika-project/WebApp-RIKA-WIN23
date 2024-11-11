@@ -29,58 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${value.toFixed(2)} Sek`;
     }
 
-    //// Function to save cart to local storage
-    //function saveCartToLocalStorage() {
-    //    //const cartData = [];
-    //    //document.querySelectorAll(".cart-item").forEach(item => {
-    //    //    const name = item.querySelector(".title").textContent;
-    //    //    const ingress = item.querySelector(".ingress").textContent;
-    //    //    const price = parseFloat(item.getAttribute("data-price"));
-    //    //    const quantity = parseInt(item.querySelector(".qty-number p").textContent);
-    //    //    const size = item.querySelector(".size").textContent;
-    //    //    const coverImageUrl = item.querySelector("img").src;
-    //    //    const articleNumber = parseFloat(item.getAttribute("data-articleNumber"));
-    //    //    cartData.push({ name, price, ingress, quantity, size, coverImageUrl, articleNumber });
-    //    //});
-
-
-    //    //localStorage.setItem("cart", JSON.stringify(cartData));
-        
-    //    document.querySelectorAll(".cart-item").forEach(item => {
-
-    //        // Här kan vi skapa en produktstruktur för varje artikel
-    //        const cartItem = {
-    //            product: {
-    //                articleNumber: item.getAttribute("data-articleNumber"),  // Förutsatt att artikelnr finns som en data-attribut
-    //                //categoryName: item.getAttribute("data-category-name"),    // Förutsatt att kategorin finns som en data-attribut
-    //                //color: item.getAttribute("data-color"),                   // Förutsatt att färg finns som en data-attribut
-    //                coverImageUrl: item.querySelector("img").src,             // Hämtar bild-URL
-    //                /*                    description: item.querySelector(".description").textContent,*/ // Förutsatt att beskrivning finns som en text
-    //                //imageUrls: item.querySelectorAll(".image-wrapper img").map(img => img.src), // Om det finns flera bilder
-    //                ingress: item.querySelector(".ingress").textContent,
-    //                name: item.querySelector(".title").textContent,
-    //                price: parseFloat(item.getAttribute("data-price")),
-    //                //variations: [], // Lägg till logik för att hämta varianter om det behövs
-    //            },
-    //            size: item.querySelector(".size").textContent, // Förutsatt att storleken finns i ett element med klassen "size"
-    //            quantity: parseInt(item.querySelector(".qty-number p").textContent),
-    //        };
-
-    //        // Lägg till objektet i cartData
-    //        let cartData = JSON.parse(localStorage.getItem("cart")) || []; // Hämta befintlig data om den finns
-    //        cartData.push(cartItem);
-
-    //        // Spara den uppdaterade cartData tillbaka till Local Storage
-    //        localStorage.setItem("cart", JSON.stringify(cartData));
-    //    });
-
-
-
-
-
-    //}
-
-    function saveQuantityUpdate(articleNumber, newQuantity) {
+    function saveCartUpdate(articleNumber, newQuantity) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const itemIndex = cart.findIndex(item => item.product.articleNumber === articleNumber);
 
@@ -119,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
                             <p class="body ingress">${ingress}</p>
                             <p class="h6 price">${formatPrice(price * quantity)}</p>
-                            <p class="body size">Storlek: ${size}</p> <!-- Lägg till storlek -->
+                            <p class="body size">Storlek: ${size}</p> 
                             <div class="quantity bg-gray">
                                 <button class="qty-btn decrease">-</button>
                                 <div class="qty-number">
@@ -161,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cartTotalElement.textContent = formatPrice(totalWithShipping);
         itemCountElement.textContent = `(${totalItems} items)`;
 
-        //saveCartToLocalStorage();
     }
 
     // Function for buttons in cart
@@ -190,10 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     quantity--;
                     quantityElement.textContent = quantity;
 
-                    saveQuantityUpdate(articleNumber, quantity)
-
+                    saveCartUpdate(articleNumber, quantity)
                     updateButtonState(quantity);
-                    //calculateTotal();
                 }
             });
 
@@ -203,19 +149,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 quantity++;
                 quantityElement.textContent = quantity;
 
-                saveQuantityUpdate(articleNumber, quantity)
-
+                saveCartUpdate(articleNumber, quantity)
                 updateButtonState(quantity);
-                //calculateTotal();
             });
 
             deleteBtn.addEventListener("click", () => {
                 let articleNumber = item.getAttribute("data-articleNumber")
                 item.remove();
 
-                saveQuantityUpdate(articleNumber, 0)
-
-                //calculateTotal();
+                saveCartUpdate(articleNumber, 0)
             });
 
             updateButtonState(parseInt(quantityElement.textContent));

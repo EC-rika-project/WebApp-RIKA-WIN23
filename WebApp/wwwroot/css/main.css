@@ -190,6 +190,7 @@ svg {
   height: auto;
   width: 20%;
   max-width: 100px;
+  aspect-ratio: 1/1;
 }
 .cart-item .image-wrapper .image,
 .co-cart-item .image-wrapper .image {

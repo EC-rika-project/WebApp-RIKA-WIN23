@@ -2,29 +2,35 @@
 @using System.Globalization
 @model List<CartItemDto>
 
-
-@foreach (var item in Model)
+@if(Model == null || !Model.Any())
 {
-    <article class="co-cart-item" data-co-price="@item.Product.Price" data-co-articleNumber="@item.Product.ArticleNumber">
-        <div class="image-wrapper">
-            <img src="@item.Product.CoverImageUrl" alt="@item.Product.Name" class="image" />
-        </div>
-        <div class="text-grid">
-            <h5 class="h5 co-title">@item.Product.Name</h5>
-            <div class="co-delete">
-                <i class="fa-regular fa-trash"></i>
+    <p class="body" style="margin: 20px 0;">Du har inga produkter i din varukorg</p>
+}
+else
+{ 
+    @foreach (var item in Model)
+    {
+        <article class="co-cart-item" data-co-price="@item.Product.Price" data-co-articleNumber="@item.Product.ArticleNumber">
+            <div class="image-wrapper">
+                <img src="@item.Product.CoverImageUrl" alt="@item.Product.Name" class="image" />
             </div>
-            <p class="body text co-ingress">@item.Product.Ingress</p>
-            <p class="h6 co-price">@(string.Format(CultureInfo.InvariantCulture, "{0:F2} Sek", item.Product.Price * item.Quantity))</p>
-            <div class="quantity bg-gray">
-                <button class="qty-btn co-decrease">-</button>
-                <div class="qty-number">
-                    <p class="body co-quantity">@item.Quantity</p>
+            <div class="text-grid">
+                <h5 class="h5 co-title">@item.Product.Name</h5>
+                <div class="co-delete">
+                    <i class="fa-regular fa-trash"></i>
                 </div>
-                <button class="qty-btn co-increase">+</button>
+                <p class="body text co-ingress">@item.Product.Ingress</p>
+                <p class="h6 co-price">@(string.Format(CultureInfo.InvariantCulture, "{0:F2} Sek", item.Product.Price * item.Quantity))</p>
+                <div class="quantity bg-gray">
+                    <button class="qty-btn co-decrease" style="visibility: @(item.Quantity <= 1 ? "hidden" : "visible");">-</button>
+                    <div class="qty-number">
+                        <p class="body co-quantity">@item.Quantity</p>
+                    </div>
+                    <button class="qty-btn co-increase">+</button>
+                </div>
             </div>
-        </div>
-        <input type="hidden" name="Products[@item.Product.ArticleNumber].Name" value="@item.Product.Name" />
-    </article>
+            <input type="hidden" name="Products[@item.Product.ArticleNumber].Name" value="@item.Product.Name" />
+        </article>
+    }
 }
 

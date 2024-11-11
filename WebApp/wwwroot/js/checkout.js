@@ -1,4 +1,4 @@
-﻿
+﻿// Function to toggle credit card form
 function toggleCreditCardForm(selectedOption) {
     const creditCardForm = document.getElementById("creditCardForm");
 
@@ -15,10 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleCreditCardForm(selectedOption.value);
     }
 });
+
+// Function to format correct price
 function formatCheckoutPrice(value) {
     return `${value.toFixed(2)} Sek`;
 }
 
+// Function to calculate subtotal
 function calculateCheckoutSubtotal() {
     console.log("subtotal körs")
     let coSubtotal = 0;
@@ -35,6 +38,7 @@ function calculateCheckoutSubtotal() {
     calculateCheckoutShipping(coSubtotal)
 }
 
+// Function to calculate shipping cost
 function calculateCheckoutShipping(coSubtotal) {
     const coShippingElement = document.querySelector(".co-shipping");
     let coShippingCost = coSubtotal > 1000 || coSubtotal === 0 ? 0 : 50;
@@ -42,28 +46,14 @@ function calculateCheckoutShipping(coSubtotal) {
     calculateCheckoutTotal(coSubtotal, coShippingCost)
 }
 
+// Function to calculate order total price
 function calculateCheckoutTotal(coSubtotal, coShippingCost) {
     const coTotalElement = document.querySelector(".co-cart-total");
     let coTotal = coSubtotal + coShippingCost
     coTotalElement.textContent = formatCheckoutPrice(coTotal)
 }
 
-//function saveCheckoutCartToLocalStorage() {
-//    console.log("save")
-//    const cartItems = [];
-//    document.querySelectorAll(".co-cart-item").forEach(item => {
-//        const name = item.querySelector(".co-title").textContent;
-//        const ingress = item.querySelector(".co-ingress").textContent;
-//        const price = parseFloat(item.getAttribute("data-co-price"));
-//        const quantity = parseInt(item.querySelector(".qty-number p").textContent);
-//        cartItems.push({ name, price, ingress, quantity });
-//    });
-//    localStorage.setItem("cart", JSON.stringify(cartItems));
-
-//    loadCheckoutCartFromLocalStorage();
-//    loadCartFromLocalStorage();
-//}
-
+// Function to load the cart from local storage
 function loadCheckoutCartFromLocalStorage() {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
     const checkoutProductListWrapper = document.getElementById("checkout-productlist-wrapper");
@@ -105,6 +95,7 @@ function loadCheckoutCartFromLocalStorage() {
     }
 }
 
+// Function to save updated quantity of a product to local storage
 function saveCheckoutUpdate(articleNumber, newQuantity) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const itemIndex = cart.findIndex(item => item.product.articleNumber === articleNumber);
@@ -120,7 +111,7 @@ function saveCheckoutUpdate(articleNumber, newQuantity) {
     loadCartFromLocalStorage();
 }
 
-
+// Function to add eventlisteners to the quantity/delete buttons
 function setupEventListeners() {
     document.querySelectorAll(".qty-btn").forEach(button => {
         button.addEventListener("click", () => {
@@ -128,18 +119,27 @@ function setupEventListeners() {
             const quantityElement = item.querySelector(".co-quantity");
             let quantity = parseInt(quantityElement.textContent);
             let articleNumber = item.getAttribute("data-co-articleNumber")
+            const decreaseButton = item.querySelector(".co-decrease");
+
 
             if (button.classList.contains("co-increase")) {
                 quantity++;
                 saveCheckoutUpdate(articleNumber, quantity)
+               
             } else if (button.classList.contains("co-decrease") && quantity > 1) {
                 quantity--;
                 saveCheckoutUpdate(articleNumber, quantity)
+               
             }
 
             quantityElement.textContent = quantity;
             calculateCheckoutSubtotal();
-            //saveCheckoutCartToLocalStorage();
+
+            if (quantity <= 1) {
+                decreaseButton.style.visibility = "hidden";
+            } else {
+                decreaseButton.style.visibility = "visible";
+            }
         });
     });
 
@@ -152,13 +152,12 @@ function setupEventListeners() {
                 cartItem.remove();
                 saveCheckoutUpdate(articleNumber, 0)
                 calculateCheckoutSubtotal();
-                //saveCheckoutCartToLocalStorage();
-            }
+             }
         });
     });
 }
 
-
+// Load the initial cart items list
 const intervalId = setInterval(() => {
     if (document.querySelectorAll(".co-cart-item").length > 0) {
         calculateCheckoutSubtotal();
