@@ -3,8 +3,6 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
 
-using Infrastructure.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -66,26 +64,25 @@ builder.Services.AddAuthentication(options =>
     };
 })
 
-    .AddCookie(options =>
-    {
-        options.Cookie.HttpOnly = true;
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        options.LoginPath = "/signin";
-        options.LogoutPath = "/signout";
-        options.AccessDeniedPath = "/denied";
-        options.SlidingExpiration = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-        options.Cookie.SameSite = SameSiteMode.None;
-    });
-
+.AddCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.LoginPath = "/signin";
+    options.LogoutPath = "/signout";
+    options.AccessDeniedPath = "/denied";
+    options.SlidingExpiration = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;
+});
 
 
 builder.Services.AddScoped<IAppAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
+builder.Services.AddScoped<IEmailService, AzureEmailService>();
 builder.Services.AddScoped<OrderService>();
 
-
 var app = builder.Build();
-
 
 app.UseExceptionHandler("/Home/Error");
 app.UseSession();

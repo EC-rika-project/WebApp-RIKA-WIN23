@@ -6,17 +6,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using WebApp.Factories;
 using Microsoft.AspNetCore.Authentication.Facebook;
+using Infrastructure.Services;
 
 namespace WebApp.Controllers
 {
-    public class SignInController : Controller
+    public class SignInController(IAppAuthenticationService authService) : Controller
     {
-        private readonly IAppAuthenticationService _authService;
-
-        public SignInController(IAppAuthenticationService authService)
-        {
-            _authService = authService;
-        }
+        private readonly IAppAuthenticationService _authService = authService;
 
         [Route("/signin")]
         public IActionResult SignIn()
@@ -61,7 +57,7 @@ namespace WebApp.Controllers
         [Route("signin-google")]
         public IActionResult GoogleSignIn()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity!.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -78,7 +74,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                if (!User.Identity.IsAuthenticated)
+                if (!User.Identity!.IsAuthenticated)
                 {
                     TempData["Message"] = "Failed to Google login";
                     TempData["MessageType"] = "error";
@@ -105,7 +101,7 @@ namespace WebApp.Controllers
         [Route("signin-facebook")]
         public IActionResult FacebookSignIn()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity!.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
             }
