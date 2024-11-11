@@ -2,6 +2,7 @@ using Infrastructure.Interfaces;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +82,16 @@ builder.Services.AddScoped<IAppAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
 builder.Services.AddScoped<IEmailService, AzureEmailService>();
 builder.Services.AddScoped<OrderService>();
+
+
+// Register HttpClient
+builder.Services.AddHttpClient();
+
+// Register ProductService
+builder.Services.AddScoped<ProductService>(); 
+
+// Register ProductRepository
+builder.Services.AddScoped<ProductRepository>(); 
 
 var app = builder.Build();
 

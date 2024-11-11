@@ -1,7 +1,8 @@
-﻿namespace WebApp.ViewModels;
+﻿using Infrastructure.Dtos;
+
+namespace WebApp.ViewModels;
 
 public class HomeIndexViewModel
 {
-    public string PageTitle { get; set; } = "Home";
-    //public CartViewModel CartViewModel {get; set;} = new();
+    public PaginationResult<ProductsDto>? NewArrivals { get; set; } 
 }

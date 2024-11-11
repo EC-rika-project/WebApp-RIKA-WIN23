@@ -1,0 +1,48 @@
+﻿@model WebApp.ViewModels.ProductsIndexViewModel
+
+<section class="products">
+    <div class="container bg-light hero-section">
+        <!-- Render the CategoryMenu Partial -->
+        @await Html.PartialAsync("~/Views/Shared/Partials/CategoryMenu.cshtml")
+        <div class="content-wrapper">
+            <div class="all-products">
+                <div class="title-sort">
+                    <h1 class="product-title">@Model.CategoryName</h1>
+                    <button onclick="openSortModal()" class="sort-btn">
+                        <i class="fa-sharp fa-regular fa-bars-sort"></i>
+                    </button>
+                </div>
+                @if (Model.Result?.Data != null && Model.Result.Data.Any())
+                {
+                    <div class="product-grid">
+                        @foreach (var product in Model.Result.Data)
+                        {
+                            <div class="product-item" onclick="openProductModal(@product.ArticleNumber)">
+                                <img src="@product.CoverImageUrl" alt="@product.Name" />
+                                <button id="favoriteButton_@product.ArticleNumber" class="btn-like" data-id="@product.ArticleNumber" onclick="toggleFavorite(this); event.stopPropagation();">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <h2>@product.Name</h2>
+                                <p>@product.Ingress</p>
+                                <p style="font-weight:bold;">$@product.Price</p>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="items-notadded">No products available in this category.</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Render the Product Modal Partial -->
+@await Html.PartialAsync("~/Views/Shared/Partials/ProductModal.cshtml")
+
+<!-- Render the Sort Modal Partial -->
+@await Html.PartialAsync("~/Views/Shared/Partials/SortModal.cshtml")
+
+
+
