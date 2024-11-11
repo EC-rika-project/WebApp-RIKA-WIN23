@@ -11,12 +11,6 @@ namespace Infrastructure.Services;
 
 public class OrderService : IOrderService
 {
-    //private readonly AppDbContext _dbContext;
-
-    //public OrderService(AppDbContext dbContext)
-    //{
-    //    _dbContext = dbContext;
-    //}
 
     public async Task<bool> CreateOrderAsync(OrderDto orderDto)
     {
@@ -46,10 +40,6 @@ public class OrderService : IOrderService
 
             order.Items.Add(orderItem);
         }
-
-       
-        //_dbContext.Orders.Add(order);
-        //await _dbContext.SaveChangesAsync();
 
         return true;
     }

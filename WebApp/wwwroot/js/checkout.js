@@ -1,4 +1,5 @@
-﻿function toggleCreditCardForm(selectedOption) {
+﻿
+function toggleCreditCardForm(selectedOption) {
     const creditCardForm = document.getElementById("creditCardForm");
 
     if (selectedOption === "CreditCard") {
@@ -14,12 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleCreditCardForm(selectedOption.value);
     }
 });
-
 function formatCheckoutPrice(value) {
     return `${value.toFixed(2)} Sek`;
 }
 
 function calculateCheckoutSubtotal() {
+    console.log("subtotal körs")
     let coSubtotal = 0;
     document.querySelectorAll(".co-cart-item").forEach(item => {
         const coPrice = parseFloat(item.dataset.coPrice);
@@ -47,7 +48,7 @@ function calculateCheckoutTotal(coSubtotal, coShippingCost) {
     coTotalElement.textContent = formatCheckoutPrice(coTotal)
 }
 
-function saveCartToLocalStorage() {
+function saveCheckoutCartToLocalStorage() {
     console.log("save")
     const cartItems = [];
     document.querySelectorAll(".co-cart-item").forEach(item => {
@@ -57,12 +58,17 @@ function saveCartToLocalStorage() {
         const quantity = parseInt(item.querySelector(".qty-number p").textContent);
         cartItems.push({ name, price, ingress, quantity });
     });
-    localStorage.setItem("cart", JSON.stringify(cartItems)); // Spara varukorgen till localStorage
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+
+    loadCheckoutCartFromLocalStorage();
+    loadCartFromLocalStorage();
 }
 
-function loadCartFromLocalStorage() {
-    const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+function loadCheckoutCartFromLocalStorage() {
+    const cartItems = JSON.parse(localStorage.getItem("cart"));
     const checkoutProductListWrapper = document.getElementById("checkout-productlist-wrapper");
+
+    checkoutProductListWrapper.innerHTML = '';
 
     if (cartItems) {
         cartItems.forEach(item => {
@@ -70,8 +76,7 @@ function loadCartFromLocalStorage() {
             cartItemElement.classList.add("co-cart-item");
             cartItemElement.dataset.coPrice = item.price;
 
-            // Skapa innehållet för artikeln
-            cartItemElement.innerHTML = `
+            cartItemElement.innerHTML += `
                 <div class="image-wrapper">
                     <img src="https://picsum.photos/200" alt="" class="image" />
                 </div>
@@ -93,10 +98,10 @@ function loadCartFromLocalStorage() {
                 <input type="hidden" name="Products[${item.articleNumber}].Name" value="${item.name}" />
             `;
 
-            // Lägg till det skapade artikeln i checkout-productlist-wrapper
             checkoutProductListWrapper.appendChild(cartItemElement);
         });
         calculateCheckoutSubtotal();
+        setupEventListeners();
     }
 }
 
@@ -115,7 +120,7 @@ function setupEventListeners() {
 
             quantityElement.textContent = quantity;
             calculateCheckoutSubtotal();
-            saveCartToLocalStorage();
+            saveCheckoutCartToLocalStorage();
         });
     });
 
@@ -124,8 +129,8 @@ function setupEventListeners() {
             const cartItem = event.target.closest('.co-cart-item');
             if (cartItem) {
                 cartItem.remove();
-                calculateCheckoutSubtotal(); 
-                saveCartToLocalStorage();
+                calculateCheckoutSubtotal();
+                saveCheckoutCartToLocalStorage();
             }
         });
     });
@@ -139,3 +144,24 @@ const intervalId = setInterval(() => {
         clearInterval(intervalId);
     }
 }, 100);
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (window.location.pathname === "/checkout") {
+        const cartData = localStorage.getItem("cart");
+        if (cartData) {
+            fetch("/checkout/loadCartItems", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: cartData
+            })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("checkout-productlist-wrapper").innerHTML = html;
+                })
+                .catch(error => console.error("Error loading cart items:", error));
+        }
+    }
+});

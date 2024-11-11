@@ -807,7 +807,7 @@ svg {
   top: 0;
   right: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100vh;
   z-index: 2;
   padding: 20px;
   background-color: var(--color-light);
@@ -816,11 +816,11 @@ svg {
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.5s ease;
+  overflow-y: auto;
 }
 @media (min-width: 768px) {
   .cart {
     width: 400px;
-    min-height: 100%;
   }
 }
 .cart .cart-btn-close {
@@ -845,6 +845,8 @@ svg {
   align-self: center;
   margin-top: 40px;
   border: 1px solid var(--color-dark);
+  min-height: 50px;
+  margin-bottom: 24px;
 }
 .cart .btn:hover {
   border: 1px solid var(--color-dark);
