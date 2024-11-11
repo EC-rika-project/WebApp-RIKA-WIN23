@@ -11,18 +11,17 @@ using System.Text;
 using AuthenticationProperties = Microsoft.AspNetCore.Authentication.AuthenticationProperties;
 
 namespace Infrastructure.Services;
-
 public class AuthenticationService(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : IAppAuthenticationService
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly IConfiguration _configuration = configuration;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly string _apiKey = configuration["ApiKey:Secret"]!;
 
     public async Task<string?> SignInAsync(SignInDto signInDto)
     {
-        var content = new StringContent(JsonConvert.SerializeObject(signInDto),Encoding.UTF8,"application/json");
-
-        var response = await _httpClient.PostAsync("https://localhost:7163/api/SignIn", content);
+        var content = new StringContent(JsonConvert.SerializeObject(signInDto), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync($"https://userprovider-rika-win23.azurewebsites.net/api/SignIn?key={_apiKey}", content);
 
         if (response.IsSuccessStatusCode)
         {

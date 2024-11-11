@@ -906,8 +906,10 @@ svg {
   align-self: center;
 }
 
-.hero-section {
-  display: flex;
+@media (min-width: 1200px) {
+  .hero-section {
+    display: flex;
+  }
 }
 .hero-section .category-menu {
   display: none;
@@ -988,6 +990,419 @@ svg {
   display: flex;
   align-items: flex-end;
   padding-bottom: 2px;
+}
+
+/*-------- dont want to edit this similar/existing one called ".category-link" in site.css, beacuse of possible conflicts ---------*/
+.category-links {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--color-dark);
+  padding-bottom: 2rem;
+}
+.category-links h3 {
+  font-weight: 500;
+}
+.category-links i {
+  font-size: 1.2rem;
+  width: 1.5rem;
+  text-align: center;
+}
+.category-links:hover, .category-links:active {
+  color: gray;
+}
+
+/*------------------products grid-----------------*/
+.all-products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.all-products .title-sort {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.all-products .product-title {
+  align-self: flex-start;
+  margin-bottom: 2rem;
+}
+.all-products .product-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+.all-products .product-grid .product-item {
+  position: relative;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.all-products .product-grid .product-item:hover {
+  transform: translateY(-5px);
+}
+.all-products .product-grid .product-item img {
+  width: 100%;
+  height: 14rem;
+  width: 15rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+.all-products .product-grid .product-item h2 {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+.all-products .product-grid .product-item p {
+  margin-bottom: 0.4rem;
+}
+
+@media (max-width: 1200px) {
+  .all-products .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .all-products .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .all-products .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/*------------------- Product Modal----------------------*/
+#productModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#productModal .product-modal-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  height: 80%;
+  width: 60%;
+  display: flex;
+  overflow-y: auto;
+}
+#productModal .product-modal-content .modal-content-image {
+  position: relative;
+}
+#productModal .product-modal-content .modal-content-image img {
+  width: 60rem;
+  height: 100%;
+  object-fit: fill;
+  z-index: -1;
+}
+#productModal .product-modal-content .modal-content-text {
+  padding: 2rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-header {
+  display: flex;
+  padding-bottom: 1rem;
+  justify-content: space-between;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-header h2 {
+  font-weight: bold;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info {
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-size,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-color {
+  display: flex;
+  gap: 0.5rem;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-size .btn-modal-size,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-size .btn-modal-color,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-color .btn-modal-size,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-color .btn-modal-color {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  background-color: white;
+  font-weight: bold;
+  color: gray;
+  border: 1px solid gray;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-size .btn-modal-size.selected,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-size .btn-modal-color.selected,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-color .btn-modal-size.selected,
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-color .btn-modal-color.selected {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-info .modal-description {
+  padding-top: 1rem;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-cart {
+  display: flex;
+  flex-direction: column;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-cart .stock-price {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+#productModal .product-modal-content .modal-content-text .product-modal-body .modal-body-cart .cart-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+/*------------ Product Modal responsive adjustments-------------*/
+@media (max-width: 1200px) {
+  #productModal .product-modal-content {
+    flex-direction: column;
+    height: 80%;
+    width: 70%;
+  }
+  #productModal .product-modal-content .modal-content-image img {
+    width: 100%;
+    height: auto;
+  }
+}
+@media (max-width: 900px) {
+  #productModal .product-modal-content {
+    height: 90%;
+    width: 80%;
+  }
+}
+/*------------------- Sort Modal----------------------*/
+#sortModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#sortModal .sort-modal-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  height: 60%;
+  width: 50%;
+  display: flex;
+  overflow-y: auto;
+}
+#sortModal .sort-modal-content .modal-search-bar {
+  margin: 2rem;
+  display: inline-block;
+}
+#sortModal .sort-modal-content .modal-search-bar i {
+  color: gray;
+  padding-left: 1rem;
+  font-size: 1rem;
+}
+#sortModal .sort-modal-content #searchInput {
+  padding: 10px;
+  border: 2px solid gray;
+  border-radius: 8px !important;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  outline: none;
+}
+
+/*------------ Sort Modal responsive adjustments-------------*/
+/*--------------Buttons--------------*/
+.btn-modal-close {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.btn-modal-cart-btn {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: none;
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 20px;
+}
+
+.btn-like {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  background-color: white;
+  color: gray;
+  border: 1px solid gray;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.btn-like.favorite {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}
+
+.btn-like-modal {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  background-color: white;
+  color: gray;
+  border: 1px solid gray;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 1;
+}
+.btn-like-modal.favorite {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}
+
+.sort-btn {
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+}
+
+.apply-sort-btn {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: none;
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 20px;
+}
+
+.btn-onesize {
+  width: 4rem !important;
+  border-radius: 4px !important;
+}
+
+/*-------------------other------------------*/
+.items-notadded {
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #666;
+  justify-content: center;
+  margin-top: 20%;
+}
+
+.btn-modal-size.out-of-stock {
+  cursor: default !important;
+  text-decoration: line-through;
+}
+
+.new-arrival-image {
+  display: flex;
+  gap: 1rem;
+}
+@media (max-width: 1200px) {
+  .new-arrival-image .image-wrapper {
+    width: 70% !important;
+  }
+}
+@media (max-width: 700px) {
+  .new-arrival-image {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+  .new-arrival-image .text-wrapper {
+    padding-bottom: 2rem;
+  }
+}
+.new-arrival-image .image-wrapper {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.new-arrival-image .image-wrapper:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notification {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1.5rem;
+  background-color: lightgoldenrodyellow; /* Success color */
+  color: black;
+  font-size: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.notification.error {
+  background-color: #f44336; /* Error color */
+}
+
+.favorites .product-title {
+  text-align: center;
+  padding-bottom: 2rem;
+}
+@media (max-width: 600px) {
+  .favorites .product-title {
+    padding-top: 2rem;
+  }
+}
+
+.new-arrivals .all-products .product-grid {
+  gap: 1.5rem !important;
+}
+
+.new-arrivals .all-products .product-grid .product-item img {
+  width: 20rem;
+  height: 20rem;
 }
 
 .signin-container {

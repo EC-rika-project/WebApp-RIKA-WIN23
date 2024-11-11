@@ -29,18 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${value.toFixed(2)} Sek`;
     }
 
-    // Function to save cart to local storage
-    function saveCartToLocalStorage() {
-        const cartData = [];
-        document.querySelectorAll(".cart-item").forEach(item => {
-            const name = item.querySelector(".title").textContent;
-            const ingress = item.querySelector(".ingress").textContent;
-            const price = parseFloat(item.getAttribute("data-price"));
-            const quantity = parseInt(item.querySelector(".qty-number p").textContent);
-            cartData.push({ name, price, ingress, quantity });
-        });
-        localStorage.setItem("cart", JSON.stringify(cartData));
-    }
+    //// Function to save cart to local storage
+    //function saveCartToLocalStorage() {
+    //    const cartData = [];
+    //    document.querySelectorAll(".cart-item").forEach(item => {
+    //        const name = item.querySelector(".title").textContent;
+    //        const ingress = item.querySelector(".ingress").textContent;
+    //        const price = parseFloat(item.getAttribute("data-price"));
+    //        const quantity = parseInt(item.querySelector(".qty-number p").textContent);
+    //        cartData.push({ name, price, ingress, quantity });
+    //    });
+    //    localStorage.setItem("cart", JSON.stringify(cartData));
+    //}
 
     // Function to load the cart from local storage
     function loadCartFromLocalStorage() {
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cartTotalElement.textContent = formatPrice(totalWithShipping);
         itemCountElement.textContent = `(${totalItems} items)`;
 
-        saveCartToLocalStorage();
+        /*saveCartToLocalStorage();*/
     }
 
 

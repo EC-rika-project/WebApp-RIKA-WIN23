@@ -1,6 +1,6 @@
 ﻿@{
     // Retrieve categories from ViewData
-    var categories = ViewData["Categories"] as List<Infrastructure.Dtos.CategoryDto>;
+    var categories = ViewData["Categories"] as List<Infrastructure.Dtos.CategoryDto>; 
 
     // Map category names to FontAwesome icons
     var categoryIcons = new Dictionary<string, string>
@@ -17,11 +17,10 @@
     var sortedCategories = categories?.OrderBy(c => c.Name != "New Arrivals").ThenBy(c => c.Name);
 }
 
-<div class="mobile-menu hide" id="mobile-menu">
-    <div class="category-menu">
-        <button class="btn-dark btn-circle close-btn" id="mobile-menu-btn-close"><i class="fa-solid fa-xmark"></i></button>
-        <h1 class="h4 heading">Categories</h1>
-        <div class="link-wrapper">
+<div class="category-menu">
+    <h1 class="h4 heading">Categories</h1>
+    <div class="link-wrapper">
+        <div class="category-list">
             @if (sortedCategories != null)
             {
                 @foreach (var category in sortedCategories)
@@ -41,4 +40,3 @@
         </div>
     </div>
 </div>
-

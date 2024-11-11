@@ -1,26 +1,33 @@
-using Infrastructure.Dtos;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using WebApp.ViewModels;
-
 
 namespace WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(ProductService productService) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        private readonly ProductService _productService = productService;
 
         [Route("/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            HomeIndexViewModel viewModel = new();
-            return View(viewModel);
+            // Fetch categories
+            var categories = await _productService.GetAllCategoriesAsync();
 
+            // Pass the list of categories to ViewData
+            ViewData["Categories"] = categories;
+
+            // You can also fetch products if needed, like the "New Arrivals"
+            var newArrivalsCategoryName = "New Arrivals";
+            var newArrivals = await _productService.GetAllProductsAsync(newArrivalsCategoryName);
+
+            var viewModel = new HomeIndexViewModel
+            {
+                NewArrivals = newArrivals
+            };
+
+            return View(viewModel);
         }
     }
 }
+
