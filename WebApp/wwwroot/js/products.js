@@ -170,6 +170,9 @@ async function addToCart(button) {
     // Save the updated cart to localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
     showNotification("Product added to cart!", "success");
+
+    loadCartFromLocalStorage();
+
 }
 
 // Toggle the 'favorite' class on the favorite button for the specific product

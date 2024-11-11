@@ -48,21 +48,21 @@ function calculateCheckoutTotal(coSubtotal, coShippingCost) {
     coTotalElement.textContent = formatCheckoutPrice(coTotal)
 }
 
-function saveCheckoutCartToLocalStorage() {
-    console.log("save")
-    const cartItems = [];
-    document.querySelectorAll(".co-cart-item").forEach(item => {
-        const name = item.querySelector(".co-title").textContent;
-        const ingress = item.querySelector(".co-ingress").textContent;
-        const price = parseFloat(item.getAttribute("data-co-price"));
-        const quantity = parseInt(item.querySelector(".qty-number p").textContent);
-        cartItems.push({ name, price, ingress, quantity });
-    });
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+//function saveCheckoutCartToLocalStorage() {
+//    console.log("save")
+//    const cartItems = [];
+//    document.querySelectorAll(".co-cart-item").forEach(item => {
+//        const name = item.querySelector(".co-title").textContent;
+//        const ingress = item.querySelector(".co-ingress").textContent;
+//        const price = parseFloat(item.getAttribute("data-co-price"));
+//        const quantity = parseInt(item.querySelector(".qty-number p").textContent);
+//        cartItems.push({ name, price, ingress, quantity });
+//    });
+//    localStorage.setItem("cart", JSON.stringify(cartItems));
 
-    loadCheckoutCartFromLocalStorage();
-    loadCartFromLocalStorage();
-}
+//    loadCheckoutCartFromLocalStorage();
+//    loadCartFromLocalStorage();
+//}
 
 function loadCheckoutCartFromLocalStorage() {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
@@ -78,7 +78,7 @@ function loadCheckoutCartFromLocalStorage() {
 
             cartItemElement.innerHTML += `
                 <div class="image-wrapper">
-                    <img src="https://picsum.photos/200" alt="" class="image" />
+                    <img src="${item.coverImageUrl || 'https://picsum.photos/200'}" alt="${item.name}" class="image" />
                 </div>
                 <div class="text-grid">
                     <h5 class="h5 co-title">${item.name}</h5>
@@ -105,32 +105,54 @@ function loadCheckoutCartFromLocalStorage() {
     }
 }
 
+function saveCheckoutUpdate(articleNumber, newQuantity) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemIndex = cart.findIndex(item => item.product.articleNumber === articleNumber);
+
+    if (newQuantity === 0 && itemIndex !== -1) {
+        cart.splice(itemIndex, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    else if (itemIndex !== -1) {
+        cart[itemIndex].quantity = newQuantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    loadCartFromLocalStorage();
+}
+
+
 function setupEventListeners() {
     document.querySelectorAll(".qty-btn").forEach(button => {
         button.addEventListener("click", () => {
             const item = button.closest(".co-cart-item");
             const quantityElement = item.querySelector(".co-quantity");
             let quantity = parseInt(quantityElement.textContent);
+            let articleNumber = item.getAttribute("data-co-articleNumber")
 
             if (button.classList.contains("co-increase")) {
                 quantity++;
+                saveCheckoutUpdate(articleNumber, quantity)
             } else if (button.classList.contains("co-decrease") && quantity > 1) {
                 quantity--;
+                saveCheckoutUpdate(articleNumber, quantity)
             }
 
             quantityElement.textContent = quantity;
             calculateCheckoutSubtotal();
-            saveCheckoutCartToLocalStorage();
+            //saveCheckoutCartToLocalStorage();
         });
     });
 
     document.querySelectorAll('.co-delete').forEach(deleteButton => {
         deleteButton.addEventListener('click', function (event) {
             const cartItem = event.target.closest('.co-cart-item');
+            let articleNumber = cartItem.getAttribute("data-co-articleNumber")
+
             if (cartItem) {
                 cartItem.remove();
+                saveCheckoutUpdate(articleNumber, 0)
                 calculateCheckoutSubtotal();
-                saveCheckoutCartToLocalStorage();
+                //saveCheckoutCartToLocalStorage();
             }
         });
     });

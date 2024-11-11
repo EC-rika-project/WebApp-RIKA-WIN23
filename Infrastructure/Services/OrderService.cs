@@ -33,9 +33,9 @@ public class OrderService : IOrderService
         {
             var orderItem = new OrderItem
             {
-                ProductName = item.Name,
+                ProductName = item.Product.Name,
                 Quantity = item.Quantity,
-                Price = item.Price
+                Price = item.Product.Price
             };
 
             order.Items.Add(orderItem);
