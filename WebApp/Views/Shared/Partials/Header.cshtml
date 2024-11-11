@@ -8,6 +8,7 @@
         <a asp-controller="" asp-action="" class="logo-desktop"><img src="/images/rikaLogo.svg" alt="Rika logo" class="logo"></a>
     </div>
     <div class="right-wrapper">
+        @* favorites *@ <a asp-controller="Products" asp-action="Favorites" class="link"><i class="fa-solid fa-heart"></i></a>
  		@if (User.Identity?.IsAuthenticated ?? false)
 		{ 
 			<a asp-controller="Profile" asp-action="" class="link"><i class="fa-solid fa-user icon"></i></a>

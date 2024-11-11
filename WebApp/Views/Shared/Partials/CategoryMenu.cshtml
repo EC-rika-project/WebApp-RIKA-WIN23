@@ -27,7 +27,7 @@
                 {
                     // Get the icon class for each category
                     var iconClass = categoryIcons.ContainsKey(category.Name) ? categoryIcons[category.Name] : "fa-light fa-cart-shopping";
-                    <a asp-controller="Products" asp-action="Index" asp-route-categoryName="@category.Name" class="category-links">
+                    <a asp-controller="Products" asp-action="Products" asp-route-categoryName="@category.Name" class="category-links">
                         <i class="@iconClass"></i> <!-- FontAwesome icon -->
                         <h3>@category.Name</h3>
                     </a>

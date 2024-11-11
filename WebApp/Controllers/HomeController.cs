@@ -18,12 +18,12 @@ namespace WebApp.Controllers
             ViewData["Categories"] = categories;
 
             // You can also fetch products if needed, like the "New Arrivals"
-            // var newArrivalsCategoryName = "New Arrivals"; 
-            // var newArrivals = await _productService.GetAllProductsAsync(newArrivalsCategoryName);
+            var newArrivalsCategoryName = "New Arrivals";
+            var newArrivals = await _productService.GetAllProductsAsync(newArrivalsCategoryName);
 
             var viewModel = new HomeIndexViewModel
             {
-                // NewArrivals = newArrivals
+                NewArrivals = newArrivals
             };
 
             return View(viewModel);

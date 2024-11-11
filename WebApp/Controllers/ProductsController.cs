@@ -8,7 +8,7 @@ namespace WebApp.Controllers
     {
         private readonly ProductService _productService = productService;
 
-        public async Task<IActionResult> Index(string categoryName)
+        public async Task<IActionResult> Products(string categoryName)
         {
             var categories = await _productService.GetAllCategoriesAsync();
 
@@ -37,6 +37,17 @@ namespace WebApp.Controllers
                 return Json(product);
             }
             return NotFound();
+        }
+
+        public async Task<IActionResult> Favorites()
+        {
+            // Fetch categories for the menu
+            var categories = await _productService.GetAllCategoriesAsync();
+
+            // Pass the list of categories to ViewData
+            ViewData["Categories"] = categories;
+
+            return View();
         }
     }
 }

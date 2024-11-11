@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Dtos;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
+using System.Drawing;
 using System.Net.Http.Json;
 
 namespace Infrastructure.Repositories
@@ -31,7 +32,7 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                string request = $"/products?category={categoryId}";
+                string request = $"/products?category={categoryId}&Page=1&Size=10";
                 var result = await _httpClient.GetFromJsonAsync<PaginationResult<ProductsDto>>(request);
                 return result!;
             }

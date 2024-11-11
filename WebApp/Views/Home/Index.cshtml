@@ -1,35 +1,64 @@
 ﻿@model WebApp.ViewModels.HomeIndexViewModel
 
-<section class="section">
+<section style="padding-bottom: 4rem; padding-top: 4rem;" class="new-arrivals">
     <div class="container bg-light hero-section">
         <!-- Render the CategoryMenu Partial -->
         @await Html.PartialAsync("~/Views/Shared/Partials/CategoryMenu.cshtml")
         <div class="content-wrapper">
             <!-- Section for New Arrivals -->
-            <div class="new-arrival-image">
-                <h1 class="h2">20% Discount New Arrival Product</h1>
-                <p class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur fuga iste et porro magni repellendus nesciunt.</p>
-                <div class="image-wrapper">
-                    @if (Model.NewArrivals != null)
-                    {
-                        // displays one product's image from the fetched list, add js later for more dynamic rendering, or create "date" functionality in the api, to be able to fetch by most recent added product.
-                        var firstProduct = Model.NewArrivals.Data?.First();
-                        <img src="@firstProduct?.CoverImageUrl" class="image" />
-                        <h1 class="h4 heading">New Arrivals</h1>
-                        foreach (var product in Model.NewArrivals.Data!)
-                        {
-                            <div class="product-item" onclick="openModal(@product.ArticleNumber)">
-                                <img src="@product.CoverImageUrl" alt="@product.Name" />
-                                <h2>@product.Name</h2>
-                                <p>@product.Ingress</p>
-                                <p>Price: @product.Price</p>
-                            </div>
+            @if (Model.NewArrivals?.Data != null && Model.NewArrivals.Data.Any())
+            {
+                <div class="new-arrival-image">
+                    <div class="image-wrapper">
+                        @* Display the first product image *@
+                        @{
+                            var firstProduct = Model.NewArrivals.Data.First();
                         }
-                    }
+                        <div onclick="openProductModal(@firstProduct.ArticleNumber)">
+                            <img src="@firstProduct.CoverImageUrl" class="image" />
+                        </div>
+                    </div>
+                    <div class="text-wrapper">
+                        <h1 class="h2">20% Discount New Arrival Product</h1>
+                        <p class="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur fuga iste et porro magni repellendus nesciunt.</p>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <!-- Optionally, you can show this message if no new arrivals exist -->
+                <p class="items-notadded">No new arrivals available.</p>
+            }
         </div>
     </div>
+    <div style="padding-top: 4rem;" class="container">
+        <div class="all-products">
+            <div class="title-sort">
+                <h1 class="product-title">New Arrivals</h1>
+               <a asp-controller="Products" asp-action="Products" asp-route-categoryName="New Arrivals" class="category-links">View All</a>
+            </div>
+            @if (Model.NewArrivals?.Data != null && Model.NewArrivals.Data.Any())
+            {
+                <div class="product-grid">
+                    @foreach (var product in Model.NewArrivals.Data)
+                    {
+                        <div class="product-item" onclick="openProductModal(@product.ArticleNumber)">
+                            <img src="@product.CoverImageUrl" alt="@product.Name" />
+                            <button id="favoriteButton_@product.ArticleNumber" class="btn-like" data-id="@product.ArticleNumber" onclick="toggleFavorite(this); event.stopPropagation();">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <h2>@product.Name</h2>
+                            <p>@product.Ingress</p>
+                            <p style="font-weight:bold;">$@product.Price</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div> 
 </section>
+
+<!-- Render the Product Modal Partial -->
+@await Html.PartialAsync("~/Views/Shared/Partials/ProductModal.cshtml")
 
 
