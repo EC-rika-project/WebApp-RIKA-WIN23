@@ -10,13 +10,19 @@ using Infrastructure.Services;
 
 namespace WebApp.Controllers
 {
-    public class SignInController(IAppAuthenticationService authService) : Controller
+    public class SignInController(IAppAuthenticationService authService, ProductService productService) : Controller
     {
         private readonly IAppAuthenticationService _authService = authService;
+        private readonly ProductService _productService = productService;
 
         [Route("/signin")]
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
+            var categories = await _productService.GetAllCategoriesAsync();
+
+            // Pass the list of categories to ViewData
+            ViewData["Categories"] = categories;
+
             return View();
         }
 
