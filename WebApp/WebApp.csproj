@@ -19,6 +19,7 @@
     <Folder Include="Configurations\" />
     <Folder Include="Views\Home\Partials\" />
     <Folder Include="Views\Shared\Components\" />
+    <Folder Include="wwwroot\images\uploads\" />
   </ItemGroup>
 
   <ItemGroup>

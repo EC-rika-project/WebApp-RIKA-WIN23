@@ -1,0 +1,71 @@
+﻿@using WebApp.ViewModels
+@model ProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Shipping Address";
+}
+
+<section class="profile-section">
+
+    <div class="container">
+
+        
+        <div class="profile-info-text">
+            <p class="bold-text">@Model.FirstName @Model.LastName</p>
+
+            <p>@Model.Email</p>
+        </div>
+        <div class="profile-info">
+            <form asp-action="UpdateShippingInfo" method="post" class="personal-form">
+                <div class="form-item">
+                    <input type="hidden" asp-for="UserId" />
+                    <input type="hidden" asp-for="UserAddress.UserId" />
+                    <input type="hidden" asp-for="FirstName" />
+                    <input type="hidden" asp-for="LastName" />
+                    <input type="hidden" asp-for="Email" />
+
+                </div>
+                <div class="form-item">
+                    <label asp-for="UserAddress.AddressLine" class="bold-text">Adress</label>
+                    <input class="input-underlined" asp-for="UserAddress.AddressLine" type="text" />
+                </div>
+                <span asp-validation-for="UserAddress.AddressLine"></span>
+
+                <div class="form-item">
+                    <label asp-for="UserAddress.ApartmentNumber" class="bold-text">Adress number</label>
+                    <input class="input-underlined" asp-for="UserAddress.ApartmentNumber" type="text" />
+                </div>
+                <span asp-validation-for="UserAddress.ApartmentNumber"></span>
+
+                <div class="form-item">
+                    <label asp-for="UserAddress.PostalCode" class="bold-text">Postal Code</label>
+                    <input class="input-underlined" type="text" asp-for="UserAddress.PostalCode" />
+                </div>
+                <span asp-validation-for="UserAddress.PostalCode"></span>
+
+                <div class="form-item">
+                    <label asp-for="UserAddress.City" class="bold-text">City</label>
+                    <input class="input-underlined" asp-for="UserAddress.City" type="text" />
+                </div>
+                <span asp-validation-for="UserAddress.City"></span>
+
+                <div class="form-item">
+                    <label asp-for="UserAddress.Country" class="bold-text">Country</label>
+                    <input class="input-underlined" asp-for="UserAddress.Country" type="text" />
+                </div>
+                <span asp-validation-for="UserAddress.Country"></span>
+
+                <button type="submit" class="btn-accent">Confirm Changes</button>
+                <button type="button" onclick="window.location.href='/Profile'" class="btn-dark">Back</button>
+            </form>
+        </div>
+
+        <div>
+            <form method="post" action="/signout">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn-dark btn-signout">Sign Out</button>
+            </form>
+        </div>
+
+    </div>
+</section>

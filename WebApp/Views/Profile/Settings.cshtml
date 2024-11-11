@@ -11,15 +11,22 @@
      
     <div class="container">
 
-        <div class="profile-pic">
-            <img src="@Model.ProfileImageUrl" />
-        </div>
-
+        
         <div class="profile-info">
-        <form asp-action="UpdateProfile" method="post" class="personal-form">
+        <form asp-action="UpdateProfile" method="post" class="personal-form" enctype="multipart/form-data">
             <div class="form-item">
                 <input type="hidden" asp-for="UserId"></>
+                    <div class="profile-pic" style="position: relative;">
+                        <img src="@Model.ProfileImageUrl" alt="Profile Image" />
+                        <label asp-for="ProfileImage" class="profile-image-upload-btn">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" asp-for="ProfileImage" id="ProfileImage" style="display:none;" />
+                    </div>
 
+                    
+               </div>
+                <div class="form-item">
 
                     <label asp-for="FirstName" class="bold-text">First Name</label>
                     <input class="input-underlined" asp-for="FirstName" type="text" value="@Model.FirstName" />
@@ -98,6 +105,9 @@
 </section>
 
 <script>
+    
+        
+    
     document.addEventListener("DOMContentLoaded", function () {
         const toggleInputs = document.querySelectorAll('.toggle-input');
 

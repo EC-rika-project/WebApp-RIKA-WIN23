@@ -971,7 +971,8 @@ svg {
   padding: 5px;
 }
 .profile-info-box img {
-  width: 50%;
+  max-width: 100px;
+  height: 100px;
   border-radius: 10%;
 }
 .profile-info-box .profile-info-text {
@@ -1041,6 +1042,33 @@ h1 {
   margin: 5px 0;
 }
 
+.profile-pic {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-image-upload-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #3b5998;
+  border-radius: 40%;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-image-upload-btn i {
+  color: #3b5998;
+}
+
+.profile-image-upload-btn i:hover {
+  transition: 0.25s ease-in-out;
+  font-size: 32px;
+  color: #061fb7;
+}
+
 .input-validation-error {
   border-bottom-color: #dc3545 !important;
 }
@@ -1091,7 +1119,9 @@ h1 {
 
 .profile-pic {
   border-radius: 8px;
-  max-width: 275px;
+  max-width: 150px;
+  height: 150px;
+  overflow: hidden;
   display: flex;
   padding: 5px;
   align-items: center;
@@ -1099,7 +1129,9 @@ h1 {
   margin-bottom: 15px;
 }
 .profile-pic img {
-  width: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 10%;
 }
 
