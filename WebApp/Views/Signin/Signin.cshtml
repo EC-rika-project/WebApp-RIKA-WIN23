@@ -30,7 +30,7 @@
                 <div class="form-group remember-me-forgot">
                     <input asp-for="RememberMe" type="checkbox" id="Rememberme" />
                     <label asp-for="RememberMe">Remember me</label>
-                    <a asp-controller="" asp-action="">Forgot password?</a>
+                    <a asp-controller="PasswordRecovery" asp-action="ForgotPassword">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Login</button>
@@ -43,9 +43,13 @@
 
         <!--Fontawesome pls-->
         <div class="external-signin">
-            <a href="#" class="btn btn-facebook">Continue with Facebook</a>
-            <a href="#" class="btn btn-google">Continue with Google</a>
-            <a href="#" class="btn btn-X">Continue with X</a>
+            <a asp-controller="SignIn" asp-action="FacebookSignIn" class="btn btn-facebook">
+                Continue with Facebook
+            </a>
+            <a asp-controller="SignIn" asp-action="GoogleSignIn" class="btn btn-google">
+                Continue with Google
+            </a>
+           
         </div>
     </div>
 </section>
