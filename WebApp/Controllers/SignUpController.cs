@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Dtos;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
@@ -8,10 +9,11 @@ using WebApp.ViewModels;
 namespace WebApp.Controllers;
 
 
-public class SignUpController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : Controller
+public class SignUpController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ProductService productService) : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
     private readonly IConfiguration _configuration = configuration;
+    private readonly ProductService _productService = productService;
 
     public bool IsValidEmail(string email)
     {
@@ -21,8 +23,13 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
 
     [HttpGet]
     [Route("/signup")]
-    public IActionResult SignUp()
+    public async Task<IActionResult> SignUp()
     {
+        var categories = await _productService.GetAllCategoriesAsync();
+
+        // Pass the list of categories to ViewData
+        ViewData["Categories"] = categories;
+
         return View();
     }
 

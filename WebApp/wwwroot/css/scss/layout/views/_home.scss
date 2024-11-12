@@ -1,5 +1,8 @@
 .hero-section {
-    display: flex;
+
+    @media (min-width: 1200px) {
+        display: flex;
+    }
 
     .category-menu {
         display: none;
