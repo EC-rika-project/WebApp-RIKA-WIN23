@@ -1,0 +1,30 @@
+﻿
+@* @inject SignInManager<UserEntity> _signInManager; *@
+
+<header class="header container">
+    <div class="left-wrapper">
+        <button class="btn-circle mobile-btn" id="mobile-menu-btn-open"><i class="fa-solid fa-bars"></i></button>
+        <a asp-controller="" asp-action="" class="logo-mobile"><img src="/images/rikaMobileLogo.svg" alt="Rika logo" class="logo"></a>
+        <a asp-controller="" asp-action="" class="logo-desktop"><img src="/images/rikaLogo.svg" alt="Rika logo" class="logo"></a>
+    </div>
+    <div class="right-wrapper">
+        @* favorites *@ <a asp-controller="Products" asp-action="Favorites" class="link"><i class="fa-solid fa-heart"></i></a>
+ 		@if (User.Identity?.IsAuthenticated ?? false)
+		{ 
+			<a asp-controller="Profile" asp-action="" class="link"><i class="fa-solid fa-user icon"></i></a>
+ 		}
+		else
+		{
+			<a asp-controller="Signin" asp-action="" class="link"><i class="fa-solid fa-user icon"></i></a>
+		}     
+        <button class="link cart-btn-open"><i class="fa-solid fa-cart-shopping icon"></i></button>
+    </div>
+
+    @await Html.PartialAsync("Partials/MobileMenu")
+    @await Html.PartialAsync("Partials/Cart")
+
+
+</header>
+
+<script src="~/js/toggleMobileMenu.js"></script>
+<script src="~/js/cart.js" asp-append-version="true"></script>

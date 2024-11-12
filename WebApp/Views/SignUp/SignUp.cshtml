@@ -1,0 +1,60 @@
+﻿@model SignUpViewModel
+
+<section class="signUp">
+    <div class="container">
+        <h2>Sign Up</h2>
+        <p>Create a new account</p>
+        <form method="post" asp-controller="SignUp" asp-action="SignUp" novalidate>
+            <div class="signup-form">
+                <div class="form-content">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" />
+                    <span asp-validation-for="FirstName"></span>
+                </div>
+                <div class="form-content">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" />
+                    <span asp-validation-for="LastName"></span>
+                </div>
+                <div class="form-content">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="form-content password-wrapper">
+                    <label asp-for="Password"></label>
+                    <input type="password" asp-for="Password" id="password" />
+                    <button type="button" class="password-toggle" onclick="togglePassword('password', this)"> <i class="fas fa-eye"></i></button>
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <div class="form-content password-wrapper">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input type="password" asp-for="ConfirmPassword" id="confirmPassword" />
+                    <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword', this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+                <div class="form-checkbox">
+                    <div class="checkbox-group">
+                        <input asp-for="TermsAndConditions" />
+                        <label asp-for="TermsAndConditions">
+                            By creating an account you accept our
+                            <a href="javascript:void(0);" onclick="showOverlay('terms')">Terms & Conditions</a>
+                              
+                        </label>
+                    <span asp-validation-for="TermsAndConditions"></span>
+                    </div>
+                </div>
+                <button class="btn-dark" type="submit">Sign up</button>
+            </div>
+        </form>
+        <p>Already have an account? <a class="link" asp-controller="Signin" asp-action="signin">Sign in here</a></p>
+    </div>
+    @await Html.PartialAsync("~/Views/SignUp/PartialViews/overlay.cshtml")
+
+     @await Html.PartialAsync("_ValidationScriptsPartial") 
+</section>
+
+
+

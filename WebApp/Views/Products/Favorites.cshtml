@@ -1,0 +1,19 @@
+﻿<section class="products favorites">
+    <div class="container">
+        <div class="title-sort">
+            <h1 class="product-title">Your favorites</h1>
+        </div>
+        <div class="content-wrapper">
+            <div class="all-products">
+                <div class="product-grid">
+                    <!-- Render the Products using JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Render the Product Modal Partial -->
+@await Html.PartialAsync("~/Views/Shared/Partials/ProductModal.cshtml")
+
+<script src="~/js/favorites.js"></script>

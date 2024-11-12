@@ -1,0 +1,44 @@
+﻿@{
+    // Retrieve categories from ViewData
+    var categories = ViewData["Categories"] as List<Infrastructure.Dtos.CategoryDto>;
+
+    // Map category names to FontAwesome icons
+    var categoryIcons = new Dictionary<string, string>
+    {
+        { "New Arrivals", "fa-light fa-cart-shopping" },
+        { "Clothes", "fa-regular fa-shirt" },
+        { "Bags", "fa-regular fa-bag-shopping" },
+        { "Shoes", "fa-light fa-boot-heeled" },
+        { "Electronics", "fa-light fa-laptop" },
+        { "Jewellry", "fa-light fa-ring-diamond" }
+    };
+
+    // Sort categories to place "New Arrivals" first
+    var sortedCategories = categories?.OrderBy(c => c.Name != "New Arrivals").ThenBy(c => c.Name);
+}
+
+<div class="mobile-menu hide" id="mobile-menu">
+    <div class="category-menu">
+        <button class="btn-dark btn-circle close-btn" id="mobile-menu-btn-close"><i class="fa-solid fa-xmark"></i></button>
+        <h1 class="h4 heading">Categories</h1>
+        <div class="link-wrapper">
+            @if (sortedCategories != null)
+            {
+                @foreach (var category in sortedCategories)
+                {
+                    // Get the icon class for each category
+                    var iconClass = categoryIcons.ContainsKey(category.Name) ? categoryIcons[category.Name] : "fa-light fa-cart-shopping";
+                    <a asp-controller="Products" asp-action="Products" asp-route-categoryName="@category.Name" class="category-links">
+                        <i class="@iconClass"></i> <!-- FontAwesome icon -->
+                        <h3>@category.Name</h3>
+                    </a>
+                }
+            }
+            else
+            {
+                <p>No categories available</p>
+            }
+        </div>
+    </div>
+</div>
+

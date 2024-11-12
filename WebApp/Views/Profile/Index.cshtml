@@ -1,0 +1,40 @@
+﻿@using WebApp.ViewModels
+@model ProfilePageViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<section>
+    <div class="container">
+    <div class="profile-info-box">
+        <div class="profile-pic">
+        <img src="@Model.ProfileImageUrl"/>
+        </div>
+        <div class="profile-info-text">
+            <p class="bold-text">@Model.FirstName @Model.LastName</p>
+
+        <p>@Model.Email</p>
+        </div>
+    </div>
+
+    <ul>
+            <li class="bold-text"><a href="/Profile"><i class="fa-solid fa-user left-icon"></i> Personal Information<i class="fa-solid fa-chevron-right"></i></a></li>
+            <li class="bold-text"><a href="/UnderConstruction"><i class="fa-solid fa-bag-shopping left-icon"></i> My Orders <i class="fa-solid fa-chevron-right"></i></a></li>
+            <li class="bold-text"><a href="/UnderConstruction"><i class="fa-solid fa-heart left-icon"></i> My Favorites <i class="fa-solid fa-chevron-right"></i></a></li>
+            <li class="bold-text"><a href="/Profile/Shipping"><i class="fa-solid fa-truck left-icon"></i> Shipping Address <i class="fa-solid fa-chevron-right"></i></a></li>
+            <li class="bold-text"><a href="/UnderConstruction"><i class="fa-solid fa-credit-card left-icon"></i> Payment <i class="fa-solid fa-chevron-right"></i></a></li>
+            <li class="bold-text"><a href="/Profile/Settings"><i class="fa-solid fa-gear left-icon"></i> Settings <i class="fa-solid fa-chevron-right"></i></a></li>
+   
+        </ul>
+
+    <ul>
+            <li class="bold-text"><a href="/Profile/FAQ"><i class="fa-solid fa-circle-exclamation left-icon"></i> FAQs <i class="fa-solid fa-chevron-right"></i></a></li>
+            <li class="bold-text"><a href="/Profile/Privacy"><i class="fa-solid fa-shield-check left-icon"></i> Privacy Policy <i class="fa-solid fa-chevron-right"></i></a></li>
+    </ul>
+
+        <form method="post" action="/signout">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn-dark btn-signout">Sign Out</button>
+        </form>
+    </div>
+</section>
