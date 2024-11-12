@@ -1,4 +1,15 @@
-﻿// Cache object to store fetched product details to minimize the fetching from the api, gets removed on page reload
+﻿const colorMap = {
+    "Svart": "#000000",      
+    "Vit": "#FFFFFF",       
+    "Grå": "#808080",      
+    "Beige": "#F5F5DC",     
+    "Ljusblå": "#ADD8E6",  
+    "Mörkgrå": "#505050",   
+    "Marinblå": "#000033",  
+    "Brun": "#5C4033",  
+};
+
+// Cache object to store fetched product details to minimize the fetching from the api, gets removed on page reload
 const productCache = {};
 
 async function fetchProductDetails(articleNumber) {
@@ -33,41 +44,37 @@ async function openProductModal(articleNumber) {
     const productDetails = await fetchProductDetails(articleNumber);
     const product = productDetails.product;
 
-    // Sort the size variations (handles both numbers and letters correctly)
-    const sortedSizes = product.variations.sort((a, b) => {
-        // Handle numerical sizes
-        const aSize = isNaN(a.name) ? a.name : parseInt(a.name);
-        const bSize = isNaN(b.name) ? b.name : parseInt(b.name);
-
-        // Sort numerically if both are numbers, or alphabetically otherwise
-        if (typeof aSize === "number" && typeof bSize === "number") {
-            return aSize - bSize;
-        } else {
-            return aSize.localeCompare(bSize);
-        }
-    });
+    // Sort the size variations
+    const sortedSizes = sortSizes(product.variations);
 
     // Populate size buttons
     const sizeContainer = document.querySelector(".modal-size");
     sizeContainer.innerHTML = ''; // Clear existing buttons
+
     sortedSizes.forEach(size => {
         const button = document.createElement("button");
         button.classList.add("btn-modal-size");
         button.textContent = size.name;
+
+        // Check if the size is "onesize" and add a unique class
+        if (size.name.toLowerCase() === "onesize") {
+            button.classList.add("btn-onesize");
+        }
 
         // Add the 'out-of-stock' class if stock is 0
         if (size.stock === 0) {
             button.classList.add("out-of-stock");
         }
 
-        // Check if size is "onesize" and add a unique class
-        if (size.name.toLowerCase() === "onesize") {
-            button.classList.add("btn-onesize");
+        // Add the 'out-of-stock' class if it's a "onesize" and stock is 0
+        if (size.name.toLowerCase() === "onesize" && size.stock === 0) {
+            button.classList.add("out-of-stock");
         }
 
         button.onclick = () => selectSize(button); // Attach the click handler
         sizeContainer.appendChild(button);
     });
+
 
     // Update other modal content
     document.getElementById("productImage").src = product.coverImageUrl;
@@ -86,6 +93,9 @@ async function openProductModal(articleNumber) {
 
     // Update the favorite button
     updateFavoriteButton(articleNumber);
+
+    // Populate color buttons with main product and variants
+    populateColorButtons(productDetails);
     
 }
 
@@ -242,3 +252,112 @@ function showNotification(message, type) {
         notification.style.display = "none";
     }, 4000); // Adjust the duration as needed
 }
+
+// Function to populate color buttons in the modal
+function populateColorButtons(productDetails) {
+    const colorContainer = document.querySelector(".modal-color");
+    colorContainer.innerHTML = '';  // Clear existing color buttons
+
+    // Create the color button for the main product
+    const mainColorButton = createColorButton(productDetails.product);
+    colorContainer.appendChild(mainColorButton);
+
+    // Create color buttons for each variant
+    productDetails.variants.forEach(variant => {
+        const colorButton = createColorButton(variant);
+        colorContainer.appendChild(colorButton);
+    });
+}
+
+// Function to create a color button with proper background color
+function createColorButton(variant) {
+    const button = document.createElement("button");
+    button.classList.add("btn-modal-color");
+
+    // Use color mapping or fallback to variant color
+    const color = colorMap[variant.color] || variant.color;
+    button.style.backgroundColor = color;
+
+    // Set button click to update modal content with this variant
+    button.onclick = () => updateModalContent(variant);
+
+    // Optional: Tooltip with color name for accessibility
+    button.title = variant.color;
+
+    return button;
+}
+
+function updateModalContent(variant) {
+    // Update the modal with the selected variant's product details
+    document.getElementById("productImage").src = variant.coverImageUrl;
+    document.getElementById("productName").innerText = variant.name;
+    document.getElementById("productIngress").innerText = variant.ingress;
+    document.getElementById("productDescription").innerText = variant.description;
+    document.getElementById("articleNumber").innerText = `Art.nr: ${variant.articleNumber}`;
+    document.getElementById("productPrice").innerText = `Price: $${variant.price}`;
+
+    // Update favorite and cart buttons with new product ID
+    document.getElementById("favoriteButton").setAttribute("data-id", variant.articleNumber);
+    document.getElementById("cartButton").setAttribute("data-id", variant.articleNumber);
+
+    // Update favorite button status for this variant
+    updateFavoriteButton(variant.articleNumber);
+
+    // Update size buttons based on the selected color variant
+    updateSizeButtons(variant);
+}
+
+// Use the sortSizes function inside your code where needed
+function updateSizeButtons(product) {
+    const sizeContainer = document.querySelector(".modal-size");
+    sizeContainer.innerHTML = ''; // Clear existing buttons
+
+    // Sort variations before displaying
+    const sortedVariations = sortSizes(product.variations || []);
+
+    sortedVariations.forEach(size => {
+        const button = document.createElement("button");
+        button.classList.add("btn-modal-size");
+        button.textContent = size.name;
+
+        if (size.name.toLowerCase() === "onesize") {
+            button.classList.add("btn-onesize");
+        }
+        if (size.stock === 0) {
+            button.classList.add("out-of-stock");
+        }
+        button.onclick = () => selectSize(button);
+        sizeContainer.appendChild(button);
+    });
+}
+
+// Helper function to sort sizes
+function sortSizes(variations) {
+    // Custom order for letter-based sizes
+    const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL"];
+
+    return variations.sort((a, b) => {
+        const aSize = a.name;
+        const bSize = b.name;
+
+        // Check if sizes are in custom order
+        if (sizeOrder.includes(aSize) && sizeOrder.includes(bSize)) {
+            return sizeOrder.indexOf(aSize) - sizeOrder.indexOf(bSize);
+        }
+
+        // Sort numerical sizes
+        const aIsNumber = !isNaN(aSize);
+        const bIsNumber = !isNaN(bSize);
+
+        if (aIsNumber && bIsNumber) {
+            return parseInt(aSize) - parseInt(bSize);
+        }
+
+        // Prioritize numerical sizes over letter-based sizes
+        return aIsNumber ? -1 : 1;
+    });
+}
+
+
+
+
