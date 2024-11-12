@@ -67,8 +67,8 @@ public class SignUpController(IHttpClientFactory httpClientFactory, IConfigurati
             return View(viewModel);
         }
 
-        var securityKey = _configuration!.GetSection("SecurityKeys")["WebAppKey"];
-        var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+        var securityKey = _configuration!.GetValue<string>("WebAppKey");
+        var apiKey = _configuration!.GetValue<string>("ApiKey");
         var dto = new SignUpDto
         {
             FirstName = viewModel.FirstName,

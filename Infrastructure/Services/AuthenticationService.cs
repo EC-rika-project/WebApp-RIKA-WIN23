@@ -16,7 +16,7 @@ public class AuthenticationService(HttpClient httpClient, IConfiguration configu
     private readonly HttpClient _httpClient = httpClient;
     private readonly IConfiguration _configuration = configuration;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-    private readonly string _apiKey = configuration["ApiKey:Secret"]!;
+    private readonly string _apiKey = configuration["ApiKey"]!;
 
     public async Task<string?> SignInAsync(SignInDto signInDto)
     {

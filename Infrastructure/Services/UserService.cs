@@ -26,7 +26,7 @@ namespace Infrastructure.Services
 
         public async Task<UserDto> GetUserFromApiAsync(string userId)
         {
-            var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+            var apiKey = _configuration!.GetValue<string>("ApiKey");
 
 
             var response = await _httpClient.GetAsync($"https://userprovider-rika-win23.azurewebsites.net/api/Profile/?key={apiKey}&userId={userId}");
@@ -45,7 +45,7 @@ namespace Infrastructure.Services
 
         public async Task<UserAddressDto> GetUserShippingInfoFromApiAsync(string userId)
         {
-            var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+            var apiKey = _configuration!.GetValue<string>("ApiKey");
 
 
             var response = await _httpClient.GetAsync($"https://userprovider-rika-win23.azurewebsites.net/api/Address/?key={apiKey}&userId={userId}");
@@ -69,7 +69,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> UpdateUserAsync(UserDto userDto)
         {
-            var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+            var apiKey = _configuration!.GetValue<string>("ApiKey");
 
             var content = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
 
@@ -90,7 +90,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> UpdateUserShippingInfo(UserAddressDto userAddress)
         {
-            var apiKey = _configuration!.GetSection("ApiKey")["Secret"];
+            var apiKey = _configuration!.GetValue<string>("ApiKey");
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {

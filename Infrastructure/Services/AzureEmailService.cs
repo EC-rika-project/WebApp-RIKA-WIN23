@@ -7,9 +7,9 @@ namespace Infrastructure.Services;
 
 public class AzureEmailService(IConfiguration configuration) : IEmailService
 {
-    private readonly string _connectionString = configuration["AzureCommunicationServices:ConnectionString"] ??
+    private readonly string _connectionString = configuration["ConnectionStrings:AzureCommunicationServices"] ??
             throw new ArgumentNullException("Azure Communication Services connection string is missing");
-    private readonly string _senderAddress = configuration["AzureCommunicationServices:SenderAddress"] ??
+    private readonly string _senderAddress = configuration.GetValue<string>("SenderAddress") ??
             throw new ArgumentNullException("Azure Communication Services sender address is missing");
     public async Task SendPasswordResetEmailAsync(string recipientEmail, string resetLink)
     {
