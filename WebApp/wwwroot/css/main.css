@@ -1293,6 +1293,10 @@ svg {
   color: white;
   border: 1px solid black;
 }
+.btn-like i {
+  margin-top: 5px;
+  margin-left: 1px;
+}
 
 .btn-like-modal {
   border-radius: 50%;

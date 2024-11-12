@@ -343,6 +343,11 @@
     @include btn-like-style;
     top: 1rem;
     right: 1rem;
+
+    i {
+        margin-top: 5px;
+        margin-left: 1px;       
+    }
 }
 
 .btn-like-modal {
