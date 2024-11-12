@@ -1435,33 +1435,30 @@ svg {
   height: 20rem;
 }
 
-.disabled-link {
+.profile-section .disabled-link {
   pointer-events: none;
 }
-
-.profile-info-box {
+.profile-section .profile-info-box {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   max-width: 275px;
   display: flex;
   padding: 5px;
 }
-.profile-info-box img {
+.profile-section .profile-info-box img {
   max-width: 100px;
   height: 100px;
   border-radius: 10%;
 }
-.profile-info-box .profile-info-text {
+.profile-section .profile-info-box .profile-info-text {
   margin-top: 15px;
   margin-left: 10px;
 }
-
-li {
+.profile-section li {
   list-style-type: none;
   margin: 15px 0 30px 0;
 }
-
-ul {
+.profile-section ul {
   border: 1px solid rgba(181, 175, 175, 0.831372549);
   border-radius: 8px;
   margin: 15px 0 15px 0;
@@ -1469,61 +1466,52 @@ ul {
   padding-right: 10px;
   max-width: 275px;
 }
-
-.bold-text {
+.profile-section .bold-text {
   font-weight: 600;
 }
-
-a {
+.profile-section a {
   text-decoration: none;
   color: #000000;
   display: flex;
   align-items: center;
 }
-
-a i.fa-chevron-right {
+.profile-section a i.fa-chevron-right {
   margin-left: auto;
 }
-
-a i.left-icon {
+.profile-section a i.left-icon {
   margin-right: 10px;
   font-size: 20px;
   padding: 5px;
   border-radius: 8px;
   background-color: rgba(181, 175, 175, 0.831372549);
 }
-
-a:hover {
+.profile-section a:hover {
   font-weight: 700;
 }
-
-.btn-signout {
+.profile-section .btn-signout {
   width: 275px;
 }
 
-p {
+.pricacy-section p {
   margin-bottom: 1em;
 }
 
-h1 {
+.faq-section h1 {
   text-align: center;
   margin-bottom: 10px;
 }
-
-.faq-item {
+.faq-section .faq-item {
   margin-bottom: 20px;
 }
-
-.faq-item p {
+.faq-section .faq-item p {
   margin: 5px 0;
 }
 
-.profile-pic {
+.profile-settings .profile-pic {
   position: relative;
   display: inline-block;
 }
-
-.profile-image-upload-btn {
+.profile-settings .profile-image-upload-btn {
   position: absolute;
   right: 10px;
   bottom: 10px;
@@ -1534,26 +1522,21 @@ h1 {
   padding: 0;
   margin: 0;
 }
-
-.profile-image-upload-btn i {
+.profile-settings .profile-image-upload-btn i {
   color: #3b5998;
 }
-
-.profile-image-upload-btn i:hover {
+.profile-settings .profile-image-upload-btn i:hover {
   transition: 0.25s ease-in-out;
   font-size: 32px;
   color: #061fb7;
 }
-
-.input-validation-error {
+.profile-settings .input-validation-error {
   border-bottom-color: #dc3545 !important;
 }
-
-.input-validation-success {
+.profile-settings .input-validation-success {
   border-bottom-color: #28a745 !important;
 }
-
-.field-validation-error {
+.profile-settings .field-validation-error {
   color: #dc3545;
   font-size: 12px;
   position: absolute;
@@ -1561,39 +1544,35 @@ h1 {
   left: 0;
   width: 100%;
 }
-
-.checkbox-group .field-validation-error {
+.profile-settings .checkbox-group .field-validation-error {
   position: static;
   margin: 0;
   font-size: 12px;
   color: #dc3545;
   display: block;
 }
-
-.left-icon {
+.profile-settings .left-icon {
   margin-right: 10px;
   font-size: 20px;
   padding: 5px;
   border-radius: 8px;
   background-color: rgba(181, 175, 175, 0.831372549);
 }
-
-.profile-info {
+.profile-settings .profile-info {
   border-radius: 8px;
   max-width: 275px;
   display: flex;
   padding: 5px;
 }
-.profile-info img {
+.profile-settings .profile-info img {
   width: 50%;
   border-radius: 10%;
 }
-.profile-info .profile-info-text {
+.profile-settings .profile-info .profile-info-text {
   margin-top: 15px;
   margin-left: 10px;
 }
-
-.profile-pic {
+.profile-settings .profile-pic {
   border-radius: 8px;
   max-width: 150px;
   height: 150px;
@@ -1604,59 +1583,58 @@ h1 {
   justify-content: center;
   margin-bottom: 15px;
 }
-.profile-pic img {
+.profile-settings .profile-pic img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10%;
 }
-
-.profile-info {
+.profile-settings .profile-info {
   margin-bottom: 15px;
   border: none;
   box-shadow: none;
 }
-.profile-info .personal-form {
+.profile-settings .profile-info .personal-form {
   grid-template-columns: 1fr;
   padding: 10px 0 10px 0;
 }
-.profile-info .form-item {
+.profile-settings .profile-info .form-item {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
 }
-.profile-info .form-item label {
+.profile-settings .profile-info .form-item label {
   margin-right: 15px;
   flex-basis: 30%;
   flex-shrink: 0;
   color: #aaaaaa;
 }
-.profile-info .form-item input {
+.profile-settings .profile-info .form-item input {
   flex-grow: 0.5;
   padding-bottom: 5px;
   padding-left: 10px;
   border-bottom: 1px solid #dcdcdc;
 }
-.profile-info .form-item input:focus {
+.profile-settings .profile-info .form-item input:focus {
   border-bottom: 1px solid #000000;
   outline: none;
 }
-.profile-info .form-item input[type=number]::-webkit-outer-spin-button,
-.profile-info .form-item input[type=number]::-webkit-inner-spin-button {
+.profile-settings .profile-info .form-item input[type=number]::-webkit-outer-spin-button,
+.profile-settings .profile-info .form-item input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.profile-info .form-item input[type=number] {
+.profile-settings .profile-info .form-item input[type=number] {
   -moz-appearance: textfield;
 }
-.profile-info .form-item .radio-container {
+.profile-settings .profile-info .form-item .radio-container {
   display: inline-block;
   margin-right: 5px;
 }
-.profile-info .form-item .radio {
+.profile-settings .profile-info .form-item .radio {
   display: none;
 }
-.profile-info .form-item .radio + label {
+.profile-settings .profile-info .form-item .radio + label {
   display: inline-block;
   background: #f0f0f0;
   padding: 10px 20px;
@@ -1664,20 +1642,17 @@ h1 {
   cursor: pointer;
   position: relative;
 }
-.profile-info .form-item .radio:checked + label {
+.profile-settings .profile-info .form-item .radio:checked + label {
   background: #000000;
   color: white;
 }
-
-.list-item {
+.profile-settings .list-item {
   display: flex;
 }
-
-.toggle-input {
+.profile-settings .toggle-input {
   display: none;
 }
-
-.toggle-label {
+.profile-settings .toggle-label {
   margin-left: auto;
   display: inline-block;
   width: 50px;
@@ -1689,8 +1664,7 @@ h1 {
   margin-right: 10px;
   vertical-align: middle;
 }
-
-.toggle-label::after {
+.profile-settings .toggle-label::after {
   content: "";
   position: absolute;
   width: 20px;
@@ -1701,12 +1675,10 @@ h1 {
   top: 2px;
   left: 2px;
 }
-
-.toggle-input:checked + .toggle-label {
+.profile-settings .toggle-input:checked + .toggle-label {
   background-color: #000000;
 }
-
-.toggle-input:checked + .toggle-label::after {
+.profile-settings .toggle-input:checked + .toggle-label::after {
   transform: translateX(26px);
 }
 
