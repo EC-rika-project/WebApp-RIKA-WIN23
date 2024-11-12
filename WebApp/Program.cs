@@ -82,6 +82,7 @@ builder.Services.AddScoped<IAppAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IResetPasswordService, ResetPasswordService>();
 builder.Services.AddScoped<IEmailService, AzureEmailService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<UserService>();
 
 
 // Register HttpClient
@@ -93,6 +94,7 @@ builder.Services.AddScoped<ProductService>();
 // Register ProductRepository
 builder.Services.AddScoped<ProductRepository>(); 
 
+
 var app = builder.Build();
 
 app.UseExceptionHandler("/Home/Error");
@@ -101,7 +103,7 @@ app.UseHsts();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(

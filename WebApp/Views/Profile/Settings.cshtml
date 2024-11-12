@@ -1,0 +1,126 @@
+﻿@using WebApp.ViewModels
+@model ProfilePageViewModel
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<section class="profile-section">
+
+
+     
+    <div class="container">
+
+        
+        <div class="profile-info">
+        <form asp-action="UpdateProfile" method="post" class="personal-form" enctype="multipart/form-data">
+            <div class="form-item">
+                <input type="hidden" asp-for="UserId"></>
+                    <div class="profile-pic" style="position: relative;">
+                        <img src="@Model.ProfileImageUrl" alt="Profile Image" />
+                        <label asp-for="ProfileImage" class="profile-image-upload-btn">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" asp-for="ProfileImage" id="ProfileImage" style="display:none;" />
+                    </div>
+
+                    
+               </div>
+                <div class="form-item">
+
+                    <label asp-for="FirstName" class="bold-text">First Name</label>
+                    <input class="input-underlined" asp-for="FirstName" type="text" value="@Model.FirstName" />
+                </div>
+                <span asp-validation-for="FirstName"></span>
+                <div class="form-item">
+                    <label asp-for="LastName" class="bold-text">Last Name</label>
+                    <input class="input-underlined" asp-for="LastName" type="text" value="@Model.LastName" />
+                </div>
+                <span asp-validation-for="LastName"></span>
+
+                
+
+                <div class="form-item">
+                <label asp-for="Gender" class="bold-text">Gender</label>
+    
+                <div class="radio-container">
+                <input class="radio input-underlined" type="radio" asp-for="Gender" name="Gender" id="Male" value="Male" />
+                <label for="Male" class="bold-text">Male</label>
+             </div>
+    
+                <div class="radio-container">
+                <input class="radio input-underlined" type="radio" asp-for="Gender" name="Gender" id="Female" value="Female" />
+                <label for="Female" class="bold-text">Female</label>
+                </div>
+                </div>
+                <span asp-validation-for="Gender"></span>
+
+                <div class="form-item">
+                    <label asp-for="Age" class="bold-text"></label>
+                    <input class="input-underlined" asp-for="Age" type="number" value="@Model.Age" />
+                </div>
+                <span asp-validation-for="Age"></span>
+
+                <div class="form-item">
+
+        <label asp-for="Email" class="bold-text"></label>
+                    <input class="input-underlined" asp-for="Email" type="text" value="@Model.Email" />
+                </div>
+                <span asp-validation-for="Email"></span>
+
+                <button type="submit" class="btn-accent">Confirm Changes</button>
+                <button type="button" onclick="window.location.href='/Profile'" class="btn-dark">Back</button>
+
+            </form>
+        </div>
+
+        <h2>Settings</h2>
+        <ul>
+            <li class="list-item bold-text">
+                <span>
+                    <i class="fa-solid fa-bell left-icon"></i>
+                    <span>Notification</span>
+                </span>
+                    <input type="checkbox" id="notification-toggle" class="toggle-input" />
+                    <label for="notification-toggle" class="toggle-label"></label>
+
+                
+            </li>
+            <li class="list-item bold-text">
+                <span>
+                    <i class="fa-solid fa-moon left-icon"></i>
+                    <span>Dark Mode</span>
+                </span>
+                    <input type="checkbox" id="dark-mode-toggle" class="toggle-input" />
+                    <label for="dark-mode-toggle" class="toggle-label"></label>
+                
+            </li>
+            <li class="bold-text"><a href="/Profile/Privacy"><i class="fa-solid fa-shield-check left-icon"></i> Help Center <i class="fa-solid fa-chevron-right"></i></a></li>
+        </ul>
+        <form method="post" action="/signout">
+           @Html.AntiForgeryToken()
+        <button type="submit" class="btn-dark btn-signout">Sign Out</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    
+        
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleInputs = document.querySelectorAll('.toggle-input');
+
+        toggleInputs.forEach(input => {
+            input.addEventListener('change', function () {
+                if (input.checked) {
+                    console.log(input.id + " is ON");
+                    // Här kan du lägga till kod för att spara inställningen
+                } else {
+                    console.log(input.id + " is OFF");
+                    // Här kan du lägga till kod för att spara inställningen
+                }
+            });
+        });
+    });
+</script>
