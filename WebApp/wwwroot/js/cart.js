@@ -13,14 +13,19 @@ function cartToggle() {
     }
 }
 
+// Close the cart if clicked outside
+function closeCartOnClickOutside(event) {
+    if (!cart.contains(event.target) && !event.target.closest(".cart-btn-open")) {
+        cart.classList.remove("show");
+        cart.classList.add("hide");
+    }
+}
+
 window.addEventListener("load", function () {
     openCartBtns.forEach(btn => btn.addEventListener("click", cartToggle));
     closeCartBtns.forEach(btn => btn.addEventListener("click", cartToggle));
+    document.addEventListener("click", closeCartOnClickOutside);
 });
-
-function fetchCart() {
-    //add fetch functionality
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     const cartItems = document.querySelectorAll(".cart-item");
@@ -33,62 +38,62 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${value.toFixed(2)} Sek`;
     }
 
-    //// Function to save cart to local storage
-    //function saveCartToLocalStorage() {
-    //    const cartData = [];
-    //    document.querySelectorAll(".cart-item").forEach(item => {
-    //        const name = item.querySelector(".title").textContent;
-    //        const ingress = item.querySelector(".ingress").textContent;
-    //        const price = parseFloat(item.getAttribute("data-price"));
-    //        const quantity = parseInt(item.querySelector(".qty-number p").textContent);
-    //        cartData.push({ name, price, ingress, quantity });
-    //    });
-    //    localStorage.setItem("cart", JSON.stringify(cartData));
-    //}
+    function saveCartUpdate(articleNumber, newQuantity) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const itemIndex = cart.findIndex(item => item.product.articleNumber === articleNumber);
+
+        if (newQuantity === 0 && itemIndex !== -1) {
+            cart.splice(itemIndex, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        else if (itemIndex !== -1) {
+            cart[itemIndex].quantity = newQuantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+        } 
+        calculateTotal();
+    }
 
     // Function to load the cart from local storage
     function loadCartFromLocalStorage() {
+
         let cartData = JSON.parse(localStorage.getItem("cart"));
         const cartContainer = document.querySelector(".cart-item-wrapper");
 
-        if (!cartData || cartData.length === 0) {
-            cartData = [
-                { name: "Produkt 1", ingress: "ingress", price: 100, quantity: 2 },
-                { name: "Produkt 2", ingress: "ingress", price: 200, quantity: 1 }
-            ];
-            localStorage.setItem("cart", JSON.stringify(cartData));
-        }
-
-        cartData = JSON.parse(localStorage.getItem("cart"));
-
         cartContainer.innerHTML = '';
 
-        cartData.forEach(({ name, price, quantity, ingress }) => {
-            cartContainer.innerHTML += `
-            <article class="cart-item" data-price="${price}">
-                <div class="image-wrapper">
-                    <img src="https://picsum.photos/200" alt="" class="image" />
-                </div>
-                <div class="text-grid">
-                    <h5 class="h5 title">${name}</h5>
-                    <div class="delete">
-                        <i class="fa-regular fa-trash"></i>
-                    </div>
-                    <p class="body ingress">${ingress}</p>
-                    <p class="h6 price">${formatPrice(price * quantity)}</p>
-                    <div class="quantity bg-gray">
-                        <button class="qty-btn decrease">-</button>
-                        <div class="qty-number">
-                            <p class="body quantity">${quantity}</p>
+        if (cartData) {
+            cartData.forEach(({ product, size, quantity }) => {
+                const { name, price, ingress, coverImageUrl, articleNumber } = product;
+
+                    cartContainer.innerHTML += `
+                    <article class="cart-item" data-price="${price}" data-articleNumber=${articleNumber}>
+                        <div class="image-wrapper">
+                            <img src="${coverImageUrl || 'https://picsum.photos/200'}" alt="${name}" class="image" />
                         </div>
-                        <button class="qty-btn increase">+</button>
-                    </div>
-                </div>
-            </article>
-        `;
-        });
+                        <div class="text-grid">
+                            <h5 class="h5 title">${name}</h5>
+                            <div class="delete">
+                                <i class="fa-regular fa-trash"></i>
+                            </div>
+                            <p class="body ingress">${ingress}</p>
+                            <p class="h6 price">${formatPrice(price * quantity)}</p>
+                            <p class="body size">Storlek: ${size}</p> 
+                            <div class="quantity bg-gray">
+                                <button class="qty-btn decrease">-</button>
+                                <div class="qty-number">
+                                    <p class="body quantity">${quantity}</p>
+                                </div>
+                                <button class="qty-btn increase">+</button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            });
+        }
 
         addEventListenersToCartItems();
+        calculateTotal();
+        window.loadCartFromLocalStorage = loadCartFromLocalStorage;
     }
 
     // Function for calculate the total price in the cart
@@ -96,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let subtotal = 0;
         let totalItems = 0;
         const updatedCartItems = document.querySelectorAll(".cart-item");
+
         updatedCartItems.forEach(item => {
             const price = parseFloat(item.getAttribute("data-price"));
             const quantity = parseInt(item.querySelector(".qty-number p").textContent);
@@ -114,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
         cartTotalElement.textContent = formatPrice(totalWithShipping);
         itemCountElement.textContent = `(${totalItems} items)`;
 
-        /*saveCartToLocalStorage();*/
     }
 
     // Function for buttons in cart
@@ -137,25 +142,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
             decreaseBtn.addEventListener("click", () => {
                 let quantity = parseInt(quantityElement.textContent);
+                let articleNumber = item.getAttribute("data-articleNumber")
+
                 if (quantity > 1) {
                     quantity--;
                     quantityElement.textContent = quantity;
+
+                    saveCartUpdate(articleNumber, quantity)
                     updateButtonState(quantity);
-                    calculateTotal();
                 }
             });
 
             increaseBtn.addEventListener("click", () => {
                 let quantity = parseInt(quantityElement.textContent);
+                let articleNumber = item.getAttribute("data-articleNumber")
                 quantity++;
                 quantityElement.textContent = quantity;
+
+                saveCartUpdate(articleNumber, quantity)
                 updateButtonState(quantity);
-                calculateTotal();
             });
 
             deleteBtn.addEventListener("click", () => {
+                let articleNumber = item.getAttribute("data-articleNumber")
                 item.remove();
-                calculateTotal();
+
+                saveCartUpdate(articleNumber, 0)
             });
 
             updateButtonState(parseInt(quantityElement.textContent));
@@ -166,26 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
     calculateTotal();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    if (window.location.pathname === "/checkout") {
-        const cartData = localStorage.getItem("cart");
-        if (cartData) {
-            fetch("/checkout/loadCartItems", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: cartData
-            })
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById("checkout-productlist-wrapper").innerHTML = html;
-                })
-                .catch(error => console.error("Error loading cart items:", error));
-        }
-    }
-});
+
 
 
 
