@@ -9,7 +9,7 @@ namespace Infrastructure.Services;
 public class ResetPasswordService(HttpClient httpClient, IConfiguration configuration) : IResetPasswordService
 {
     private readonly HttpClient _httpClient = httpClient;
-    private readonly string _apiKey = configuration["ApiKey:Secret"]!;
+    private readonly string _apiKey = configuration["ApiKey"]!;
     public async Task<JwtDto> InitiatePasswordResetAsync(ForgotPasswordDto forgotPasswordDto)
     {
         try

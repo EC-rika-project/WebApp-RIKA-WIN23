@@ -24,9 +24,9 @@ builder.Services.AddAuthentication(options =>
     })
 .AddGoogle(options =>
 {
-    var googleAuthSection = builder.Configuration.GetSection("Authentication:Google");
-    options.ClientId = googleAuthSection["ClientId"];
-    options.ClientSecret = googleAuthSection["ClientSecret"];
+    var configuration = builder.Configuration;
+    options.ClientId = configuration.GetValue<string>("GoogleClientId");
+    options.ClientSecret = configuration.GetValue<string>("GoogleClientSecret");
     options.SaveTokens = true;
     options.CallbackPath = "/google-callback";
 
@@ -41,9 +41,9 @@ builder.Services.AddAuthentication(options =>
 
 .AddFacebook(options =>
 {
-    var facebookAuthSection = builder.Configuration.GetSection("Authentication:Facebook");
-    options.AppId = facebookAuthSection["AppId"];
-    options.AppSecret = facebookAuthSection["AppSecret"];
+    var configuration = builder.Configuration;
+    options.AppId = configuration.GetValue<string>("FacebookAppId");
+    options.AppSecret = configuration.GetValue<string>("FacebookAppSecret");
     options.CallbackPath = "/facebook-callback";
     options.SaveTokens = true;
 
