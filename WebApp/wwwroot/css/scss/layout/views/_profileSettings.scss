@@ -175,44 +175,43 @@
 }
 
 .list-item {
-    display:flex;
+    display: flex;
 }
 
 
-    .toggle-input {
-        display: none;
-    }
+.toggle-input {
+    display: none;
+}
 
-    .toggle-label {
-        margin-left:auto;
-        display: inline-block;
-        width: 50px;
-        height: 24px;
-        background-color: #ccc;
-        border-radius: 50px;
-        position: relative;
-        cursor: pointer;
-        margin-right: 10px;
-        vertical-align: middle;
-    }
+.toggle-label {
+    margin-left: auto;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    margin-right: 10px;
+    vertical-align: middle;
+}
 
-    .toggle-label::after {
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: white;
-        border-radius: 50%;
-        transition: transform 0.2s;
-        top: 2px;
-        left: 2px;
-    }
+.toggle-label::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    top: 2px;
+    left: 2px;
+}
 
-    .toggle-input:checked + .toggle-label {
-        background-color: #000000;
-    }
+.toggle-input:checked + .toggle-label {
+    background-color: #000000;
+}
 
-    .toggle-input:checked + .toggle-label::after {
-        transform: translateX(26px);
-    }
-
+.toggle-input:checked + .toggle-label::after {
+    transform: translateX(26px);
+}
