@@ -21,6 +21,7 @@ else
                 </div>
                 <p class="body text co-ingress">@item.Product.Ingress</p>
                 <p class="h6 co-price">@(string.Format(CultureInfo.InvariantCulture, "{0:F2} Sek", item.Product.Price * item.Quantity))</p>
+                <p class="body size">Storlek: @item.Size</p>
                 <div class="quantity bg-gray">
                     <button class="qty-btn co-decrease" style="visibility: @(item.Quantity <= 1 ? "hidden" : "visible");">-</button>
                     <div class="qty-number">
@@ -28,9 +29,9 @@ else
                     </div>
                     <button class="qty-btn co-increase">+</button>
                 </div>
+                
             </div>
             <input type="hidden" name="Products[@item.Product.ArticleNumber].Name" value="@item.Product.Name" />
         </article>
     }
 }
-

@@ -23,8 +23,8 @@ function formatCheckoutPrice(value) {
 
 // Function to calculate subtotal
 function calculateCheckoutSubtotal() {
-    console.log("subtotal körs")
     let coSubtotal = 0;
+
     document.querySelectorAll(".co-cart-item").forEach(item => {
         const coPrice = parseFloat(item.dataset.coPrice);
         const coQuantity = parseInt(item.querySelector(".quantity .co-quantity").textContent);
@@ -53,48 +53,6 @@ function calculateCheckoutTotal(coSubtotal, coShippingCost) {
     coTotalElement.textContent = formatCheckoutPrice(coTotal)
 }
 
-// Function to load the cart from local storage
-function loadCheckoutCartFromLocalStorage() {
-    const cartItems = JSON.parse(localStorage.getItem("cart"));
-    const checkoutProductListWrapper = document.getElementById("checkout-productlist-wrapper");
-
-    checkoutProductListWrapper.innerHTML = '';
-
-    if (cartItems) {
-        cartItems.forEach(item => {
-            const cartItemElement = document.createElement("article");
-            cartItemElement.classList.add("co-cart-item");
-            cartItemElement.dataset.coPrice = item.price;
-
-            cartItemElement.innerHTML += `
-                <div class="image-wrapper">
-                    <img src="${item.coverImageUrl || 'https://picsum.photos/200'}" alt="${item.name}" class="image" />
-                </div>
-                <div class="text-grid">
-                    <h5 class="h5 co-title">${item.name}</h5>
-                    <div class="co-delete">
-                        <i class="fa-regular fa-trash"></i>
-                    </div>
-                    <p class="body text co-ingress">${item.ingress || ""}</p>
-                    <p class="h6 co-price">${formatCheckoutPrice(item.price * item.quantity)}</p>
-                    <div class="quantity bg-gray">
-                        <button class="qty-btn co-decrease">-</button>
-                        <div class="qty-number">
-                            <p class="body co-quantity">${item.quantity}</p>
-                        </div>
-                        <button class="qty-btn co-increase">+</button>
-                    </div>
-                </div>
-                <input type="hidden" name="Products[${item.articleNumber}].Name" value="${item.name}" />
-            `;
-
-            checkoutProductListWrapper.appendChild(cartItemElement);
-        });
-        calculateCheckoutSubtotal();
-        setupEventListeners();
-    }
-}
-
 // Function to save updated quantity of a product to local storage
 function saveCheckoutUpdate(articleNumber, newQuantity) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -117,7 +75,9 @@ function setupEventListeners() {
         button.addEventListener("click", () => {
             const item = button.closest(".co-cart-item");
             const quantityElement = item.querySelector(".co-quantity");
+            const priceElement = item.querySelector(".co-price"); 
             let quantity = parseInt(quantityElement.textContent);
+            let price = parseFloat(item.getAttribute("data-co-price"));
             let articleNumber = item.getAttribute("data-co-articleNumber")
             const decreaseButton = item.querySelector(".co-decrease");
 
@@ -132,6 +92,7 @@ function setupEventListeners() {
                
             }
 
+            priceElement.textContent = formatCheckoutPrice(price * quantity)
             quantityElement.textContent = quantity;
             calculateCheckoutSubtotal();
 

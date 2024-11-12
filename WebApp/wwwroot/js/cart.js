@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to load the cart from local storage
     function loadCartFromLocalStorage() {
-        console.log("load cart")
+
         let cartData = JSON.parse(localStorage.getItem("cart"));
         const cartContainer = document.querySelector(".cart-item-wrapper");
 
@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let subtotal = 0;
         let totalItems = 0;
         const updatedCartItems = document.querySelectorAll(".cart-item");
+
         updatedCartItems.forEach(item => {
             const price = parseFloat(item.getAttribute("data-price"));
             const quantity = parseInt(item.querySelector(".qty-number p").textContent);
