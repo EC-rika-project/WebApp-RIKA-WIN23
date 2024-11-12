@@ -13,9 +13,18 @@ function cartToggle() {
     }
 }
 
+// Close the cart if clicked outside
+function closeCartOnClickOutside(event) {
+    if (!cart.contains(event.target) && !event.target.closest(".cart-btn-open")) {
+        cart.classList.remove("show");
+        cart.classList.add("hide");
+    }
+}
+
 window.addEventListener("load", function () {
     openCartBtns.forEach(btn => btn.addEventListener("click", cartToggle));
     closeCartBtns.forEach(btn => btn.addEventListener("click", cartToggle));
+    document.addEventListener("click", closeCartOnClickOutside);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
