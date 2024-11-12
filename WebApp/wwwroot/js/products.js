@@ -82,7 +82,7 @@ async function openProductModal(articleNumber) {
     document.getElementById("productIngress").innerText = product.ingress;
     document.getElementById("productDescription").innerText = product.description;
     document.getElementById("articleNumber").innerText = `Art.nr: ${product.articleNumber}`;
-    document.getElementById("productPrice").innerText = `Price: $${product.price}`;
+    document.getElementById("productPrice").innerText = `Price: ${product.price} Sek`;
 
     // Set the product ID on the favorite and cart buttons
     document.getElementById("favoriteButton").setAttribute("data-id", articleNumber);
@@ -297,7 +297,7 @@ function updateModalContent(variant) {
     document.getElementById("productIngress").innerText = variant.ingress;
     document.getElementById("productDescription").innerText = variant.description;
     document.getElementById("articleNumber").innerText = `Art.nr: ${variant.articleNumber}`;
-    document.getElementById("productPrice").innerText = `Price: $${variant.price}`;
+    document.getElementById("productPrice").innerText = `Price: ${variant.price} Sek`;
 
     // Update favorite and cart buttons with new product ID
     document.getElementById("favoriteButton").setAttribute("data-id", variant.articleNumber);

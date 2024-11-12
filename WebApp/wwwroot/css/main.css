@@ -1051,6 +1051,7 @@ svg {
   width: 15rem;
   border-radius: 8px;
   margin-bottom: 0.5rem;
+  object-fit: cover;
 }
 .all-products .product-grid .product-item h2 {
   font-size: 1rem;
