@@ -1236,6 +1236,21 @@ svg {
 }
 
 /*------------ Sort Modal responsive adjustments-------------*/
+@media (max-width: 1200px) {
+  #sortModal .sort-modal-content {
+    height: 80%;
+    width: 70%;
+  }
+}
+@media (max-width: 900px) {
+  #sortModal .sort-modal-content {
+    height: 90%;
+    width: 80%;
+  }
+  .items-notadded {
+    margin-top: 30% !important;
+  }
+}
 /*--------------Buttons--------------*/
 .btn-modal-close {
   cursor: pointer;
@@ -1334,9 +1349,18 @@ svg {
   margin-top: 20%;
 }
 
+/* For normal out-of-stock button */
 .btn-modal-size.out-of-stock {
   cursor: default !important;
   text-decoration: line-through;
+  text-decoration-thickness: 2px; /* Increase thickness */
+}
+
+/* For onesize out-of-stock button */
+.btn-onesize.out-of-stock {
+  cursor: default !important;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px; /* Increase thickness */
 }
 
 .new-arrival-image {

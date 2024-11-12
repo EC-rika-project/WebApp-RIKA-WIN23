@@ -10,8 +10,14 @@ async function renderFavorites() {
     favoritesContainer.innerHTML = '';
 
     if (favorites.length === 0) {
+        // Remove the 'product-grid' class if no favorites
+        favoritesContainer.classList.remove('product-grid');
+
         favoritesContainer.innerHTML = '<p class="items-notadded">No favorites added yet.</p>';
         return;
+    } else {
+        // Add the 'product-grid' class if there are favorites
+        favoritesContainer.classList.add('product-grid');
     }
 
     // Loop through each favorite entry
@@ -39,4 +45,5 @@ async function renderFavorites() {
         }
     }
 }
+
 

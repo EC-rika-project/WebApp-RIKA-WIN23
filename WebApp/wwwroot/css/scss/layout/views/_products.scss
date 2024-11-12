@@ -278,6 +278,24 @@
 
 /*------------ Sort Modal responsive adjustments-------------*/
 
+@media (max-width: 1200px) {
+    #sortModal .sort-modal-content {
+        height: 80%;
+        width: 70%;
+    }
+}
+
+@media (max-width: 900px) {
+    #sortModal .sort-modal-content {
+        height: 90%;
+        width: 80%;
+    }
+
+    .items-notadded {
+        margin-top: 30% !important;
+    }
+}
+
 /*--------------Buttons--------------*/
 
 .btn-modal-close {
@@ -369,10 +387,20 @@
     margin-top: 20%;
 }
 
+/* For normal out-of-stock button */
 .btn-modal-size.out-of-stock {
     cursor: default !important;
     text-decoration: line-through;
+    text-decoration-thickness: 2px; /* Increase thickness */
 }
+
+/* For onesize out-of-stock button */
+.btn-onesize.out-of-stock {
+    cursor: default !important;
+    text-decoration: line-through;
+    text-decoration-thickness: 2px; /* Increase thickness */
+}
+
 
 .new-arrival-image {
     display: flex;
@@ -400,7 +428,7 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease;
 
         &:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     }
 }
